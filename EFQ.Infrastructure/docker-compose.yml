@@ -1,0 +1,46 @@
+# docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db mongo
+
+version: "3.7"
+
+services:
+    sq:
+        image: mcr.microsoft.com/mssql/server:2017-latest
+        container_name: sql1
+        hostname: sql1
+        ports:
+            - 1433:1433
+        volumes:
+#            - /home/jdege/Programming/EFQuery/EFQ/Sql1DockerVolumes/data:/var/opt/mssql/data
+#            - /home/jdege/Programming/EFQuery/EFQ/Sql1DockerVolumes/log:/var/opt/mssql/log
+#            - /home/jdege/Programming/EFQuery/EFQ/Sql1DockerVolumes/secrets:/var/opt/mssql/secrets 
+            - ../Sql1DockerVolumes/data:/var/opt/mssql/data
+            - ../Sql1DockerVolumes/log:/var/opt/mssql/log
+            - ../Sql1DockerVolumes/secrets:/var/opt/mssql/secrets 
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=Password1
+
+
+# Sql Server 2019 does not work on my version of Linux:
+
+# sudo docker pull mcr.microsoft.com/mssql/server:2017-latest
+
+# sudo docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Password1" -p 1433:1433 --name sql1 -h sql1 -d mcr.microsoft.com/mssql/server:2017-latest
+
+# sudo docker run 
+#   -e "ACCEPT_EULA=Y" 
+#   -e "SA_PASSWORD=Password1" 
+#   -p 1433:1433 
+#   --name sql1 
+#   -h sql1 
+#   -d 
+#   mcr.microsoft.com/mssql/server:2017-latest
+
+
+# Change the SA password:
+
+# docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "Password1" -Q 'ALTER LOGIN SA WITH PASSWORD="Password1"'
+
+# docker exec -it sql1 "bash"
+
+# /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "Password1"
