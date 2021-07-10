@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace EFQ.Web.Models
 {
-    public partial class chinookContext : DbContext
+    public partial class ChinookContext : DbContext
     {
-        public chinookContext()
+        public ChinookContext()
         {
         }
 
-        public chinookContext(DbContextOptions<chinookContext> options)
+        public ChinookContext(DbContextOptions<ChinookContext> options)
             : base(options)
         {
         }
