@@ -261,5 +261,7 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+# Stuff I added
 /Sql1DockerVolumes/
-EFGetStarted/blogging.db
+EFGetStarted/
