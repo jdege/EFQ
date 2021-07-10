@@ -46,8 +46,6 @@ namespace EFQ.Web.Models
 
                 entity.HasIndex(e => e.ArtistId, "IFK_AlbumArtistId");
 
-                entity.Property(e => e.AlbumId).ValueGeneratedNever();
-
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasColumnType("NVARCHAR(160)");
@@ -62,8 +60,6 @@ namespace EFQ.Web.Models
             {
                 entity.ToTable("Artist");
 
-                entity.Property(e => e.ArtistId).ValueGeneratedNever();
-
                 entity.Property(e => e.Name).HasColumnType("NVARCHAR(120)");
             });
 
@@ -72,8 +68,6 @@ namespace EFQ.Web.Models
                 entity.ToTable("Customer");
 
                 entity.HasIndex(e => e.SupportRepId, "IFK_CustomerSupportRepId");
-
-                entity.Property(e => e.CustomerId).ValueGeneratedNever();
 
                 entity.Property(e => e.Address).HasColumnType("NVARCHAR(70)");
 
@@ -114,8 +108,6 @@ namespace EFQ.Web.Models
 
                 entity.HasIndex(e => e.ReportsTo, "IFK_EmployeeReportsTo");
 
-                entity.Property(e => e.EmployeeId).ValueGeneratedNever();
-
                 entity.Property(e => e.Address).HasColumnType("NVARCHAR(70)");
 
                 entity.Property(e => e.BirthDate).HasColumnType("DATETIME");
@@ -155,8 +147,6 @@ namespace EFQ.Web.Models
             {
                 entity.ToTable("Genre");
 
-                entity.Property(e => e.GenreId).ValueGeneratedNever();
-
                 entity.Property(e => e.Name).HasColumnType("NVARCHAR(120)");
             });
 
@@ -165,8 +155,6 @@ namespace EFQ.Web.Models
                 entity.ToTable("Invoice");
 
                 entity.HasIndex(e => e.CustomerId, "IFK_InvoiceCustomerId");
-
-                entity.Property(e => e.InvoiceId).ValueGeneratedNever();
 
                 entity.Property(e => e.BillingAddress).HasColumnType("NVARCHAR(70)");
 
@@ -200,8 +188,6 @@ namespace EFQ.Web.Models
 
                 entity.HasIndex(e => e.TrackId, "IFK_InvoiceLineTrackId");
 
-                entity.Property(e => e.InvoiceLineId).ValueGeneratedNever();
-
                 entity.Property(e => e.UnitPrice)
                     .IsRequired()
                     .HasColumnType("NUMERIC(10,2)");
@@ -221,16 +207,12 @@ namespace EFQ.Web.Models
             {
                 entity.ToTable("MediaType");
 
-                entity.Property(e => e.MediaTypeId).ValueGeneratedNever();
-
                 entity.Property(e => e.Name).HasColumnType("NVARCHAR(120)");
             });
 
             modelBuilder.Entity<Playlist>(entity =>
             {
                 entity.ToTable("Playlist");
-
-                entity.Property(e => e.PlaylistId).ValueGeneratedNever();
 
                 entity.Property(e => e.Name).HasColumnType("NVARCHAR(120)");
             });
@@ -263,8 +245,6 @@ namespace EFQ.Web.Models
                 entity.HasIndex(e => e.GenreId, "IFK_TrackGenreId");
 
                 entity.HasIndex(e => e.MediaTypeId, "IFK_TrackMediaTypeId");
-
-                entity.Property(e => e.TrackId).ValueGeneratedNever();
 
                 entity.Property(e => e.Composer).HasColumnType("NVARCHAR(220)");
 

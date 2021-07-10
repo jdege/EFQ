@@ -1,4 +1,3 @@
-//using EFQ.Web.Models;
 using System;
 using System.Linq;
 using System.Text;
@@ -9,7 +8,7 @@ namespace EFQ.Web.Controllers
 {
     public class EmployeeController : Controller
     {
-        private Random random = new();
+        private static Random random = new();
 
         [HttpGet]
         public string Index()
@@ -33,16 +32,10 @@ namespace EFQ.Web.Controllers
 
                 foreach (var artist in artists)
                 {
-                    sb.Append($"{artist.Name}<br>");
+                    sb.AppendLine($"{artist.Name}");
                 }
             }
 
-            // var employee = new Employee
-            // {
-            //     Name = "Joe"
-            // };
-
-            // return employee;
             return sb.ToString(); ;
         }
     }
