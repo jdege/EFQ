@@ -265,3 +265,6 @@ FakesAssemblies/
 # Stuff I added
 /Sql1DockerVolumes/
 EFGetStarted/
+EFQ.Web/chinook.db-shm
+EFQ.Web/chinook.db
+EFQ.Web/chinook.db-wal
