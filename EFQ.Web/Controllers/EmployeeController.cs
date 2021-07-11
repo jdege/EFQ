@@ -1,9 +1,9 @@
-//#define SKIP_STUFF
+#define NO_SKIP
 
 using System;
 using System.Linq;
 using System.Text;
-#if SKIP_STUFF
+#if NO_SKIP
 using EFQ.Web.Models;
 #endif
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +17,7 @@ namespace EFQ.Web.Controllers
         [HttpGet]
         public string Index()
         {
-#if SKIP_STUFF
+#if NO_SKIP
             using (var dbContext = new ChinookContext())
             {
                 var artist = new Artist
@@ -33,7 +33,7 @@ namespace EFQ.Web.Controllers
             StringBuilder sb = new();
             sb.AppendLine("These are the artists:");
 
-#if SKIP_STUFF
+#if NO_SKIP
             using (var dbContext = new ChinookContext())
             {
                 var artists = dbContext.Artists.ToList();
