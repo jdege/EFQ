@@ -7,10 +7,14 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/EFQ.Web/EFQ.Web.csproj",
+                "${workspaceFolder}/EFQ.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "problemMatcher": "$msCompile"
         },
         {
