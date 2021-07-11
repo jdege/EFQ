@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFQ.Web.Migrations
 {
     [DbContext(typeof(ChinookContext))]
-    [Migration("20210711020208_InitialCreate")]
+    [Migration("20210711201449_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
