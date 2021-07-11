@@ -1,11 +1,8 @@
-#define NO_SKIP
 
 using System;
 using System.Linq;
 using System.Text;
-#if NO_SKIP
 using EFQ.Web.Models;
-#endif
 using Microsoft.AspNetCore.Mvc;
 
 namespace EFQ.Web.Controllers
@@ -13,28 +10,20 @@ namespace EFQ.Web.Controllers
     public class EmployeeController : Controller
     {
         private static Random random = new();
+        private ChinookDbContext dbContext;
+
+        public EmployeeController(ChinookDbContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
 
         [HttpGet]
         public string Index()
         {
-#if NO_SKIP
-            using (var dbContext = new ChinookContext())
-            {
-                var artist = new Artist
-                {
-                    Name = "Name" + random.Next()
-                };
-
-                dbContext.Artists.Add(artist);
-                dbContext.SaveChanges();
-            }
-#endif
-
             StringBuilder sb = new();
             sb.AppendLine("These are the artists:");
 
-#if NO_SKIP
-            using (var dbContext = new ChinookContext())
+            //using (var dbContext = new ChinookDbContext())
             {
                 var artists = dbContext.Artists.ToList();
 
@@ -43,7 +32,6 @@ namespace EFQ.Web.Controllers
                     sb.AppendLine($"{artist.Name}");
                 }
             }
-#endif
 
             return sb.ToString(); ;
         }

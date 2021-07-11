@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFQ.Web.Migrations
 {
-    [DbContext(typeof(ChinookContext))]
+    [DbContext(typeof(ChinookDbContext))]
     [Migration("20210711212301_InitialCreate")]
     partial class InitialCreate
     {
