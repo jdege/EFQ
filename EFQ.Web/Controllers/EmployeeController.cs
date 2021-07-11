@@ -1,7 +1,11 @@
+//#define SKIP_STUFF
+
 using System;
 using System.Linq;
 using System.Text;
+#if SKIP_STUFF
 using EFQ.Web.Models;
+#endif
 using Microsoft.AspNetCore.Mvc;
 
 namespace EFQ.Web.Controllers
@@ -13,6 +17,7 @@ namespace EFQ.Web.Controllers
         [HttpGet]
         public string Index()
         {
+#if SKIP_STUFF
             using (var dbContext = new ChinookContext())
             {
                 var artist = new Artist
@@ -23,9 +28,12 @@ namespace EFQ.Web.Controllers
                 dbContext.Artists.Add(artist);
                 dbContext.SaveChanges();
             }
+#endif
 
             StringBuilder sb = new();
+            sb.AppendLine("These are the artists:");
 
+#if SKIP_STUFF
             using (var dbContext = new ChinookContext())
             {
                 var artists = dbContext.Artists.ToList();
@@ -35,6 +43,7 @@ namespace EFQ.Web.Controllers
                     sb.AppendLine($"{artist.Name}");
                 }
             }
+#endif
 
             return sb.ToString(); ;
         }
