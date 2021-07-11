@@ -38,6 +38,8 @@ namespace EFQ.Web.Models
                 .HasForeignKey(d => d.MediaTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TrackMediaTypeId");
+
+            seedData(builder);
         }
         private void seedData(EntityTypeBuilder<Track> builder)
         {
@@ -42065,7 +42067,7 @@ namespace EFQ.Web.Models
                     Milliseconds = 221331,
                     Bytes = 3665114,
                     UnitPrice = 0.99M
-                }, 
+                },
                 new Track
                 {
                     TrackId = 3503,

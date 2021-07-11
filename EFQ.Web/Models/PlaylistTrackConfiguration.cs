@@ -25,6 +25,8 @@ namespace EFQ.Web.Models
                 .HasForeignKey(d => d.TrackId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PlaylistTrackTrackId");
+        
+            seedData(builder);
         }
         private void seedData(EntityTypeBuilder<PlaylistTrack> builder)
         {
