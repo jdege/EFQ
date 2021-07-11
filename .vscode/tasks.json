@@ -7,14 +7,10 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/EFQ.Web.csproj",
+                "${workspaceFolder}/EFQ.Web/EFQ.Web.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
             "problemMatcher": "$msCompile"
         },
         {
@@ -23,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/EFQ.Web.csproj",
+                "${workspaceFolder}/EFQ.Web/EFQ.Web.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -36,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/EFQ.Web.csproj",
+                "${workspaceFolder}/EFQ.Web/EFQ.Web.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

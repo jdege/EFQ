@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+    sq:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        container_name: sql1
+        hostname: sql1
+        user: root
+        ports:
+            - 1433:1433
+        volumes:
+            - ./Sql1DockerVolumes/data:/var/opt/mssql/data
+            - ./Sql1DockerVolumes/log:/var/opt/mssql/log
+            - ./Sql1DockerVolumes/secrets:/var/opt/mssql/secrets 
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=Password1
