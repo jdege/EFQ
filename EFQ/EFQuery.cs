@@ -572,25 +572,9 @@ namespace JeffDege.EFQuery
         {
             if (selectionComparison == SelectionComparison.Like)
             {
-                // todo: Make sure this works!
-
-                var method = typeof(DbFunctionsExtensions).GetMethod("Like",
-                    new[] { typeof(DbFunctions), typeof(string), typeof(string) });
-                if (method == null) throw new Exception("We can't find 'LIKE' on class DbFunctions");
-
-                // public static bool Like([CanBeNullAttribute] this DbFunctions _, 
-                //     [CanBeNullAttribute] string matchExpression, 
-                //     [CanBeNullAttribute] string pattern);
-                // public static bool Like([CanBeNullAttribute] this DbFunctions _, 
-                //     [CanBeNullAttribute] string matchExpression, 
-                //     [CanBeNullAttribute] string pattern, 
-                //     [CanBeNullAttribute] string escapeCharacter);
-
-                //#error We need to pass a DbFunctions object to Expression.Call, somehow!!!
-
-                var methodExpression = Expression.Call(method, converted, member);
-                // var zeroExpression = Expression.Constant(0, typeof(int?));
-                // var greaterThanExpression = Expression.GreaterThan(methodExpression, zeroExpression);
+                var methodExpression = Expression.Call(
+                    typeof(DbFunctionsExtensions), "Like", Type.EmptyTypes,
+                    Expression.Constant(EF.Functions), member, converted);
 
                 return methodExpression;
             }
