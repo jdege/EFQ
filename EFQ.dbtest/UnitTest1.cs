@@ -24,5 +24,16 @@ namespace EFQ.dbtest
                 parent.name.ShouldBe("Joe");
             }
         }
+
+        [Fact]
+        public async Task Test2Async()
+        {
+            using (var dbContext = new TestDbContext(ContextOptions))
+            {
+                var parent = await dbContext.Parents.FirstOrDefaultAsync();
+
+                parent.name.ShouldBe("Joe");
+            }
+        }
     }
 }
