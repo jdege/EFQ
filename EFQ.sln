@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFQ.Web", "EFQ.Web\EFQ.Web.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFQ", "EFQ\EFQ.csproj", "{9EEF8C30-D980-4731-810D-EF5539F1A43C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFQ.dbtest", "EFQ.dbtest\EFQ.dbtest.csproj", "{F19F20F9-EEFE-4424-BBBC-56ECD6A0CC76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{9EEF8C30-D980-4731-810D-EF5539F1A43C}.Release|x64.Build.0 = Release|Any CPU
 		{9EEF8C30-D980-4731-810D-EF5539F1A43C}.Release|x86.ActiveCfg = Release|Any CPU
 		{9EEF8C30-D980-4731-810D-EF5539F1A43C}.Release|x86.Build.0 = Release|Any CPU
+		{F19F20F9-EEFE-4424-BBBC-56ECD6A0CC76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F19F20F9-EEFE-4424-BBBC-56ECD6A0CC76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F19F20F9-EEFE-4424-BBBC-56ECD6A0CC76}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F19F20F9-EEFE-4424-BBBC-56ECD6A0CC76}.Debug|x64.Build.0 = Debug|Any CPU
+		{F19F20F9-EEFE-4424-BBBC-56ECD6A0CC76}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F19F20F9-EEFE-4424-BBBC-56ECD6A0CC76}.Debug|x86.Build.0 = Debug|Any CPU
+		{F19F20F9-EEFE-4424-BBBC-56ECD6A0CC76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F19F20F9-EEFE-4424-BBBC-56ECD6A0CC76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F19F20F9-EEFE-4424-BBBC-56ECD6A0CC76}.Release|x64.ActiveCfg = Release|Any CPU
+		{F19F20F9-EEFE-4424-BBBC-56ECD6A0CC76}.Release|x64.Build.0 = Release|Any CPU
+		{F19F20F9-EEFE-4424-BBBC-56ECD6A0CC76}.Release|x86.ActiveCfg = Release|Any CPU
+		{F19F20F9-EEFE-4424-BBBC-56ECD6A0CC76}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
