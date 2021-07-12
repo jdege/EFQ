@@ -1,16 +1,15 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EFQ.dbtest;
 using EFQ.dbtest.Models;
 using JeffDege.EFQuery;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using Shouldly;
 using Xunit;
 
 namespace EFQueryTest
 {
+    [Collection("Sequential")]
     public class ComparisonTests : TestDbContextTest
     {
         public ComparisonTests()
