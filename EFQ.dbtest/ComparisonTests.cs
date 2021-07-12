@@ -5,6 +5,7 @@ using EFQ.dbtest;
 using EFQ.dbtest.Models;
 using JeffDege.EFQuery;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Shouldly;
 using Xunit;
 
@@ -18,7 +19,7 @@ namespace EFQueryTest
         }
 
         [Fact]
-        public void testEqual()
+        public async Task testEqualAsync()
         {
             const string expectedName = "An item";
             Seed(items: new[]
@@ -31,7 +32,7 @@ namespace EFQueryTest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = dbContext.Items.Where(sc.constructPredicate<Item>()).ToList();
+                var results = await dbContext.Items.Where(sc.constructPredicate<Item>()).ToListAsync();
 
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe(expectedName);
@@ -39,7 +40,7 @@ namespace EFQueryTest
         }
 
         [Fact]
-        public void testNotEqual()
+        public async Task testNotEqualAsync()
         {
             Seed(items: new[]
                 {
@@ -51,14 +52,14 @@ namespace EFQueryTest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = dbContext.Items.Where(sc.constructPredicate<Item>()).ToList();
+                var results = await dbContext.Items.Where(sc.constructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe("An item");
             }
         }
 
         [Fact]
-        public void testGreaterThan()
+        public async Task testGreaterThanAsync()
         {
             Seed(items: new[]
             {
@@ -70,14 +71,14 @@ namespace EFQueryTest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = dbContext.Items.Where(sc.constructPredicate<Item>()).ToList();
+                var results = await dbContext.Items.Where(sc.constructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe("Another item");
             }
         }
 
         [Fact]
-        public void testGreaterThanOrEqual()
+        public async Task testGreaterThanOrEqualAsync()
         {
             Seed(items: new[]
             {
@@ -89,14 +90,14 @@ namespace EFQueryTest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = dbContext.Items.Where(sc.constructPredicate<Item>()).ToList();
+                var results = await dbContext.Items.Where(sc.constructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe("Another item");
             }
         }
 
         [Fact]
-        public void testLessThan()
+        public async Task testLessThanAsync()
         {
             Seed(items: new[]
             {
@@ -108,14 +109,14 @@ namespace EFQueryTest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = dbContext.Items.Where(sc.constructPredicate<Item>()).ToList();
+                var results = await dbContext.Items.Where(sc.constructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe("An item");
             }
         }
 
         [Fact]
-        public void testLessThanOrEqual()
+        public async Task testLessThanOrEqualAsync()
         {
             Seed(items: new[]
             {
@@ -127,14 +128,14 @@ namespace EFQueryTest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = dbContext.Items.Where(sc.constructPredicate<Item>()).ToList();
+                var results = await dbContext.Items.Where(sc.constructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe("An item");
             }
         }
 
         [Fact]
-        public void testContains()
+        public async Task testContainsAsync()
         {
             Seed(items: new[]
             {
@@ -147,8 +148,8 @@ namespace EFQueryTest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = dbContext.Items.Where(sc.constructPredicate<Item>())
-                    .OrderBy(i => i.itemId).ToList();
+                var results = await dbContext.Items.Where(sc.constructPredicate<Item>())
+                    .OrderBy(i => i.itemId).ToListAsync();
                 results.Count.ShouldBe(2);
                 results[0].itemId.ShouldBe("abcd");
                 results[1].itemId.ShouldBe("cdef");
@@ -156,7 +157,7 @@ namespace EFQueryTest
         }
 
         [Fact]
-        public void testStartsWith()
+        public async Task testStartsWithAsync()
         {
             Seed(items: new[]
             {
@@ -169,15 +170,15 @@ namespace EFQueryTest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = dbContext.Items.Where(sc.constructPredicate<Item>())
-                    .OrderBy(i => i.itemId).ToList();
+                var results = await dbContext.Items.Where(sc.constructPredicate<Item>())
+                    .OrderBy(i => i.itemId).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe("cdef");
             }
         }
 
         [Fact]
-        public void testEndsWith()
+        public async Task testEndsWithAsync()
         {
             Seed(items: new[]
             {
@@ -190,15 +191,15 @@ namespace EFQueryTest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = dbContext.Items.Where(sc.constructPredicate<Item>())
-                    .OrderBy(i => i.itemId).ToList();
+                var results = await dbContext.Items.Where(sc.constructPredicate<Item>())
+                    .OrderBy(i => i.itemId).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe("abcd");
             }
         }
 
         [Fact]
-        public void testLike()
+        public async Task testLikeAsync()
         {
             Seed(items: new[]
             {
@@ -211,8 +212,8 @@ namespace EFQueryTest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = dbContext.Items.Where(sc.constructPredicate<Item>())
-                    .OrderBy(i => i.itemId).ToList();
+                var results = await dbContext.Items.Where(sc.constructPredicate<Item>())
+                    .OrderBy(i => i.itemId).ToListAsync();
                 results.Count.ShouldBe(2);
                 results[0].itemId.ShouldBe("abcd");
                 results[1].itemId.ShouldBe("cdef");
