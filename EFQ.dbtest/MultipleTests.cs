@@ -2,7 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EFQ.dbtest;
 using EFQ.dbtest.Models;
-using JeffDege.EFQuery;
+using jdege.EFQ;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
@@ -27,7 +27,7 @@ namespace EFQueryTest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = EFQuery.containedIn("itemId", new[]
+            var sc = jdege.EFQ.EFQ.containedIn("itemId", new[]
                 {
                     "Item 0",
                     "Item 2",
@@ -54,7 +54,7 @@ namespace EFQueryTest
                 new Item{itemId = "f"},
             });
 
-            var sc = EFQuery.between("itemId", "c", "e");
+            var sc = jdege.EFQ.EFQ.between("itemId", "c", "e");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {

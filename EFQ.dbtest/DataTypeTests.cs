@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EFQ.dbtest;
 using EFQ.dbtest.Models;
-using JeffDege.EFQuery;
+using jdege.EFQ;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
@@ -33,7 +33,7 @@ namespace EFQueryTest
                 new Item {itemId = "Item 3", when = date3},
             });
 
-            var sc = EFQuery.greaterThan("when", date2);
+            var sc = jdege.EFQ.EFQ.greaterThan("when", date2);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -42,7 +42,7 @@ namespace EFQueryTest
                 results[0].itemId.ShouldBe("Item 3");
             }
 
-            sc = EFQuery.greaterThanOrEqual("when", date2);
+            sc = jdege.EFQ.EFQ.greaterThanOrEqual("when", date2);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -65,7 +65,7 @@ namespace EFQueryTest
                 new Item {itemId = "Item 3", amount = 12},
             });
 
-            var sc = EFQuery.greaterThan("amount", 11);
+            var sc = jdege.EFQ.EFQ.greaterThan("amount", 11);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -74,7 +74,7 @@ namespace EFQueryTest
                 results[0].itemId.ShouldBe("Item 3");
             }
 
-            sc = EFQuery.greaterThanOrEqual("amount", 11);
+            sc = jdege.EFQ.EFQ.greaterThanOrEqual("amount", 11);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {

@@ -10,19 +10,19 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using PeteMontgomery.PredicateBuilder;
 
-namespace JeffDege.EFQuery
+namespace jdege.EFQ
 {
-    public class EFQuery
+    public class EFQ
     {
         #region static convenience functions
 
-        public static EFQuery compare(SelectionComparison comparison, string fieldName, object rightHandSide)
+        public static EFQ compare(SelectionComparison comparison, string fieldName, object rightHandSide)
         {
-            return new EFQuery
+            return new EFQ
             {
                 selectionComparison = comparison,
                 fieldName = fieldName,
-                rightHandSide = rightHandSide as EFQuery ?? EFQuery.constant(rightHandSide)
+                rightHandSide = rightHandSide as EFQ ?? EFQ.constant(rightHandSide)
             };
         }
 
@@ -30,25 +30,25 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is always true
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery isTrue()
+        public static EFQ isTrue()
         {
-            return new EFQuery { selectionComparison = SelectionComparison.IsTrue };
+            return new EFQ { selectionComparison = SelectionComparison.IsTrue };
         }
 
         /// <summary>
         /// returns a EFQuery that is always false
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery isFalse()
+        public static EFQ isFalse()
         {
-            return new EFQuery { selectionComparison = SelectionComparison.IsFalse };
+            return new EFQ { selectionComparison = SelectionComparison.IsFalse };
         }
 
         /// <summary>
         /// returns a EFQuery that is true if fieldName contains rightHandSide as a substring
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery contains(string fieldName, object rightHandSide)
+        public static EFQ contains(string fieldName, object rightHandSide)
         {
             return compare(SelectionComparison.Contains, fieldName, rightHandSide);
         }
@@ -57,7 +57,7 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if fieldName starts with rightHandSide as a substring
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery startsWith(string fieldName, object rightHandSide)
+        public static EFQ startsWith(string fieldName, object rightHandSide)
         {
             return compare(SelectionComparison.StartsWith, fieldName, rightHandSide);
         }
@@ -66,7 +66,7 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if fieldName ends with rightHandSide as a substring
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery endsWith(string fieldName, object rightHandSide)
+        public static EFQ endsWith(string fieldName, object rightHandSide)
         {
             return compare(SelectionComparison.EndsWith, fieldName, rightHandSide);
         }
@@ -75,7 +75,7 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if fieldName matches rightHandSide as a SQL LIKE pattern
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery like(string fieldName, object rightHandSide)
+        public static EFQ like(string fieldName, object rightHandSide)
         {
             return compare(SelectionComparison.Like, fieldName, rightHandSide);
         }
@@ -85,9 +85,9 @@ namespace JeffDege.EFQuery
         /// on the fieldName. (Assumes fieldName is a one-to-many navigational property).
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery any(string fieldName, EFQuery innerCriteria)
+        public static EFQ any(string fieldName, EFQ innerCriteria)
         {
-            return new EFQuery
+            return new EFQ
             {
                 selectionComparison = SelectionComparison.Any,
                 fieldName = fieldName,
@@ -99,7 +99,7 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if fieldName is equal to rightHandSide
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery equal(string fieldName, object rightHandSide)
+        public static EFQ equal(string fieldName, object rightHandSide)
         {
             return compare(SelectionComparison.Equal, fieldName, rightHandSide);
         }
@@ -108,7 +108,7 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if fieldName is not equal to rightHandSide
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery notEqual(string fieldName, object rightHandSide)
+        public static EFQ notEqual(string fieldName, object rightHandSide)
         {
             return compare(SelectionComparison.NotEqual, fieldName, rightHandSide);
         }
@@ -117,7 +117,7 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if fieldName is greater than rightHandSide
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery greaterThan(string fieldName, object rightHandSide)
+        public static EFQ greaterThan(string fieldName, object rightHandSide)
         {
             return compare(SelectionComparison.GreaterThan, fieldName, rightHandSide);
         }
@@ -126,7 +126,7 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if fieldName is greater than or equal to rightHandSide
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery greaterThanOrEqual(string fieldName, object rightHandSide)
+        public static EFQ greaterThanOrEqual(string fieldName, object rightHandSide)
         {
             return compare(SelectionComparison.GreaterThanOrEqual, fieldName, rightHandSide);
         }
@@ -135,7 +135,7 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if fieldName is less than rightHandSide
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery lessThan(string fieldName, object rightHandSide)
+        public static EFQ lessThan(string fieldName, object rightHandSide)
         {
             return compare(SelectionComparison.LessThan, fieldName, rightHandSide);
         }
@@ -144,7 +144,7 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if fieldName is less than or equal to rightHandSide
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery lessThanOrEqual(string fieldName, object rightHandSide)
+        public static EFQ lessThanOrEqual(string fieldName, object rightHandSide)
         {
             return compare(SelectionComparison.LessThanOrEqual, fieldName, rightHandSide);
         }
@@ -153,13 +153,13 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if all of the efQueries evaluate true
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery and(params EFQuery[] efQueries)
+        public static EFQ and(params EFQ[] efQueries)
         {
-            return and(efQueries as IEnumerable<EFQuery>);
+            return and(efQueries as IEnumerable<EFQ>);
         }
-        public static EFQuery and(IEnumerable<EFQuery> efQueries)
+        public static EFQ and(IEnumerable<EFQ> efQueries)
         {
-            return new EFQuery
+            return new EFQ
             {
                 selectionComparison = SelectionComparison.And,
                 aggregateList = efQueries
@@ -170,13 +170,13 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if at least one of the efQueries evaluates true
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery or(params EFQuery[] efQueries)
+        public static EFQ or(params EFQ[] efQueries)
         {
-            return or(efQueries as IEnumerable<EFQuery>);
+            return or(efQueries as IEnumerable<EFQ>);
         }
-        public static EFQuery or(IEnumerable<EFQuery> efQueries)
+        public static EFQ or(IEnumerable<EFQ> efQueries)
         {
-            return new EFQuery
+            return new EFQ
             {
                 selectionComparison = SelectionComparison.Or,
                 aggregateList = efQueries
@@ -187,13 +187,13 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if at least one the efQueries evaluates false
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery nand(params EFQuery[] efQueries)
+        public static EFQ nand(params EFQ[] efQueries)
         {
-            return nand(efQueries as IEnumerable<EFQuery>);
+            return nand(efQueries as IEnumerable<EFQ>);
         }
-        public static EFQuery nand(IEnumerable<EFQuery> efQueries)
+        public static EFQ nand(IEnumerable<EFQ> efQueries)
         {
-            return new EFQuery
+            return new EFQ
             {
                 selectionComparison = SelectionComparison.Nand,
                 aggregateList = efQueries
@@ -204,13 +204,13 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if all of the efQueries evaluate false
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery nor(params EFQuery[] efQueries)
+        public static EFQ nor(params EFQ[] efQueries)
         {
-            return nor(efQueries as IEnumerable<EFQuery>);
+            return nor(efQueries as IEnumerable<EFQ>);
         }
-        public static EFQuery nor(IEnumerable<EFQuery> efQueries)
+        public static EFQ nor(IEnumerable<EFQ> efQueries)
         {
-            return new EFQuery
+            return new EFQ
             {
                 selectionComparison = SelectionComparison.Nor,
                 aggregateList = efQueries
@@ -221,7 +221,7 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if all of the EFQuery evaluates false
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery not(EFQuery efQuery)
+        public static EFQ not(EFQ efQuery)
         {
             return nand(new[] { efQuery });
         }
@@ -230,7 +230,7 @@ namespace JeffDege.EFQuery
         /// returns a EFQuery that is true if fieldName is equal to one of the objects
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery containedIn(string fieldName, IEnumerable<object> objects)
+        public static EFQ containedIn(string fieldName, IEnumerable<object> objects)
         {
             return or(objects.Select(o => equal(fieldName, o)));
         }
@@ -240,7 +240,7 @@ namespace JeffDege.EFQuery
         /// and less than or equal to right
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQuery between(string fieldName, object left, object right)
+        public static EFQ between(string fieldName, object left, object right)
         {
             return and(new[]
                 {
@@ -249,24 +249,24 @@ namespace JeffDege.EFQuery
                 });
         }
 
-        public static EFQuery constant(object value)
+        public static EFQ constant(object value)
         {
-            return new EFQuery
+            return new EFQ
             {
                 selectionComparison = SelectionComparison.Constant,
                 constantValue = value
             };
         }
 
-        public static EFQuery add(object left, object right)
+        public static EFQ add(object left, object right)
         {
-            return new EFQuery
+            return new EFQ
             {
                 selectionComparison = SelectionComparison.Add,
                 aggregateList = new[]
                 {
-                    EFQuery.constant(left),
-                    EFQuery.constant(right)
+                    EFQ.constant(left),
+                    EFQ.constant(right)
                 }
             };
         }
@@ -281,25 +281,25 @@ namespace JeffDege.EFQuery
         public string fieldName { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public EFQuery rightHandSide { get; set; }
+        public EFQ rightHandSide { get; set; }
 
         // This is here so we can deserialize old-style EFQuery strings
         public object fieldValue
         {
-            set { this.rightHandSide = EFQuery.constant((value)); }
+            set { this.rightHandSide = EFQ.constant((value)); }
         }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public object constantValue { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public EFQuery innerCriteria { get; set; }
+        public EFQ innerCriteria { get; set; }
 
-        private IEnumerable<EFQuery> aggregateList_ = null;
+        private IEnumerable<EFQ> aggregateList_ = null;
 
-        public IEnumerable<EFQuery> aggregateList
+        public IEnumerable<EFQ> aggregateList
         {
-            get { return this.aggregateList_ ?? (this.aggregateList_ = new List<EFQuery>()); }
+            get { return this.aggregateList_ ?? (this.aggregateList_ = new List<EFQ>()); }
             set { this.aggregateList_ = value; }
         }
 
@@ -307,7 +307,7 @@ namespace JeffDege.EFQuery
 
         #region Constructors
 
-        public EFQuery()
+        public EFQ()
         {
             this.selectionComparison = SelectionComparison.Constant;
             this.constantValue = null;
@@ -596,7 +596,7 @@ namespace JeffDege.EFQuery
             var collectionType = member.Type;
             var memberType = collectionType.GenericTypeArguments[0];
 
-            var constructPredicateMethod = typeof(EFQuery).GetMethod("constructPredicate");
+            var constructPredicateMethod = typeof(EFQ).GetMethod("constructPredicate");
             var constructPredicateMethodGeneric = constructPredicateMethod.MakeGenericMethod(memberType);
             var innerPredicate = (Expression)constructPredicateMethodGeneric.Invoke(this.innerCriteria, new object[] { context });
 
@@ -663,7 +663,7 @@ namespace JeffDege.EFQuery
 
         private ConstantExpression constructConstantExpression<T>(object value, object context)
         {
-            var sc = value as EFQuery;
+            var sc = value as EFQ;
             if (sc != null)
             {
                 if (sc.isAdd)
@@ -680,7 +680,7 @@ namespace JeffDege.EFQuery
             return Expression.Constant(value, value.GetType());
         }
 
-        private object executeAddExpression<T>(EFQuery sc, object context)
+        private object executeAddExpression<T>(EFQ sc, object context)
         {
             object result = null;
 
