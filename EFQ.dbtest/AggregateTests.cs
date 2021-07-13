@@ -10,7 +10,7 @@ using Xunit;
 namespace EFQueryTest
 {
     [Collection("Sequential")]
-    public class AggregateTests : TestDbContextTest
+    public class AggregateTests : TestDbContextTestBase
     {
         public AggregateTests()
         : base(new DbContextOptionsBuilder<TestDbContext>().UseSqlite("Filename=Test.db").Options)

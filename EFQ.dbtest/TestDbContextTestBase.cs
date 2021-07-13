@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace EFQ.dbtest
 {
-    public class TestDbContextTest
+    public class TestDbContextTestBase
     {
         protected DbContextOptions<TestDbContext> ContextOptions { get; }
 
-        protected TestDbContextTest(DbContextOptions<TestDbContext> contextOptions)
+        protected TestDbContextTestBase(DbContextOptions<TestDbContext> contextOptions)
         {
             ContextOptions = contextOptions;
 
