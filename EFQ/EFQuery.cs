@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using PeteMontgomery.PredicateBuilder;
 
-namespace JDege.EFQ
+namespace JeffDege.EFQ
 {
     public class EFQ
     {

@@ -2,7 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EFQ.dbtest;
 using EFQ.dbtest.Models;
-using JDege.EFQ;
+using JeffDege.EFQ;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
@@ -27,10 +27,10 @@ namespace EFQueryTest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQ.And(new[]
+            var sc = JeffDege.EFQ.EFQ.And(new[]
                 {
-                    JDege.EFQ.EFQ.Equal("itemId", "Item 1"),
-                    JDege.EFQ.EFQ.Equal("name", "An item"),
+                    JeffDege.EFQ.EFQ.Equal("itemId", "Item 1"),
+                    JeffDege.EFQ.EFQ.Equal("name", "An item"),
                 });
 
             using (var dbContext = new TestDbContext(ContextOptions))
@@ -51,10 +51,10 @@ namespace EFQueryTest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQ.And(new[]
+            var sc = JeffDege.EFQ.EFQ.And(new[]
                 {
-                    JDege.EFQ.EFQ.Equal("itemId", "Item 1"),
-                    JDege.EFQ.EFQ.IsTrue(),
+                    JeffDege.EFQ.EFQ.Equal("itemId", "Item 1"),
+                    JeffDege.EFQ.EFQ.IsTrue(),
                 });
 
             using (var dbContext = new TestDbContext(ContextOptions))
@@ -75,9 +75,9 @@ namespace EFQueryTest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQ.And(
-                JDege.EFQ.EFQ.Equal("itemId", "Item 1"),
-                JDege.EFQ.EFQ.IsTrue()
+            var sc = JeffDege.EFQ.EFQ.And(
+                JeffDege.EFQ.EFQ.Equal("itemId", "Item 1"),
+                JeffDege.EFQ.EFQ.IsTrue()
             );
 
             using (var dbContext = new TestDbContext(ContextOptions))
@@ -98,10 +98,10 @@ namespace EFQueryTest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQ.And(new[]
+            var sc = JeffDege.EFQ.EFQ.And(new[]
                 {
-                    JDege.EFQ.EFQ.Equal("itemId", "Item 1"),
-                    JDege.EFQ.EFQ.IsFalse(),
+                    JeffDege.EFQ.EFQ.Equal("itemId", "Item 1"),
+                    JeffDege.EFQ.EFQ.IsFalse(),
                 });
 
             using (var dbContext = new TestDbContext(ContextOptions))
@@ -121,10 +121,10 @@ namespace EFQueryTest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQ.Or(new[]
+            var sc = JeffDege.EFQ.EFQ.Or(new[]
                 {
-                    JDege.EFQ.EFQ.Equal("itemId", "Item 1"),
-                    JDege.EFQ.EFQ.Equal("itemId", "Item 3"),
+                    JeffDege.EFQ.EFQ.Equal("itemId", "Item 1"),
+                    JeffDege.EFQ.EFQ.Equal("itemId", "Item 3"),
                 });
 
             using (var dbContext = new TestDbContext(ContextOptions))
@@ -147,10 +147,10 @@ namespace EFQueryTest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQ.Nand(new[]
+            var sc = JeffDege.EFQ.EFQ.Nand(new[]
                 {
-                    JDege.EFQ.EFQ.Equal("itemId", "Item 1"),
-                    JDege.EFQ.EFQ.Equal("name", "An item"),
+                    JeffDege.EFQ.EFQ.Equal("itemId", "Item 1"),
+                    JeffDege.EFQ.EFQ.Equal("name", "An item"),
                 });
 
             using (var dbContext = new TestDbContext(ContextOptions))
@@ -173,10 +173,10 @@ namespace EFQueryTest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQ.Nor(new[]
+            var sc = JeffDege.EFQ.EFQ.Nor(new[]
                 {
-                    JDege.EFQ.EFQ.Equal("itemId", "Item 1"),
-                    JDege.EFQ.EFQ.Equal("itemId", "Item 3"),
+                    JeffDege.EFQ.EFQ.Equal("itemId", "Item 1"),
+                    JeffDege.EFQ.EFQ.Equal("itemId", "Item 3"),
                 });
 
             using (var dbContext = new TestDbContext(ContextOptions))
@@ -197,7 +197,7 @@ namespace EFQueryTest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQ.Not(JDege.EFQ.EFQ.Equal("itemId", "Item 1"));
+            var sc = JeffDege.EFQ.EFQ.Not(JeffDege.EFQ.EFQ.Equal("itemId", "Item 1"));
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {

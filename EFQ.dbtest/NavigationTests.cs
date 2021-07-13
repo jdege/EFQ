@@ -2,7 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EFQ.dbtest;
 using EFQ.dbtest.Models;
-using JDege.EFQ;
+using JeffDege.EFQ;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
@@ -33,7 +33,7 @@ namespace EFQueryTest
                     new Item {itemId = "Item 3", name = "A third item", parentId = "Parent 3"},
                 });
 
-            var sc = JDege.EFQ.EFQ.Equal("parent.name", "A parent");
+            var sc = JeffDege.EFQ.EFQ.Equal("parent.name", "A parent");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -59,7 +59,7 @@ namespace EFQueryTest
                     new Child {childId = "Child 3", name = "A third child", itemId = "Item 3"},
                 });
 
-            var sc = JDege.EFQ.EFQ.Any("Children", JDege.EFQ.EFQ.Equal("name", "A child"));
+            var sc = JeffDege.EFQ.EFQ.Any("Children", JeffDege.EFQ.EFQ.Equal("name", "A child"));
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
