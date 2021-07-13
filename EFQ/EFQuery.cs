@@ -200,7 +200,7 @@ namespace JeffDege.EFQ
             };
         }
 
-        // todo: Ensure that having separate methods for EFQ[] and IEnumerable<EFQ> are both necessary
+        // #TODO: Ensure that having separate methods for EFQ[] and IEnumerable<EFQ> are both necessary
         /// <summary>
         /// returns a EFQuery that is true if all of the efQueries evaluate false
         /// </summary>
@@ -275,7 +275,7 @@ namespace JeffDege.EFQ
 
         #region Member variables
 
-        // todo: better name for SelectionComparison?
+        // #TODO: better name for SelectionComparison?
         [JsonConverter(typeof(StringEnumConverter))]
         public SelectionComparison SelectionComparison { get; set; }
 
