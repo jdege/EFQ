@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EFQ.dbtest;
 using EFQ.dbtest.Models;
-using jdege.EFQ;
+using JDege.EFQ;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
@@ -33,20 +33,20 @@ namespace EFQueryTest
                 new Item {itemId = "Item 3", when = date3},
             });
 
-            var sc = jdege.EFQ.EFQ.greaterThan("when", date2);
+            var sc = JDege.EFQ.EFQ.GreaterThan("when", date2);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.constructPredicate<Item>()).ToListAsync();
+                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe("Item 3");
             }
 
-            sc = jdege.EFQ.EFQ.greaterThanOrEqual("when", date2);
+            sc = JDege.EFQ.EFQ.GreaterThanOrEqual("when", date2);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.constructPredicate<Item>())
+                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>())
                     .OrderBy(i => i.itemId).ToListAsync();
                 results.Count.ShouldBe(2);
                 results[0].itemId.ShouldBe("Item 2");
@@ -65,20 +65,20 @@ namespace EFQueryTest
                 new Item {itemId = "Item 3", amount = 12},
             });
 
-            var sc = jdege.EFQ.EFQ.greaterThan("amount", 11);
+            var sc = JDege.EFQ.EFQ.GreaterThan("amount", 11);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.constructPredicate<Item>()).ToListAsync();
+                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe("Item 3");
             }
 
-            sc = jdege.EFQ.EFQ.greaterThanOrEqual("amount", 11);
+            sc = JDege.EFQ.EFQ.GreaterThanOrEqual("amount", 11);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.constructPredicate<Item>())
+                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>())
                     .OrderBy(i => i.itemId).ToListAsync();
                 results.Count.ShouldBe(2);
                 results[0].itemId.ShouldBe("Item 2");

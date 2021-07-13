@@ -2,7 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EFQ.dbtest;
 using EFQ.dbtest.Models;
-using jdege.EFQ;
+using JDege.EFQ;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
@@ -27,7 +27,7 @@ namespace EFQueryTest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = jdege.EFQ.EFQ.containedIn("itemId", new[]
+            var sc = JDege.EFQ.EFQ.ContainedIn("itemId", new[]
                 {
                     "Item 0",
                     "Item 2",
@@ -36,7 +36,7 @@ namespace EFQueryTest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.constructPredicate<Item>()).ToListAsync();
+                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe("Another item");
             }
@@ -54,11 +54,11 @@ namespace EFQueryTest
                 new Item{itemId = "f"},
             });
 
-            var sc = jdege.EFQ.EFQ.between("itemId", "c", "e");
+            var sc = JDege.EFQ.EFQ.Between("itemId", "c", "e");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.constructPredicate<Item>())
+                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>())
                     .OrderBy(i => i.itemId).ToListAsync();
                 results.Count.ShouldBe(2);
                 results[0].itemId.ShouldBe("d");

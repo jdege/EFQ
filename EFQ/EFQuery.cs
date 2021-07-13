@@ -10,19 +10,19 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using PeteMontgomery.PredicateBuilder;
 
-namespace jdege.EFQ
+namespace JDege.EFQ
 {
     public class EFQ
     {
         #region static convenience functions
 
-        public static EFQ compare(SelectionComparison comparison, string fieldName, object rightHandSide)
+        public static EFQ Compare(SelectionComparison comparison, string fieldName, object rightHandSide)
         {
             return new EFQ
             {
-                selectionComparison = comparison,
-                fieldName = fieldName,
-                rightHandSide = rightHandSide as EFQ ?? EFQ.constant(rightHandSide)
+                SelectionComparison = comparison,
+                FieldName = fieldName,
+                RightHandSide = rightHandSide as EFQ ?? EFQ.Constant(rightHandSide)
             };
         }
 
@@ -30,54 +30,54 @@ namespace jdege.EFQ
         /// returns a EFQuery that is always true
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ isTrue()
+        public static EFQ IsTrue()
         {
-            return new EFQ { selectionComparison = SelectionComparison.IsTrue };
+            return new EFQ { SelectionComparison = SelectionComparison.IsTrue };
         }
 
         /// <summary>
         /// returns a EFQuery that is always false
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ isFalse()
+        public static EFQ IsFalse()
         {
-            return new EFQ { selectionComparison = SelectionComparison.IsFalse };
+            return new EFQ { SelectionComparison = SelectionComparison.IsFalse };
         }
 
         /// <summary>
         /// returns a EFQuery that is true if fieldName contains rightHandSide as a substring
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ contains(string fieldName, object rightHandSide)
+        public static EFQ Contains(string fieldName, object rightHandSide)
         {
-            return compare(SelectionComparison.Contains, fieldName, rightHandSide);
+            return Compare(SelectionComparison.Contains, fieldName, rightHandSide);
         }
 
         /// <summary>
         /// returns a EFQuery that is true if fieldName starts with rightHandSide as a substring
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ startsWith(string fieldName, object rightHandSide)
+        public static EFQ StartsWith(string fieldName, object rightHandSide)
         {
-            return compare(SelectionComparison.StartsWith, fieldName, rightHandSide);
+            return Compare(SelectionComparison.StartsWith, fieldName, rightHandSide);
         }
 
         /// <summary>
         /// returns a EFQuery that is true if fieldName ends with rightHandSide as a substring
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ endsWith(string fieldName, object rightHandSide)
+        public static EFQ EndsWith(string fieldName, object rightHandSide)
         {
-            return compare(SelectionComparison.EndsWith, fieldName, rightHandSide);
+            return Compare(SelectionComparison.EndsWith, fieldName, rightHandSide);
         }
 
         /// <summary>
         /// returns a EFQuery that is true if fieldName matches rightHandSide as a SQL LIKE pattern
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ like(string fieldName, object rightHandSide)
+        public static EFQ Like(string fieldName, object rightHandSide)
         {
-            return compare(SelectionComparison.Like, fieldName, rightHandSide);
+            return Compare(SelectionComparison.Like, fieldName, rightHandSide);
         }
 
         /// <summary>
@@ -85,13 +85,13 @@ namespace jdege.EFQ
         /// on the fieldName. (Assumes fieldName is a one-to-many navigational property).
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ any(string fieldName, EFQ innerCriteria)
+        public static EFQ Any(string fieldName, EFQ innerCriteria)
         {
             return new EFQ
             {
-                selectionComparison = SelectionComparison.Any,
-                fieldName = fieldName,
-                innerCriteria = innerCriteria
+                SelectionComparison = SelectionComparison.Any,
+                FieldName = fieldName,
+                InnerCriteria = innerCriteria
             };
         }
 
@@ -99,70 +99,70 @@ namespace jdege.EFQ
         /// returns a EFQuery that is true if fieldName is equal to rightHandSide
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ equal(string fieldName, object rightHandSide)
+        public static EFQ Equal(string fieldName, object rightHandSide)
         {
-            return compare(SelectionComparison.Equal, fieldName, rightHandSide);
+            return Compare(SelectionComparison.Equal, fieldName, rightHandSide);
         }
 
         /// <summary>
         /// returns a EFQuery that is true if fieldName is not equal to rightHandSide
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ notEqual(string fieldName, object rightHandSide)
+        public static EFQ NotEqual(string fieldName, object rightHandSide)
         {
-            return compare(SelectionComparison.NotEqual, fieldName, rightHandSide);
+            return Compare(SelectionComparison.NotEqual, fieldName, rightHandSide);
         }
 
         /// <summary>
         /// returns a EFQuery that is true if fieldName is greater than rightHandSide
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ greaterThan(string fieldName, object rightHandSide)
+        public static EFQ GreaterThan(string fieldName, object rightHandSide)
         {
-            return compare(SelectionComparison.GreaterThan, fieldName, rightHandSide);
+            return Compare(SelectionComparison.GreaterThan, fieldName, rightHandSide);
         }
 
         /// <summary>
         /// returns a EFQuery that is true if fieldName is greater than or equal to rightHandSide
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ greaterThanOrEqual(string fieldName, object rightHandSide)
+        public static EFQ GreaterThanOrEqual(string fieldName, object rightHandSide)
         {
-            return compare(SelectionComparison.GreaterThanOrEqual, fieldName, rightHandSide);
+            return Compare(SelectionComparison.GreaterThanOrEqual, fieldName, rightHandSide);
         }
 
         /// <summary>
         /// returns a EFQuery that is true if fieldName is less than rightHandSide
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ lessThan(string fieldName, object rightHandSide)
+        public static EFQ LessThan(string fieldName, object rightHandSide)
         {
-            return compare(SelectionComparison.LessThan, fieldName, rightHandSide);
+            return Compare(SelectionComparison.LessThan, fieldName, rightHandSide);
         }
 
         /// <summary>
         /// returns a EFQuery that is true if fieldName is less than or equal to rightHandSide
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ lessThanOrEqual(string fieldName, object rightHandSide)
+        public static EFQ LessThanOrEqual(string fieldName, object rightHandSide)
         {
-            return compare(SelectionComparison.LessThanOrEqual, fieldName, rightHandSide);
+            return Compare(SelectionComparison.LessThanOrEqual, fieldName, rightHandSide);
         }
 
         /// <summary>
         /// returns a EFQuery that is true if all of the efQueries evaluate true
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ and(params EFQ[] efQueries)
+        public static EFQ And(params EFQ[] efQueries)
         {
-            return and(efQueries as IEnumerable<EFQ>);
+            return And(efQueries as IEnumerable<EFQ>);
         }
-        public static EFQ and(IEnumerable<EFQ> efQueries)
+        public static EFQ And(IEnumerable<EFQ> efQueries)
         {
             return new EFQ
             {
-                selectionComparison = SelectionComparison.And,
-                aggregateList = efQueries
+                SelectionComparison = SelectionComparison.And,
+                AggregateList = efQueries
             };
         }
 
@@ -170,16 +170,16 @@ namespace jdege.EFQ
         /// returns a EFQuery that is true if at least one of the efQueries evaluates true
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ or(params EFQ[] efQueries)
+        public static EFQ Or(params EFQ[] efQueries)
         {
-            return or(efQueries as IEnumerable<EFQ>);
+            return Or(efQueries as IEnumerable<EFQ>);
         }
-        public static EFQ or(IEnumerable<EFQ> efQueries)
+        public static EFQ Or(IEnumerable<EFQ> efQueries)
         {
             return new EFQ
             {
-                selectionComparison = SelectionComparison.Or,
-                aggregateList = efQueries
+                SelectionComparison = SelectionComparison.Or,
+                AggregateList = efQueries
             };
         }
 
@@ -187,33 +187,34 @@ namespace jdege.EFQ
         /// returns a EFQuery that is true if at least one the efQueries evaluates false
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ nand(params EFQ[] efQueries)
+        public static EFQ Nand(params EFQ[] efQueries)
         {
-            return nand(efQueries as IEnumerable<EFQ>);
+            return Nand(efQueries as IEnumerable<EFQ>);
         }
-        public static EFQ nand(IEnumerable<EFQ> efQueries)
+        public static EFQ Nand(IEnumerable<EFQ> efQueries)
         {
             return new EFQ
             {
-                selectionComparison = SelectionComparison.Nand,
-                aggregateList = efQueries
+                SelectionComparison = SelectionComparison.Nand,
+                AggregateList = efQueries
             };
         }
 
+        // todo: Ensure that having separate methods for EFQ[] and IEnumerable<EFQ> are both necessary
         /// <summary>
         /// returns a EFQuery that is true if all of the efQueries evaluate false
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ nor(params EFQ[] efQueries)
+        public static EFQ Nor(params EFQ[] efQueries)
         {
-            return nor(efQueries as IEnumerable<EFQ>);
+            return Nor(efQueries as IEnumerable<EFQ>);
         }
-        public static EFQ nor(IEnumerable<EFQ> efQueries)
+        public static EFQ Nor(IEnumerable<EFQ> efQueries)
         {
             return new EFQ
             {
-                selectionComparison = SelectionComparison.Nor,
-                aggregateList = efQueries
+                SelectionComparison = SelectionComparison.Nor,
+                AggregateList = efQueries
             };
         }
 
@@ -221,18 +222,18 @@ namespace jdege.EFQ
         /// returns a EFQuery that is true if all of the EFQuery evaluates false
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ not(EFQ efQuery)
+        public static EFQ Not(EFQ efQuery)
         {
-            return nand(new[] { efQuery });
+            return Nand(new[] { efQuery });
         }
 
         /// <summary>
         /// returns a EFQuery that is true if fieldName is equal to one of the objects
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ containedIn(string fieldName, IEnumerable<object> objects)
+        public static EFQ ContainedIn(string fieldName, IEnumerable<object> objects)
         {
-            return or(objects.Select(o => equal(fieldName, o)));
+            return Or(objects.Select(o => Equal(fieldName, o)));
         }
 
         /// <summary>
@@ -240,33 +241,33 @@ namespace jdege.EFQ
         /// and less than or equal to right
         /// </summary>
         /// <returns>EFQuery</returns>
-        public static EFQ between(string fieldName, object left, object right)
+        public static EFQ Between(string fieldName, object left, object right)
         {
-            return and(new[]
+            return And(new[]
                 {
-                    greaterThanOrEqual(fieldName, left),
-                    lessThanOrEqual(fieldName, right)
+                    GreaterThanOrEqual(fieldName, left),
+                    LessThanOrEqual(fieldName, right)
                 });
         }
 
-        public static EFQ constant(object value)
+        public static EFQ Constant(object value)
         {
             return new EFQ
             {
-                selectionComparison = SelectionComparison.Constant,
-                constantValue = value
+                SelectionComparison = SelectionComparison.Constant,
+                ConstantValue = value
             };
         }
 
-        public static EFQ add(object left, object right)
+        public static EFQ Add(object left, object right)
         {
             return new EFQ
             {
-                selectionComparison = SelectionComparison.Add,
-                aggregateList = new[]
+                SelectionComparison = SelectionComparison.Add,
+                AggregateList = new[]
                 {
-                    EFQ.constant(left),
-                    EFQ.constant(right)
+                    EFQ.Constant(left),
+                    EFQ.Constant(right)
                 }
             };
         }
@@ -274,33 +275,34 @@ namespace jdege.EFQ
 
         #region Member variables
 
+        // todo: better name for SelectionComparison?
         [JsonConverter(typeof(StringEnumConverter))]
-        public SelectionComparison selectionComparison { get; set; }
+        public SelectionComparison SelectionComparison { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string fieldName { get; set; }
+        public string FieldName { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public EFQ rightHandSide { get; set; }
+        public EFQ RightHandSide { get; set; }
 
         // This is here so we can deserialize old-style EFQuery strings
-        public object fieldValue
+        public object FieldValue
         {
-            set { this.rightHandSide = EFQ.constant((value)); }
+            set { this.RightHandSide = EFQ.Constant((value)); }
         }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public object constantValue { get; set; }
+        public object ConstantValue { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public EFQ innerCriteria { get; set; }
+        public EFQ InnerCriteria { get; set; }
 
-        private IEnumerable<EFQ> aggregateList_ = null;
+        private IEnumerable<EFQ> _aggregateList = null;
 
-        public IEnumerable<EFQ> aggregateList
+        public IEnumerable<EFQ> AggregateList
         {
-            get { return this.aggregateList_ ?? (this.aggregateList_ = new List<EFQ>()); }
-            set { this.aggregateList_ = value; }
+            get { return this._aggregateList ?? (this._aggregateList = new List<EFQ>()); }
+            set { this._aggregateList = value; }
         }
 
         #endregion
@@ -309,8 +311,8 @@ namespace jdege.EFQ
 
         public EFQ()
         {
-            this.selectionComparison = SelectionComparison.Constant;
-            this.constantValue = null;
+            this.SelectionComparison = SelectionComparison.Constant;
+            this.ConstantValue = null;
         }
 
         #endregion
@@ -318,29 +320,29 @@ namespace jdege.EFQ
         // This just tells JSON.net whether to include aggregateList when serializing an object
         public bool ShouldSerializeaggregateList()
         {
-            return this.aggregateList_ != null;
+            return this._aggregateList != null;
         }
 
         #region processing types
 
         [JsonIgnore]
-        public bool isAdd
+        public bool IsAdd
         {
-            get { return this.selectionComparison == SelectionComparison.Add; }
+            get { return this.SelectionComparison == SelectionComparison.Add; }
         }
 
         [JsonIgnore]
-        public bool isConstant
+        public bool IsConstant
         {
-            get { return this.selectionComparison == SelectionComparison.Constant; }
+            get { return this.SelectionComparison == SelectionComparison.Constant; }
         }
 
         [JsonIgnore]
-        public bool isMethodCall
+        public bool IsMethodCall
         {
             get
             {
-                switch (this.selectionComparison)
+                switch (this.SelectionComparison)
                 {
                     case SelectionComparison.Contains:
                     case SelectionComparison.StartsWith:
@@ -353,11 +355,11 @@ namespace jdege.EFQ
         }
 
         [JsonIgnore]
-        public bool isStaticCall
+        public bool IsStaticCall
         {
             get
             {
-                switch (this.selectionComparison)
+                switch (this.SelectionComparison)
                 {
                     case SelectionComparison.Like:
                         return true;
@@ -368,11 +370,11 @@ namespace jdege.EFQ
         }
 
         [JsonIgnore]
-        public bool isAny
+        public bool IsAny
         {
             get
             {
-                switch (this.selectionComparison)
+                switch (this.SelectionComparison)
                 {
                     case SelectionComparison.Any:
                         return true;
@@ -383,11 +385,11 @@ namespace jdege.EFQ
         }
 
         [JsonIgnore]
-        public bool isAggregate
+        public bool IsAggregate
         {
             get
             {
-                switch (this.selectionComparison)
+                switch (this.SelectionComparison)
                 {
                     case SelectionComparison.And:
                     case SelectionComparison.Or:
@@ -401,11 +403,11 @@ namespace jdege.EFQ
         }
 
         [JsonIgnore]
-        public bool isNegate
+        public bool IsNegate
         {
             get
             {
-                switch (this.selectionComparison)
+                switch (this.SelectionComparison)
                 {
                     case SelectionComparison.Nand:
                     case SelectionComparison.Nor:
@@ -417,11 +419,11 @@ namespace jdege.EFQ
         }
 
         [JsonIgnore]
-        public bool isAnd
+        public bool IsAnd
         {
             get
             {
-                switch (this.selectionComparison)
+                switch (this.SelectionComparison)
                 {
                     case SelectionComparison.And:
                     case SelectionComparison.Nand:
@@ -433,11 +435,11 @@ namespace jdege.EFQ
         }
 
         [JsonIgnore]
-        public bool isUnary
+        public bool IsUnary
         {
             get
             {
-                switch (this.selectionComparison)
+                switch (this.SelectionComparison)
                 {
                     case SelectionComparison.IsTrue:
                     case SelectionComparison.IsFalse:
@@ -450,40 +452,40 @@ namespace jdege.EFQ
         #endregion
 
         #region predicate construction functions
-        public Expression<Func<T, bool>> constructPredicate<T>(object context = null)
+        public Expression<Func<T, bool>> ConstructPredicate<T>(object context = null)
         {
-            if (this.isUnary)
-                return this.selectionComparison == SelectionComparison.IsTrue
+            if (this.IsUnary)
+                return this.SelectionComparison == SelectionComparison.IsTrue
                     ? PredicateBuilder.True<T>()
                     : PredicateBuilder.False<T>();
 
-            if (this.isAggregate)
+            if (this.IsAggregate)
                 return this.constructAggregatePredicate<T>(context);
 
-            if (this.isMethodCall)
+            if (this.IsMethodCall)
                 return this.constructMethodCallPredicate<T>(context);
 
-            if (this.isStaticCall)
+            if (this.IsStaticCall)
                 return this.constructStaticCallPredicate<T>(context);
 
-            if (this.isAny)
-                return this.constructAnyPredicate<T>(context);
+            if (this.IsAny)
+                return this.ConstructAnyPredicate<T>(context);
 
-            return this.constructSinglePredicate<T>(context);
+            return this.ConstructSinglePredicate<T>(context);
         }
 
         private Expression<Func<T, bool>> constructAggregatePredicate<T>(object context)
         {
-            var predicate = this.isAnd ? PredicateBuilder.True<T>() : PredicateBuilder.False<T>();
+            var predicate = this.IsAnd ? PredicateBuilder.True<T>() : PredicateBuilder.False<T>();
 
-            foreach (var item in this.aggregateList)
+            foreach (var item in this.AggregateList)
             {
-                predicate = this.isAnd
-                    ? predicate.And(item.constructPredicate<T>(context))
-                    : predicate.Or(item.constructPredicate<T>(context));
+                predicate = this.IsAnd
+                    ? predicate.And(item.ConstructPredicate<T>(context))
+                    : predicate.Or(item.ConstructPredicate<T>(context));
             }
 
-            if (this.isNegate)
+            if (this.IsNegate)
                 predicate = negate(predicate);
 
             return predicate;
@@ -503,16 +505,16 @@ namespace jdege.EFQ
         {
             var type = typeof(T);
 
-            if (type.GetProperty(this.fieldName) == null && type.GetField(this.fieldName) == null)
-                throw new MissingMemberException(type.Name, this.fieldName);
+            if (type.GetProperty(this.FieldName) == null && type.GetField(this.FieldName) == null)
+                throw new MissingMemberException(type.Name, this.FieldName);
 
             MethodInfo method;
-            if (!methodMap.TryGetValue(this.selectionComparison, out method))
-                throw new ArgumentOutOfRangeException("selectionComparison", this.selectionComparison, "Invalid filter operation");
+            if (!methodMap.TryGetValue(this.SelectionComparison, out method))
+                throw new ArgumentOutOfRangeException("selectionComparison", this.SelectionComparison, "Invalid filter operation");
 
             var parameter = Expression.Parameter(type);
-            var member = Expression.PropertyOrField(parameter, this.fieldName);
-            var value = this.constructConstantExpression<T>(this.rightHandSide, context);
+            var member = Expression.PropertyOrField(parameter, this.FieldName);
+            var value = this.constructConstantExpression<T>(this.RightHandSide, context);
 
             try
             {
@@ -529,8 +531,8 @@ namespace jdege.EFQ
             catch (Exception)
             {
                 throw new InvalidOperationException(
-                    String.Format("Cannot convert value \"{0}\" of type \"{1}\" to field \"{2}\" of type \"{3}\"", this.rightHandSide,
-                        value.Type, this.fieldName, member.Type));
+                    String.Format("Cannot convert value \"{0}\" of type \"{1}\" to field \"{2}\" of type \"{3}\"", this.RightHandSide,
+                        value.Type, this.FieldName, member.Type));
             }
         }
 
@@ -538,12 +540,12 @@ namespace jdege.EFQ
         {
             var type = typeof(T);
 
-            if (type.GetProperty(this.fieldName) == null && type.GetField(this.fieldName) == null)
-                throw new MissingMemberException(type.Name, this.fieldName);
+            if (type.GetProperty(this.FieldName) == null && type.GetField(this.FieldName) == null)
+                throw new MissingMemberException(type.Name, this.FieldName);
 
             var parameter = Expression.Parameter(type);
-            var member = Expression.PropertyOrField(parameter, this.fieldName);
-            var value = this.constructConstantExpression<T>(this.rightHandSide, context);
+            var member = Expression.PropertyOrField(parameter, this.FieldName);
+            var value = this.constructConstantExpression<T>(this.RightHandSide, context);
 
             try
             {
@@ -551,7 +553,7 @@ namespace jdege.EFQ
                     ? (Expression)Expression.Convert(value, member.Type)
                     : (Expression)value;
 
-                var methodExpression = this.getStaticCallMethod(this.selectionComparison, member, converted);
+                var methodExpression = this.getStaticCallMethod(this.SelectionComparison, member, converted);
 
                 var lambda = Expression.Lambda<Func<T, bool>>(methodExpression, parameter);
 
@@ -560,8 +562,8 @@ namespace jdege.EFQ
             catch (Exception)
             {
                 throw new InvalidOperationException(
-                    String.Format("Cannot convert value \"{0}\" of type \"{1}\" to field \"{2}\" of type \"{3}\"", this.rightHandSide,
-                        value.Type, this.fieldName, member.Type));
+                    String.Format("Cannot convert value \"{0}\" of type \"{1}\" to field \"{2}\" of type \"{3}\"", this.RightHandSide,
+                        value.Type, this.FieldName, member.Type));
             }
         }
 
@@ -582,13 +584,13 @@ namespace jdege.EFQ
             throw new InvalidExpressionException(String.Format("Invalid SelectionComparison {0}", selectionComparison));
         }
 
-        public Expression<Func<T, bool>> constructAnyPredicate<T>(object context)
+        public Expression<Func<T, bool>> ConstructAnyPredicate<T>(object context)
         {
             var type = typeof(T);
 
             var parameter = Expression.Parameter(type);
 
-            if (this.innerCriteria == null)
+            if (this.InnerCriteria == null)
                 throw new MissingMemberException("\"Any\" criteria must have an innerCriteria");
 
             var member = this.getMember<T>(type, parameter);
@@ -596,9 +598,9 @@ namespace jdege.EFQ
             var collectionType = member.Type;
             var memberType = collectionType.GenericTypeArguments[0];
 
-            var constructPredicateMethod = typeof(EFQ).GetMethod("constructPredicate");
+            var constructPredicateMethod = typeof(EFQ).GetMethod("ConstructPredicate");
             var constructPredicateMethodGeneric = constructPredicateMethod.MakeGenericMethod(memberType);
-            var innerPredicate = (Expression)constructPredicateMethodGeneric.Invoke(this.innerCriteria, new object[] { context });
+            var innerPredicate = (Expression)constructPredicateMethodGeneric.Invoke(this.InnerCriteria, new object[] { context });
 
             var call = Expression.Call(typeof(Enumerable), "Any",
                 new Type[] { memberType }, new[] { member, innerPredicate });
@@ -608,7 +610,7 @@ namespace jdege.EFQ
             return lambda;
         }
 
-        public Expression<Func<T, bool>> constructSinglePredicate<T>(object context)
+        public Expression<Func<T, bool>> ConstructSinglePredicate<T>(object context)
         {
             var type = typeof(T);
 
@@ -616,11 +618,11 @@ namespace jdege.EFQ
 
             var member = this.getMember<T>(type, parameter);
 
-            var value = this.constructConstantExpression<T>(this.rightHandSide, context);
+            var value = this.constructConstantExpression<T>(this.RightHandSide, context);
 
             ExpressionType operation;
-            if (!operationMap.TryGetValue(this.selectionComparison, out operation))
-                throw new ArgumentOutOfRangeException("selectionComparison", this.selectionComparison, "Invalid filter operation");
+            if (!operationMap.TryGetValue(this.SelectionComparison, out operation))
+                throw new ArgumentOutOfRangeException("selectionComparison", this.SelectionComparison, "Invalid filter operation");
 
             try
             {
@@ -656,8 +658,8 @@ namespace jdege.EFQ
             catch (Exception)
             {
                 throw new InvalidOperationException(
-                    String.Format("Cannot convert value \"{0}\" of type \"{1}\" to field \"{2}\" of type \"{3}\"", this.rightHandSide,
-                        value.Type, this.fieldName, member.Type));
+                    String.Format("Cannot convert value \"{0}\" of type \"{1}\" to field \"{2}\" of type \"{3}\"", this.RightHandSide,
+                        value.Type, this.FieldName, member.Type));
             }
         }
 
@@ -666,10 +668,10 @@ namespace jdege.EFQ
             var sc = value as EFQ;
             if (sc != null)
             {
-                if (sc.isAdd)
+                if (sc.IsAdd)
                     value = this.executeAddExpression<T>(sc, context);
-                else if (sc.isConstant)
-                    value = sc.constantValue;
+                else if (sc.IsConstant)
+                    value = sc.ConstantValue;
             }
 
             value = getConstantValue(value, context);
@@ -684,18 +686,18 @@ namespace jdege.EFQ
         {
             object result = null;
 
-            foreach (var arg in sc.aggregateList)
+            foreach (var arg in sc.AggregateList)
             {
-                if (!arg.isConstant)
+                if (!arg.IsConstant)
                     throw new ArgumentException(String.Format("{0} must be constant", sc));
 
                 if (result == null)
                 {
-                    result = getConstantValue(arg.constantValue, context);
+                    result = getConstantValue(arg.ConstantValue, context);
                     continue;
                 }
 
-                var value = getConstantValue(arg.constantValue, context);
+                var value = getConstantValue(arg.ConstantValue, context);
 
                 // Until we figure out how to make Json.NET deserialize into TimeSpan objects ...
                 var s = value as string;
@@ -805,9 +807,9 @@ namespace jdege.EFQ
         {
             MemberExpression rVal = null;
 
-            if (this.fieldName.Contains("."))
+            if (this.FieldName.Contains("."))
             {
-                var parts = this.fieldName.Split(new[] { '.' });
+                var parts = this.FieldName.Split(new[] { '.' });
 
                 foreach (var part in parts)
                 {
@@ -823,9 +825,9 @@ namespace jdege.EFQ
             }
             else
             {
-                if (type.GetProperty(this.fieldName) == null && type.GetField(this.fieldName) == null)
-                    throw new MissingMemberException(type.Name, this.fieldName);
-                rVal = Expression.PropertyOrField(parameter, this.fieldName);
+                if (type.GetProperty(this.FieldName) == null && type.GetField(this.FieldName) == null)
+                    throw new MissingMemberException(type.Name, this.FieldName);
+                rVal = Expression.PropertyOrField(parameter, this.FieldName);
             }
 
             return rVal;
