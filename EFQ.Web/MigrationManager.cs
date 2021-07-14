@@ -1,5 +1,6 @@
 using System;
 using JDege.EFQ.Web.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,6 +19,12 @@ namespace JDege.EFQ.Web
                     try
                     {
                         appContext.Database.Migrate();
+                    }
+                    catch (SqlException ex)
+                    {
+                        throw new InvalidOperationException(
+                            "Exception trying to run migrations. Did you remember to start the SqlServer Docker container?",
+                        ex);
                     }
                     catch (Exception)
                     {
