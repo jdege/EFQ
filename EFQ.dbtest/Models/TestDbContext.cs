@@ -1,7 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFQ.dbtest.Models
+namespace JDege.EFQ.dbtest.Models
 {
     public partial class TestDbContext : DbContext
     {

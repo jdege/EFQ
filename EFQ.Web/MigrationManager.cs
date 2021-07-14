@@ -1,13 +1,14 @@
 using System;
-using EFQ.Web.Models;
+using JDege.EFQ.Web.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace EFQ.Web
+namespace JDege.EFQ.Web
 {
     public static class MigrationManager
     {
+        // This allows us to run migrations on startup from Main().
         public static IHost MigrateDatabase(this IHost host)
         {
             using (var scope = host.Services.CreateScope())
@@ -20,7 +21,7 @@ namespace EFQ.Web
                     }
                     catch (Exception)
                     {
-                        // We'll just throw the exception
+                        // Since we've not configured logging, we'll just throw the exception
                         throw;
                     }
                 }

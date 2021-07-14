@@ -2,7 +2,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFQ.Web.Models
+namespace JDege.EFQ.Web.Models
 {
     internal class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
     {

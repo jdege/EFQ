@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 #nullable disable
 
-namespace EFQ.Web.Models
+namespace JDege.EFQ.Web.Models
 {
     public class AlbumConfiguration : IEntityTypeConfiguration<Album>
     {

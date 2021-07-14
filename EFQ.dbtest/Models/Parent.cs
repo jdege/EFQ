@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EFQ.dbtest.Models
+namespace JDege.EFQ.dbtest.Models
 {
     public partial class Parent
     {

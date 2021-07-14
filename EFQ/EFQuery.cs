@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using PeteMontgomery.PredicateBuilder;
 
-namespace JeffDege.EFQ
+namespace JDege.EFQ
 {
     public class EFQ
     {
@@ -581,6 +581,7 @@ namespace JeffDege.EFQ
                 return methodExpression;
             }
 
+            // #TODO: use string interpolation
             throw new InvalidExpressionException(String.Format("Invalid SelectionComparison {0}", selectionComparison));
         }
 
@@ -598,6 +599,7 @@ namespace JeffDege.EFQ
             var collectionType = member.Type;
             var memberType = collectionType.GenericTypeArguments[0];
 
+            // #TODO: Use nameof()
             var constructPredicateMethod = typeof(EFQ).GetMethod("ConstructPredicate");
             var constructPredicateMethodGeneric = constructPredicateMethod.MakeGenericMethod(memberType);
             var innerPredicate = (Expression)constructPredicateMethodGeneric.Invoke(this.InnerCriteria, new object[] { context });

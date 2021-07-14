@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace EFQ.Web
+namespace JDege.EFQ.Web
 {
     public class Program
     {

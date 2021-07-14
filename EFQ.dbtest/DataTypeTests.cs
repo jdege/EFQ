@@ -1,14 +1,14 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using EFQ.dbtest;
-using EFQ.dbtest.Models;
-using JeffDege.EFQ;
+using JDege.EFQ.dbtest;
+using JDege.EFQ.dbtest.Models;
+using JDege.EFQ;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
 
-namespace EFQueryTest
+namespace JDege.EFQ.dbtest
 {
     [Collection("Sequential")]
     public class DatatypeTests : TestDbContextTestBase
@@ -33,7 +33,7 @@ namespace EFQueryTest
                 new Item {itemId = "Item 3", when = date3},
             });
 
-            var sc = JeffDege.EFQ.EFQ.GreaterThan("when", date2);
+            var sc = JDege.EFQ.EFQ.GreaterThan("when", date2);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -42,7 +42,7 @@ namespace EFQueryTest
                 results[0].itemId.ShouldBe("Item 3");
             }
 
-            sc = JeffDege.EFQ.EFQ.GreaterThanOrEqual("when", date2);
+            sc = JDege.EFQ.EFQ.GreaterThanOrEqual("when", date2);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -65,7 +65,7 @@ namespace EFQueryTest
                 new Item {itemId = "Item 3", amount = 12},
             });
 
-            var sc = JeffDege.EFQ.EFQ.GreaterThan("amount", 11);
+            var sc = JDege.EFQ.EFQ.GreaterThan("amount", 11);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -74,7 +74,7 @@ namespace EFQueryTest
                 results[0].itemId.ShouldBe("Item 3");
             }
 
-            sc = JeffDege.EFQ.EFQ.GreaterThanOrEqual("amount", 11);
+            sc = JDege.EFQ.EFQ.GreaterThanOrEqual("amount", 11);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {

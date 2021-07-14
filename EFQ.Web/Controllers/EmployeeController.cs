@@ -2,10 +2,10 @@
 using System;
 using System.Linq;
 using System.Text;
-using EFQ.Web.Models;
+using JDege.EFQ.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EFQ.Web.Controllers
+namespace JDege.EFQ.Web.Controllers
 {
     public class EmployeeController : Controller
     {

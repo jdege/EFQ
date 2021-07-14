@@ -1,13 +1,13 @@
 using System.Linq;
 using System.Threading.Tasks;
-using EFQ.dbtest;
-using EFQ.dbtest.Models;
-using JeffDege.EFQ;
+using JDege.EFQ.dbtest;
+using JDege.EFQ.dbtest.Models;
+using JDege.EFQ;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
 
-namespace EFQueryTest
+namespace JDege.EFQ.dbtest
 {
     [Collection("Sequential")]
     public class ComparisonTests : TestDbContextTestBase
@@ -27,7 +27,7 @@ namespace EFQueryTest
                 new Item{ itemId = "Item 2", name = "Another item"},
             });
 
-            var sc = JeffDege.EFQ.EFQ.Equal("itemId", "Item 1");
+            var sc = JDege.EFQ.EFQ.Equal("itemId", "Item 1");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -47,7 +47,7 @@ namespace EFQueryTest
                     new Item{itemId = "Item 2", name = "Another item"},
                 });
 
-            var sc = JeffDege.EFQ.EFQ.NotEqual("itemId", "Item 2");
+            var sc = JDege.EFQ.EFQ.NotEqual("itemId", "Item 2");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -66,7 +66,7 @@ namespace EFQueryTest
                     new Item{itemId = "Item 2", name = "Another item"},
                 });
 
-            var sc = JeffDege.EFQ.EFQ.GreaterThan("itemId", "Item 1");
+            var sc = JDege.EFQ.EFQ.GreaterThan("itemId", "Item 1");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -85,7 +85,7 @@ namespace EFQueryTest
                     new Item{itemId = "Item 2", name = "Another item"},
                 });
 
-            var sc = JeffDege.EFQ.EFQ.GreaterThanOrEqual("itemId", "Item 2");
+            var sc = JDege.EFQ.EFQ.GreaterThanOrEqual("itemId", "Item 2");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -104,7 +104,7 @@ namespace EFQueryTest
                     new Item{itemId = "Item 2", name = "Another item"},
                 });
 
-            var sc = JeffDege.EFQ.EFQ.LessThan("itemId", "Item 2");
+            var sc = JDege.EFQ.EFQ.LessThan("itemId", "Item 2");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -123,7 +123,7 @@ namespace EFQueryTest
                     new Item{itemId = "Item 2", name = "Another item"},
                 });
 
-            var sc = JeffDege.EFQ.EFQ.LessThanOrEqual("itemId", "Item 1");
+            var sc = JDege.EFQ.EFQ.LessThanOrEqual("itemId", "Item 1");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -143,7 +143,7 @@ namespace EFQueryTest
                     new Item{itemId = "efgh"},
                 });
 
-            var sc = JeffDege.EFQ.EFQ.Contains("itemId", "cd");
+            var sc = JDege.EFQ.EFQ.Contains("itemId", "cd");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -165,7 +165,7 @@ namespace EFQueryTest
                     new Item{itemId = "efgh"},
                 });
 
-            var sc = JeffDege.EFQ.EFQ.StartsWith("itemId", "cd");
+            var sc = JDege.EFQ.EFQ.StartsWith("itemId", "cd");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -186,7 +186,7 @@ namespace EFQueryTest
                     new Item{itemId = "efgh"},
                 });
 
-            var sc = JeffDege.EFQ.EFQ.EndsWith("itemId", "cd");
+            var sc = JDege.EFQ.EFQ.EndsWith("itemId", "cd");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -207,7 +207,7 @@ namespace EFQueryTest
                     new Item{itemId = "efgh"},
                 });
 
-            var sc = JeffDege.EFQ.EFQ.Like("itemId", "%d%");
+            var sc = JDege.EFQ.EFQ.Like("itemId", "%d%");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {

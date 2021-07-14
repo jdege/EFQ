@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace EFQ.Web.Migrations
+namespace JDege.EFQ.Web.Migrations
 {
     public partial class SeedData : Migration
     {

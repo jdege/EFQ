@@ -1,6 +1,6 @@
 using System;
 
-namespace EFQ.Web
+namespace JDege.EFQ.Web
 {
     public class WeatherForecast
     {

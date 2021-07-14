@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace EFQ.Web.Models
+namespace JDege.EFQ.Web.Models
 {
     public partial class PlaylistTrack
     {

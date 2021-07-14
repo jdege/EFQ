@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace EFQ.Web.Models
+namespace JDege.EFQ.Web.Models
 {
     public partial class ChinookDbContext : DbContext
     {

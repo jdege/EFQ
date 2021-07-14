@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EFQ.Web.Pages
+namespace JDege.EFQ.Web.Pages
 {
     public class IndexModel : PageModel
     {

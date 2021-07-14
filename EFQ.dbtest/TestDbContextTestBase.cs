@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using EFQ.dbtest.Models;
+using JDege.EFQ.dbtest.Models;
 using System.Collections.Generic;
 
-namespace EFQ.dbtest
+namespace JDege.EFQ.dbtest
 {
     public class TestDbContextTestBase
     {

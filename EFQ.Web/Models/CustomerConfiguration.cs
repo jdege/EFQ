@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 #nullable disable
 
-namespace EFQ.Web.Models
+namespace JDege.EFQ.Web.Models
 {
     internal class CustomerConfiguration : IEntityTypeConfiguration<Customer>
     {

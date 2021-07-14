@@ -1,13 +1,13 @@
 using System.Linq;
 using System.Threading.Tasks;
-using EFQ.dbtest;
-using EFQ.dbtest.Models;
-using JeffDege.EFQ;
+using JDege.EFQ.dbtest;
+using JDege.EFQ.dbtest.Models;
+using JDege.EFQ;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
 
-namespace EFQueryTest
+namespace JDege.EFQ.dbtest
 {
     [Collection("Sequential")]
     public class MultipleTests : TestDbContextTestBase
@@ -27,7 +27,7 @@ namespace EFQueryTest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JeffDege.EFQ.EFQ.ContainedIn("itemId", new[]
+            var sc = JDege.EFQ.EFQ.ContainedIn("itemId", new[]
                 {
                     "Item 0",
                     "Item 2",
@@ -54,7 +54,7 @@ namespace EFQueryTest
                 new Item{itemId = "f"},
             });
 
-            var sc = JeffDege.EFQ.EFQ.Between("itemId", "c", "e");
+            var sc = JDege.EFQ.EFQ.Between("itemId", "c", "e");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {

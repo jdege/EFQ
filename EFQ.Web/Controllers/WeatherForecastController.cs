@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace EFQ.Web.Controllers
+namespace JDege.EFQ.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]
