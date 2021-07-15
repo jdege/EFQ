@@ -30,6 +30,8 @@ namespace JDege.EFQ.Web.Controllers
                 sb.AppendLine($"{artist.Name}");
             }
 
+            ViewData["contents"] = sb.ToString();
+
             return View();
         }
     }
