@@ -18,22 +18,19 @@ namespace JDege.EFQ.Web.Controllers
         }
 
         [HttpGet]
-        public string Index()
+        public IActionResult Index()
         {
             StringBuilder sb = new();
             sb.AppendLine("These are the artists:");
 
-            //using (var dbContext = new ChinookDbContext())
-            {
-                var artists = dbContext.Artists.ToList();
+            var artists = dbContext.Artists.ToList();
 
-                foreach (var artist in artists)
-                {
-                    sb.AppendLine($"{artist.Name}");
-                }
+            foreach (var artist in artists)
+            {
+                sb.AppendLine($"{artist.Name}");
             }
 
-            return sb.ToString(); ;
+            return View();
         }
     }
 }
