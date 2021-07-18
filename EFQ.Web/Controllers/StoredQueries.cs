@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using JDege.EFQ.Web.Models;
 using JDege.EFQ.Web.Entities;
+using JDege.EFQ.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JDege.EFQ.Web.Controllers
@@ -17,10 +17,10 @@ namespace JDege.EFQ.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var storedQueries = new List<StoredQuery>{
-                new StoredQuery{Id = 1, Name = "First", Description = "The first"},
-                new StoredQuery{Id = 2, Name = "First", Description = "The second"},
-                new StoredQuery{Id = 3, Name = "First", Description = "The third"},
+            var storedQueries = new List<StoredQueryModel>{
+                new StoredQueryModel{Id = 1, Name = "First", Description = "The first"},
+                new StoredQueryModel{Id = 2, Name = "First", Description = "The second"},
+                new StoredQueryModel{Id = 3, Name = "First", Description = "The third"},
             };
             return View(storedQueries);
         }

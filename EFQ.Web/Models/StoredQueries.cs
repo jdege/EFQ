@@ -1,6 +1,6 @@
 namespace JDege.EFQ.Web.Models
 {
-    public class StoredQuery
+    public class StoredQueryModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
