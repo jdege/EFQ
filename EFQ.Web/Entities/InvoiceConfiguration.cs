@@ -2,7 +2,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace JDege.EFQ.Web.Models
+namespace JDege.EFQ.Web.Entities
 {
     internal class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
     {

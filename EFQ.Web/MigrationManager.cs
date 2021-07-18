@@ -1,5 +1,5 @@
 using System;
-using JDege.EFQ.Web.Models;
+using JDege.EFQ.Web.Entities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

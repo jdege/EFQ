@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 using System.Text;
-using JDege.EFQ.Web.Models;
+using JDege.EFQ.Web.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JDege.EFQ.Web.Controllers

@@ -1,4 +1,4 @@
-using JDege.EFQ.Web.Models;
+using JDege.EFQ.Web.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
