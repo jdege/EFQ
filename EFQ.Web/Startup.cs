@@ -25,6 +25,7 @@ namespace JDege.EFQ.Web
                 opts.UseSqlServer(Configuration.GetConnectionString("ChinookDbConnection"));
             }, ServiceLifetime.Scoped);
 
+            services.AddAutoMapper(typeof(Startup));
             services.AddRazorPages();
             services.AddMvc();
             services.AddControllers();
