@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using EFQ.Web.DbContexts;
 using EFQ.Web.Entities;
 using JDege.EFQ.Web.Models;
@@ -14,12 +14,13 @@ namespace JDege.EFQ.Web.Controllers
     public class RunQueryController : Controller
     {
         private readonly IDbContextFactory<ChinookContext> _contextFactory;
-        private readonly IMapper _mapper;
+        // Injecting AutoMapper configuration
+        private readonly IConfigurationProvider _configurationProvider;
 
-        public RunQueryController(IDbContextFactory<ChinookContext> contextFactory, IMapper mapper)
+        public RunQueryController(IDbContextFactory<ChinookContext> contextFactory, IConfigurationProvider configurationProvider)
         {
             _contextFactory = contextFactory;
-            _mapper = mapper;
+            _configurationProvider = configurationProvider;
         }
 
         [HttpGet]
@@ -37,13 +38,10 @@ namespace JDege.EFQ.Web.Controllers
                 var efq = JsonConvert.DeserializeObject<EFQ>(storedQuery.StoredQueryJson);
                 var predicate = efq.ConstructSinglePredicate<Album>(null);
 
-                var albums = await dbContext.Albums
-                    .Include(a => a.Artist)
+                var albumModels = await dbContext.Albums
                     .Where(predicate)
+                    .ProjectTo<AlbumModel>(_configurationProvider)
                     .ToListAsync();
-
-                // #TODO: Use AutoMapper queryable extensions???
-                var albumModels = _mapper.Map<IEnumerable<Album>, List<AlbumModel>>(albums);
 
                 return View(albumModels);
             }

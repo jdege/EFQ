@@ -1,2 +1,5 @@
 {
+    "todo-tree.filtering.excludeGlobs": [
+        "**/wwwroot/lib/*"
+    ]
 }
