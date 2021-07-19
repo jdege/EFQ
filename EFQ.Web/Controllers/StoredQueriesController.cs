@@ -9,27 +9,29 @@ namespace JDege.EFQ.Web.Controllers
 {
     public class StoredQueriesController : Controller
     {
-        // #TODO: Inject DbContextFactory
-        private ChinookContext dbContext;
+        private readonly IDbContextFactory<ChinookContext> _contextFactory;
 
-        public StoredQueriesController(ChinookContext dbContext)
+        public StoredQueriesController(IDbContextFactory<ChinookContext> contextFactory)
         {
-            this.dbContext = dbContext;
+            _contextFactory = contextFactory;
         }
 
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
-            var storedQuerModels = await dbContext.StoredQueries
-            .Select(e => new StoredQueryModel
+            using (var dbContext = _contextFactory.CreateDbContext())
             {
-                Id = e.StoredQueryId,
-                Name = e.Name,
-                Description = e.Description
-            })
-            .ToListAsync();
+                var storedQuerModels = await dbContext.StoredQueries
+                .Select(e => new StoredQueryModel
+                {
+                    Id = e.StoredQueryId,
+                    Name = e.Name,
+                    Description = e.Description
+                })
+                .ToListAsync();
 
-            return View(storedQuerModels);
+                return View(storedQuerModels);
+            }
         }
     }
 }

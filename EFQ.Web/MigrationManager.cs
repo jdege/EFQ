@@ -14,7 +14,9 @@ namespace JDege.EFQ.Web
         {
             using (var scope = host.Services.CreateScope())
             {
-                using (var appContext = scope.ServiceProvider.GetRequiredService<ChinookContext>())
+                var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<ChinookContext>>();
+
+                using (var appContext = contextFactory.CreateDbContext())
                 {
                     try
                     {
