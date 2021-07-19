@@ -1,14 +1,15 @@
-using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using EFQ.Web.DbContexts;
-using EFQ.Web.Entities;
 using JDege.EFQ.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace JDege.EFQ.Web.Controllers
 {
     public class StoredQueriesController : Controller
     {
+        // #TODO: Inject DbContextFactory
         private ChinookContext dbContext;
 
         public StoredQueriesController(ChinookContext dbContext)
@@ -17,15 +18,18 @@ namespace JDege.EFQ.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            var storedQueries = new List<StoredQueryModel>
+            var storedQuerModels = await dbContext.StoredQueries
+            .Select(e => new StoredQueryModel
             {
-                new StoredQueryModel{Id = 1, Name = "First", Description = "The first"},
-                new StoredQueryModel{Id = 2, Name = "First", Description = "The second"},
-                new StoredQueryModel{Id = 3, Name = "First", Description = "The third"},
-            };
-            return View(storedQueries);
+                Id = e.StoredQueryId,
+                Name = e.Name,
+                Description = e.Description
+            })
+            .ToListAsync();
+
+            return View(storedQuerModels);
         }
     }
 }
