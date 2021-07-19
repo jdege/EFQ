@@ -2,7 +2,7 @@ namespace JDege.EFQ.Web.Entities
 {
     public partial class StoredQuery
     {
-        public int Id { get; set; }
+        public int StoredQueryId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string BaseTableName { get; set; }

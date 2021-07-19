@@ -27,6 +27,7 @@ namespace JDege.EFQ.Web.Entities
         public virtual DbSet<Playlist> Playlists { get; set; }
         public virtual DbSet<PlaylistTrack> PlaylistTracks { get; set; }
         public virtual DbSet<Track> Tracks { get; set; }
+        public virtual DbSet<StoredQuery> StoredQueries { get; set; }
 
         //         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //         {
@@ -62,6 +63,8 @@ namespace JDege.EFQ.Web.Entities
             modelBuilder.ApplyConfiguration(new PlaylistTrackConfiguration());
 
             modelBuilder.ApplyConfiguration(new TrackConfiguration());
+
+            modelBuilder.ApplyConfiguration(new StoredQueryConfiguration());
 
             OnModelCreatingPartial(modelBuilder);
         }
