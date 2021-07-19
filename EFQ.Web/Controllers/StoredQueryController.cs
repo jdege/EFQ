@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JDege.EFQ.Web.Controllers
 {
-    public class StoredQueriesController : Controller
+    public class StoredQueryController : Controller
     {
         private readonly IDbContextFactory<ChinookContext> _contextFactory;
 
-        public StoredQueriesController(IDbContextFactory<ChinookContext> contextFactory)
+        public StoredQueryController(IDbContextFactory<ChinookContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }
@@ -21,7 +21,7 @@ namespace JDege.EFQ.Web.Controllers
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
-                var storedQuerModels = await dbContext.StoredQueries
+                var storedQueryModels = await dbContext.StoredQueries
                 .Select(e => new StoredQueryModel
                 {
                     Id = e.StoredQueryId,
@@ -30,7 +30,7 @@ namespace JDege.EFQ.Web.Controllers
                 })
                 .ToListAsync();
 
-                return View(storedQuerModels);
+                return View(storedQueryModels);
             }
         }
     }

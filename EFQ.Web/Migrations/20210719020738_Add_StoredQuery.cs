@@ -25,12 +25,12 @@ namespace EFQ.Web.Migrations
             migrationBuilder.InsertData(
                 table: "StoredQuery",
                 columns: new[] { "StoredQueryId", "BaseTableName", "Description", "Name", "StoredQueryJson" },
-                values: new object[] { 1, "Album", "Albums by Iron Maiden", "Iron Maiden Albums", "{\"SelectionComparison\":\"Equal\",\"FieldName\":\"ArtistId\",\"RightHandSide\":{\"SelectionComparison\":\"Constant\",\"ConstantValue\":\"90\",\"AggregateList\":[]},\"AggregateList\":[]}" });
+                values: new object[] { 1, "Album", "Albums by Iron Maiden", "Iron Maiden Albums", "{\"SelectionComparison\":\"Equal\",\"FieldName\":\"ArtistId\",\"RightHandSide\":{\"SelectionComparison\":\"Constant\",\"ConstantValue\":90,\"AggregateList\":[]},\"AggregateList\":[]}" });
 
             migrationBuilder.InsertData(
                 table: "StoredQuery",
                 columns: new[] { "StoredQueryId", "BaseTableName", "Description", "Name", "StoredQueryJson" },
-                values: new object[] { 2, "Album", "Albums by Led Zeppelin", "Led Zeppelin", "{\"SelectionComparison\":\"Equal\",\"FieldName\":\"ArtistId\",\"RightHandSide\":{\"SelectionComparison\":\"Constant\",\"ConstantValue\":\"22\",\"AggregateList\":[]},\"AggregateList\":[]}" });
+                values: new object[] { 2, "Album", "Albums by Led Zeppelin", "Led Zeppelin", "{\"SelectionComparison\":\"Equal\",\"FieldName\":\"ArtistId\",\"RightHandSide\":{\"SelectionComparison\":\"Constant\",\"ConstantValue\":22,\"AggregateList\":[]},\"AggregateList\":[]}" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

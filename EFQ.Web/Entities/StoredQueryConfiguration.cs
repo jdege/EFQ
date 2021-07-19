@@ -37,7 +37,7 @@ namespace EFQ.Web.Entities
                     Name = "Iron Maiden Albums",
                     Description = "Albums by Iron Maiden",
                     BaseTableName = "Album",
-                    StoredQueryJson = "{\"SelectionComparison\":\"Equal\",\"FieldName\":\"ArtistId\",\"RightHandSide\":{\"SelectionComparison\":\"Constant\",\"ConstantValue\":\"90\",\"AggregateList\":[]},\"AggregateList\":[]}"
+                    StoredQueryJson = "{\"SelectionComparison\":\"Equal\",\"FieldName\":\"ArtistId\",\"RightHandSide\":{\"SelectionComparison\":\"Constant\",\"ConstantValue\":90,\"AggregateList\":[]},\"AggregateList\":[]}"
                 },
                 new StoredQuery
                 {
@@ -45,7 +45,7 @@ namespace EFQ.Web.Entities
                     Name = "Led Zeppelin",
                     Description = "Albums by Led Zeppelin",
                     BaseTableName = "Album",
-                    StoredQueryJson = "{\"SelectionComparison\":\"Equal\",\"FieldName\":\"ArtistId\",\"RightHandSide\":{\"SelectionComparison\":\"Constant\",\"ConstantValue\":\"22\",\"AggregateList\":[]},\"AggregateList\":[]}"
+                    StoredQueryJson = "{\"SelectionComparison\":\"Equal\",\"FieldName\":\"ArtistId\",\"RightHandSide\":{\"SelectionComparison\":\"Constant\",\"ConstantValue\":22,\"AggregateList\":[]},\"AggregateList\":[]}"
                 });
         }
     }
