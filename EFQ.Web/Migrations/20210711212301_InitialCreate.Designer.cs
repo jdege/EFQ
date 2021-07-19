@@ -22,7 +22,7 @@ namespace JDege.EFQ.Web.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EFQ.Web.Models.Album", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Album", b =>
                 {
                     b.Property<int>("AlbumId")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.ToTable("Album");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Artist", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Artist", b =>
                 {
                     b.Property<int>("ArtistId")
                         .ValueGeneratedOnAdd()
@@ -60,7 +60,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.ToTable("Artist");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Customer", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Customer", b =>
                 {
                     b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
@@ -124,7 +124,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Employee", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Employee", b =>
                 {
                     b.Property<int>("EmployeeId")
                         .ValueGeneratedOnAdd()
@@ -193,7 +193,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.ToTable("Employee");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Genre", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Genre", b =>
                 {
                     b.Property<int>("GenreId")
                         .ValueGeneratedOnAdd()
@@ -209,7 +209,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.ToTable("Genre");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Invoice", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Invoice", b =>
                 {
                     b.Property<int>("InvoiceId")
                         .ValueGeneratedOnAdd()
@@ -252,7 +252,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.ToTable("Invoice");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.InvoiceLine", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.InvoiceLine", b =>
                 {
                     b.Property<int>("InvoiceLineId")
                         .ValueGeneratedOnAdd()
@@ -280,7 +280,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.ToTable("InvoiceLine");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.MediaType", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.MediaType", b =>
                 {
                     b.Property<int>("MediaTypeId")
                         .ValueGeneratedOnAdd()
@@ -296,7 +296,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.ToTable("MediaType");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Playlist", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Playlist", b =>
                 {
                     b.Property<int>("PlaylistId")
                         .ValueGeneratedOnAdd()
@@ -312,7 +312,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.ToTable("Playlist");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.PlaylistTrack", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.PlaylistTrack", b =>
                 {
                     b.Property<int>("PlaylistId")
                         .HasColumnType("int");
@@ -328,7 +328,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.ToTable("PlaylistTrack");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Track", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Track", b =>
                 {
                     b.Property<int>("TrackId")
                         .ValueGeneratedOnAdd()
@@ -373,7 +373,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.ToTable("Track");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Album", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Album", b =>
                 {
                     b.HasOne("EFQ.Web.Models.Artist", "Artist")
                         .WithMany("Albums")
@@ -384,7 +384,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.Navigation("Artist");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Customer", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Customer", b =>
                 {
                     b.HasOne("EFQ.Web.Models.Employee", "SupportRep")
                         .WithMany("Customers")
@@ -394,7 +394,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.Navigation("SupportRep");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Employee", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Employee", b =>
                 {
                     b.HasOne("EFQ.Web.Models.Employee", "ReportsToNavigation")
                         .WithMany("InverseReportsToNavigation")
@@ -404,7 +404,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.Navigation("ReportsToNavigation");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Invoice", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Invoice", b =>
                 {
                     b.HasOne("EFQ.Web.Models.Customer", "Customer")
                         .WithMany("Invoices")
@@ -415,7 +415,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.InvoiceLine", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.InvoiceLine", b =>
                 {
                     b.HasOne("EFQ.Web.Models.Invoice", "Invoice")
                         .WithMany("InvoiceLines")
@@ -434,7 +434,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.Navigation("Track");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.PlaylistTrack", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.PlaylistTrack", b =>
                 {
                     b.HasOne("EFQ.Web.Models.Playlist", "Playlist")
                         .WithMany("PlaylistTracks")
@@ -453,7 +453,7 @@ namespace JDege.EFQ.Web.Migrations
                     b.Navigation("Track");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Track", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Track", b =>
                 {
                     b.HasOne("EFQ.Web.Models.Album", "Album")
                         .WithMany("Tracks")
@@ -478,49 +478,49 @@ namespace JDege.EFQ.Web.Migrations
                     b.Navigation("MediaType");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Album", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Album", b =>
                 {
                     b.Navigation("Tracks");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Artist", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Artist", b =>
                 {
                     b.Navigation("Albums");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Customer", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Customer", b =>
                 {
                     b.Navigation("Invoices");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Employee", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Employee", b =>
                 {
                     b.Navigation("Customers");
 
                     b.Navigation("InverseReportsToNavigation");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Genre", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Genre", b =>
                 {
                     b.Navigation("Tracks");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Invoice", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Invoice", b =>
                 {
                     b.Navigation("InvoiceLines");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.MediaType", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.MediaType", b =>
                 {
                     b.Navigation("Tracks");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Playlist", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Playlist", b =>
                 {
                     b.Navigation("PlaylistTracks");
                 });
 
-            modelBuilder.Entity("EFQ.Web.Models.Track", b =>
+            modelBuilder.Entity("JDege.EFQ.Web.Entities.Track", b =>
                 {
                     b.Navigation("InvoiceLines");
 
