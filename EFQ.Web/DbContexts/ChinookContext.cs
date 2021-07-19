@@ -30,6 +30,7 @@ namespace EFQ.Web.DbContexts
         public virtual DbSet<Playlist> Playlists { get; set; }
         public virtual DbSet<PlaylistTrack> PlaylistTracks { get; set; }
         public virtual DbSet<Track> Tracks { get; set; }
+        public virtual DbSet<StoredQuery> StoredQueries { get; set; }
 
         //         Configure in Startup.cs
         //         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -68,7 +69,7 @@ namespace EFQ.Web.DbContexts
 
             modelBuilder.ApplyConfiguration(new TrackConfiguration());
 
-            // modelBuilder.ApplyConfiguration(new StoredQueryConfiguration());
+            modelBuilder.ApplyConfiguration(new StoredQueryConfiguration());
 
             OnModelCreatingPartial(modelBuilder);
         }

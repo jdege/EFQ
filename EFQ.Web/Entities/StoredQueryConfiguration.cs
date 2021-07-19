@@ -1,7 +1,7 @@
+using EFQ.Web.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-#if false
 namespace EFQ.Web.Entities
 {
     internal class StoredQueryConfiguration : IEntityTypeConfiguration<StoredQuery>
@@ -50,4 +50,3 @@ namespace EFQ.Web.Entities
         }
     }
 }
-#endif
