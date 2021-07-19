@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace JDege.EFQ.Web.Entities
+#if false
+namespace EFQ.Web.Entities
 {
     internal class StoredQueryConfiguration : IEntityTypeConfiguration<StoredQuery>
     {
@@ -49,3 +50,4 @@ namespace JDege.EFQ.Web.Entities
         }
     }
 }
+#endif

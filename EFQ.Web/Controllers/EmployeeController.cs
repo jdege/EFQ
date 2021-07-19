@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Text;
-using JDege.EFQ.Web.Entities;
+using EFQ.Web.DbContexts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JDege.EFQ.Web.Controllers
@@ -9,9 +9,9 @@ namespace JDege.EFQ.Web.Controllers
     public class EmployeeController : Controller
     {
         private static Random random = new();
-        private ChinookDbContext dbContext;
+        private ChinookContext dbContext;
 
-        public EmployeeController(ChinookDbContext dbContext)
+        public EmployeeController(ChinookContext dbContext)
         {
             this.dbContext = dbContext;
         }

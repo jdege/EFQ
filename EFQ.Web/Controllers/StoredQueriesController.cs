@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using JDege.EFQ.Web.Entities;
+using EFQ.Web.DbContexts;
+using EFQ.Web.Entities;
 using JDege.EFQ.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -8,9 +9,9 @@ namespace JDege.EFQ.Web.Controllers
 {
     public class StoredQueriesController : Controller
     {
-        private ChinookDbContext dbContext;
+        private ChinookContext dbContext;
 
-        public StoredQueriesController(ChinookDbContext dbContext)
+        public StoredQueriesController(ChinookContext dbContext)
         {
             this.dbContext = dbContext;
         }

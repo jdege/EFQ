@@ -1,4 +1,4 @@
-using JDege.EFQ.Web.Entities;
+using EFQ.Web.DbContexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +20,7 @@ namespace JDege.EFQ.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ChinookDbContext>(opts =>
+            services.AddDbContext<ChinookContext>(opts =>
             {
                 opts.UseSqlServer(Configuration.GetConnectionString("ChinookDbConnection"));
             }, ServiceLifetime.Scoped);

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 #nullable disable
 
-namespace JDege.EFQ.Web.Entities
+namespace EFQ.Web.Entities
 {
     public class ArtistConfiguration : IEntityTypeConfiguration<Artist>
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace JDege.EFQ.Web.Entities
+namespace EFQ.Web.Entities
 {
     public partial class Invoice
     {

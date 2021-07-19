@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace JDege.EFQ.Web.Entities
+namespace EFQ.Web.Entities
 {
     internal class TrackConfiguration : IEntityTypeConfiguration<Track>
     {

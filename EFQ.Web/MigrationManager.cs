@@ -1,5 +1,5 @@
 using System;
-using JDege.EFQ.Web.Entities;
+using EFQ.Web.DbContexts;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +14,7 @@ namespace JDege.EFQ.Web
         {
             using (var scope = host.Services.CreateScope())
             {
-                using (var appContext = scope.ServiceProvider.GetRequiredService<ChinookDbContext>())
+                using (var appContext = scope.ServiceProvider.GetRequiredService<ChinookContext>())
                 {
                     try
                     {

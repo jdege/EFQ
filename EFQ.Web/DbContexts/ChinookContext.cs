@@ -1,0 +1,78 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using EFQ.Web.Entities;
+
+#nullable disable
+
+namespace EFQ.Web.DbContexts
+{
+    public partial class ChinookContext : DbContext
+    {
+        // We don't ever want to use this...
+        // public ChinookContext()
+        // {
+        // }
+
+        public ChinookContext(DbContextOptions<ChinookContext> options)
+            : base(options)
+        {
+        }
+
+        public virtual DbSet<Album> Albums { get; set; }
+        public virtual DbSet<Artist> Artists { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<Genre> Genres { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
+        public virtual DbSet<InvoiceLine> InvoiceLines { get; set; }
+        public virtual DbSet<MediaType> MediaTypes { get; set; }
+        public virtual DbSet<Playlist> Playlists { get; set; }
+        public virtual DbSet<PlaylistTrack> PlaylistTracks { get; set; }
+        public virtual DbSet<Track> Tracks { get; set; }
+
+        //         Configure in Startup.cs
+        //         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //         {
+        //             if (!optionsBuilder.IsConfigured)
+        //             {
+        // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        //                 optionsBuilder.UseSqlServer("Server=localhost;Database=Chinook;User Id=SA;Password=Password1");
+        //             }
+        //         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            // Move configuration into XxxConfiguration classes
+            modelBuilder.ApplyConfiguration(new AlbumConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ArtistConfiguration());
+
+            modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+
+            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new GenreConfiguration());
+
+            modelBuilder.ApplyConfiguration(new InvoiceConfiguration());
+
+            modelBuilder.ApplyConfiguration(new InvoiceLineConfiguration());
+
+            modelBuilder.ApplyConfiguration(new MediaTypeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new PlaylistConfiguration());
+
+            modelBuilder.ApplyConfiguration(new PlaylistTrackConfiguration());
+
+            modelBuilder.ApplyConfiguration(new TrackConfiguration());
+
+            // modelBuilder.ApplyConfiguration(new StoredQueryConfiguration());
+
+            OnModelCreatingPartial(modelBuilder);
+        }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    }
+}
