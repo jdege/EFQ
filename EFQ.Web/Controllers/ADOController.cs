@@ -155,7 +155,7 @@ namespace JDege.EFQ.Web.Controllers
             {
                 var connectionString = dbContext.Database.GetConnectionString();
 
-                var query = "SELECT ArtistId, Name FROM Artist";
+                var query = "SELECT ArtistId, Name FROM Artist ORDER BY Name";
 
                 var rows = new List<SelectListItem> { new SelectListItem { Value = null, Text = "" } };
 
@@ -174,7 +174,7 @@ namespace JDege.EFQ.Web.Controllers
                             var selectListItem = new SelectListItem
                             {
                                 Value = artistId,
-                                Text = $"{artistId} = {name}"
+                                Text = $"{artistId} - {name}"
                             };
 
                             rows.Add(selectListItem);
@@ -198,7 +198,7 @@ namespace JDege.EFQ.Web.Controllers
             {
                 var connectionString = dbContext.Database.GetConnectionString();
 
-                var query = "SELECT CustomerId, FirstName, LastName FROM Customer";
+                var query = "SELECT CustomerId, FirstName, LastName FROM Customer ORDER BY LastName, FirstName";
 
                 var rows = new List<SelectListItem> { new SelectListItem { Value = null, Text = "" } };
 
@@ -216,14 +216,10 @@ namespace JDege.EFQ.Web.Controllers
                             var firstName = rdr.getValue<string>("FirstName").Trim();
                             var lastName = rdr.getValue<string>("LastName").Trim();
 
-                            var space = (String.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)) ? "" : " ";
-
-                            var name = $"{firstName}{space}{lastName}";
-
                             var selectListItem = new SelectListItem
                             {
                                 Value = customerId,
-                                Text = $"{customerId} - {name}"
+                                Text = $"{customerId} - {firstName} {lastName}"
                             };
 
                             rows.Add(selectListItem);
@@ -241,6 +237,7 @@ namespace JDege.EFQ.Web.Controllers
             }
         }
 
+        // #TODO: Move GetContentsAsync() someplace reasonable
         public async Task<string> GetContentsAsync(IWebHostEnvironment _webHostEnvironment, string path)
         {
             var filepath = Path.Combine(_webHostEnvironment.WebRootPath, path);
