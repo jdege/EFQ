@@ -80,10 +80,7 @@
                                     @Html.DisplayNameFor(model => model.TrackModels[0].TrackComposer)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.TrackModels[0].CustomerFirstName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.TrackModels[0].CustomerLastName)
+                                    @Html.DisplayNameFor(model => model.TrackModels[0].Customers)
                                 </th>
                             </tr>
                         </thead>
@@ -101,10 +98,14 @@
                                         @Html.DisplayFor(modelItem => item.TrackComposer)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.CustomerFirstName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CustomerLastName)
+                                        <ul>
+                                            @foreach (var customer in item.Customers)
+                                            {
+                                                <li>
+@Html.DisplayFor(modelItem => customer.FirstName)&nbsp;@Html.DisplayFor(modelItem => customer.LastName)
+                                                </li>
+                                            }
+                                        </ul>
                                     </td>
                                 </tr>
                             }

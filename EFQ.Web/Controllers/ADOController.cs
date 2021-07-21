@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -109,7 +110,7 @@ namespace JDege.EFQ.Web.Controllers
 
                 query.Append("ORDER BY t.[Name] ASC ");
 
-                var rows = new List<TrackModel>();
+                var trackModelList = new List<TrackModel>();
 
                 using (var con = new SqlConnection(connectionString))
                 {
@@ -126,26 +127,47 @@ namespace JDege.EFQ.Web.Controllers
                         var rdr = await cmd.ExecuteReaderAsync();
                         while (await rdr.ReadAsync())
                         {
-                            var taskModel = new TrackModel
-                            {
-                                TrackName = rdr.getValue<string>("TrackName"),
-                                AlbumTitle = rdr.getValue<string>("AlbumTitle"),
-                                TrackComposer = rdr.getValue<string>("TrackComposer"),
-                                CustomerFirstName = rdr.getValue<string>("CustomerFirstName"),
-                                CustomerLastName = rdr.getValue<string>("CustomerLastName")
-                            };
+                            var trackName = rdr.getValue<string>("TrackName");
+                            var albumTitle = rdr.getValue<string>("AlbumTitle");
+                            var trackComposer = rdr.getValue<string>("TrackComposer");
+                            var customerFirstName = rdr.getValue<string>("CustomerFirstName");
+                            var customerLastName = rdr.getValue<string>("CustomerLastName");
 
-                            rows.Add(taskModel);
+                            var trackModel = trackModelList.SingleOrDefault(t => t.TrackName == trackName);
+
+                            var addingNew = false;
+                            if (trackModel == null)
+                            {
+                                trackModel = new TrackModel
+                                {
+                                    TrackName = trackName,
+                                    AlbumTitle = albumTitle,
+                                    TrackComposer = trackComposer
+                                };
+
+                                addingNew = true;
+                            }
+
+                            trackModel.Customers.Add(new TrackModel.Customer
+                            {
+                                FirstName = customerFirstName,
+                                LastName = customerLastName
+                            });
+
+                            if (addingNew)
+                            {
+                                trackModelList.Add(trackModel);
+                            }
                         }
                         rdr.Close();
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "Exception retrieving TaskModel list");
+                        _logger.LogError(ex, "Exception retrieving TrackModel list");
                         throw;
                     }
                 }
-                return rows;
+                return trackModelList;
             }
         }
 
