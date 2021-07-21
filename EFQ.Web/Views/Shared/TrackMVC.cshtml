@@ -1,0 +1,121 @@
+@model JDege.EFQ.Web.Models.TrackFormModel
+
+@{
+}
+
+<h1>@Model.Title</h1>
+
+<div class="container">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item"><a class="nav-link @ViewBag.explanationActive" data-toggle="tab" id="tab-explanation"
+                href="#explanation">Explanation</a></li>
+        <li class="nav-item"><a class="nav-link @ViewBag.criteriaActive" data-toggle="tab" id="tab-criteria"
+                href="#criteria">Criteria</a></li>
+        <li class="nav-item"><a class="nav-link @ViewBag.resultsActive" data-toggle="tab" id="tab-results"
+                href="#results">Results</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="explanation" class="tab-pane fade show @ViewBag.explanationActive">
+            @Html.Raw(ViewBag.docs)
+        </div>
+        <div id="criteria" class="tab-pane fade show @ViewBag.criteriaActive">
+            @using (Html.BeginForm())
+            {
+                <div class="row">
+                    <div class="col-sm-12">
+                        Select a Client, a Worker, or both, and click "Search"
+                    </div>
+                </div>
+
+                <hr>
+
+                <fieldset>
+                    <div class="row">
+                        <div class="editor-label col-sm-12">
+                            @Html.LabelFor(m => m.ArtistId)
+                        </div>
+                        <div class="editor-field col-sm-12">
+                            @Html.DropDownListFor(m => m.ArtistId, Model.Artists)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="editor-label col-sm-12">
+                            @Html.LabelFor(m => m.CustomerId)
+                        </div>
+                        <div class="editor-field col-sm-12">
+                            @Html.DropDownListFor(m => m.CustomerId, Model.Customers)
+                        </div>
+                    </div>
+                </fieldset>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-sm-9">
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="submit" value="Search" class="btn btn-primary" />
+                    </div>
+                </div>
+            }
+        </div>
+        <div id="results" class="tab-pane fade show @ViewBag.resultsActive">
+            <h3>Results</h3>
+            <div class="container">
+
+                @if (Model.TrackModels != null && Model.TrackModels.Count > 0)
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TrackModels[0].TrackName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TrackModels[0].AlbumTitle)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TrackModels[0].TrackComposer)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TrackModels[0].CustomerFirstName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TrackModels[0].CustomerLastName)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.TrackModels)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TrackName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AlbumTitle)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TrackComposer)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CustomerFirstName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CustomerLastName)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No results.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

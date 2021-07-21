@@ -727,6 +727,7 @@ namespace JDege.EFQ
 
         private static object getConstantValue(object value, object context)
         {
+            // #TODO: Remove dtKludge
             string dtKludge = null;
             var s = value as String;
             if (s != null)
