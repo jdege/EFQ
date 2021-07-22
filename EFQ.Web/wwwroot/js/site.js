@@ -1,4 +1,112 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
+// DropdownService.getArtists(function(result) {
+//     fillSelect($artistSelect, result);
+// });
 
-// Write your JavaScript code.
+// DropdownService.getCustomers(function(result) {
+
+
+DropdownService = {
+
+    getArtists: function (callback)
+    {
+        var url = "api/Artists";
+
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json"
+        };
+
+        $.ajax(url, settings)
+            .done(function (result, status, jqXHR)
+            {
+                callback({ success: true, data: result });
+            })
+            .fail(function (jqXHR, textStatus, errorThrown)
+            {
+                callback({ success: false, error: errorThrown });
+            });
+    },
+
+    getCustomers: function (callback)
+    {
+        var url = "api/Customers";
+
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json"
+        };
+
+        $.ajax(url, settings)
+            .done(function (result, status, jqXHR)
+            {
+                callback({ success: true, data: result });
+            })
+            .fail(function (jqXHR, textStatus, errorThrown)
+            {
+                callback({ success: false, error: errorThrown });
+            });
+    }
+
+    // getClientQueries: function (callback)
+    // {
+    //     var url = "api/Clients/queries";
+    //     var settings = {
+    //         type: "POST",
+    //         dataType: "json",
+    //         contentType: "application/json"
+    //     };
+
+    //     $.ajax(url, settings)
+    //         .done(function (result, status, jqXHR)
+    //         {
+    //             callback({ success: true, data: result });
+    //         })
+    //         .fail(function (jqXHR, textStatus, errorThrown)
+    //         {
+    //             callback({ success: false, error: errorThrown });
+    //         });
+    // },
+
+    // getWorkers: function (callback)
+    // {
+    //     var url = "api/Workers";
+    //     var settings = {
+    //         type: "POST",
+    //         dataType: "json",
+    //         contentType: "application/json"
+    //     };
+
+    //     $.ajax(url, settings)
+    //         .done(function (result, status, jqXHR)
+    //         {
+    //             callback({ success: true, data: result });
+    //         })
+    //         .fail(function (jqXHR, textStatus, errorThrown)
+    //         {
+    //             callback({ success: false, error: errorThrown });
+    //         });
+    // },
+
+    // getWorkerQueries: function (callback)
+    // {
+    //     var url = "api/Workers/queries";
+    //     var settings = {
+    //         type: "POST",
+    //         dataType: "json",
+    //         contentType: "application/json"
+    //     };
+
+    //     $.ajax(url, settings)
+    //         .done(function (result, status, jqXHR)
+    //         {
+    //             callback({ success: true, data: result });
+    //         })
+    //         .fail(function (jqXHR, textStatus, errorThrown)
+    //         {
+    //             callback({ success: false, error: errorThrown });
+    //         });
+    // }
+};

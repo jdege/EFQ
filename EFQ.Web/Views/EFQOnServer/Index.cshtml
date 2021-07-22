@@ -1,0 +1,162 @@
+
+@{
+}
+
+@* <h1>@Model.Title</h1> *@
+
+<div class="container">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item"><a class="nav-link @ViewBag.explanationActive" data-toggle="tab" id="tab-explanation"
+                href="#explanation">Explanation</a></li>
+        <li class="nav-item"><a class="nav-link @ViewBag.criteriaActive" data-toggle="tab" id="tab-criteria"
+                href="#criteria">Criteria</a></li>
+        <li class="nav-item"><a class="nav-link @ViewBag.resultsActive" data-toggle="tab" id="tab-results"
+                href="#results">Results</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="explanation" class="tab-pane fade show @ViewBag.explanationActive">
+            @Html.Raw(ViewBag.docs)
+        </div>
+        <div id="criteria" class="tab-pane fade show @ViewBag.criteriaActive">
+            @using (Html.BeginForm())
+            {
+                <div class="row">
+                    <div class="col-sm-12">
+                        Select a Client, a Worker, or both, and click "Search"
+                    </div>
+                </div>
+
+                <hr>
+
+                <fieldset>
+                    <div class="row">
+                        <div class="editor-label col-sm-12">
+                            <label for="ArtistId">Artist</label>
+                        </div>
+                        <div class="editor-field col-sm-12">
+                            <select id="ArtistId" name="ArtistId">
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="editor-label col-sm-12">
+                            <label for="CustomerId">Customer</label>
+                        </div>
+                        <div class="editor-field col-sm-12">
+                            <select id="CustomerId" name="CustomerId">
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-sm-9">
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="submit" value="Search" class="btn btn-primary" />
+                    </div>
+                </div>
+            }
+        </div>
+        <div id="results" class="tab-pane fade show @ViewBag.resultsActive">
+            <h3>Results</h3>
+            <div class="container">
+
+                @* @if (Model.TrackModels != null && Model.TrackModels.Count > 0)
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TrackModels[0].TrackName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TrackModels[0].AlbumTitle)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TrackModels[0].ArtistName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TrackModels[0].TrackComposer)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TrackModels[0].Customers)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.TrackModels)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TrackName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AlbumTitle)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ArtistName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TrackComposer)
+                                    </td>
+                                    <td>
+                                        @foreach (var customer in item.Customers)
+                                        {
+@Html.DisplayFor(modelItem => customer.FirstName)<text>&nbsp;</text>@Html.DisplayFor(modelItem => customer.LastName)
+                                        <br>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else *@
+                {
+                    <p>No results.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section css {
+}
+
+@section scripts {
+
+    <script type="text/javascript">
+    
+        var fillSelect = function($select, result) {
+            if (result.success) {
+                $select.empty().append("<option value=''></option>");
+                $.each(result.data, function(index, item) {
+                    $select.append("<option value='" + item.value + "'>" + item.text + "</option>");
+                });
+            } else {
+                alert(result.error);
+            }
+        };
+
+        $(document).ready(function() {
+            var $artistSelect = $("#ArtistId");
+            var $customerSelect = $("#CustomerId");
+
+            DropdownService.getArtists(function(result) {
+                fillSelect($artistSelect, result);
+            });
+
+            DropdownService.getCustomers(function(result) {
+                fillSelect($customerSelect, result);
+            });
+        });
+
+    </script>
+}
