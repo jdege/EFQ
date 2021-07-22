@@ -98,14 +98,11 @@
                                         @Html.DisplayFor(modelItem => item.TrackComposer)
                                     </td>
                                     <td>
-                                        <ul>
-                                            @foreach (var customer in item.Customers)
-                                            {
-                                                <li>
-@Html.DisplayFor(modelItem => customer.FirstName)&nbsp;@Html.DisplayFor(modelItem => customer.LastName)
-                                                </li>
-                                            }
-                                        </ul>
+                                        @foreach (var customer in item.Customers)
+                                        {
+@Html.DisplayFor(modelItem => customer.FirstName)<text>&nbsp;</text>@Html.DisplayFor(modelItem => customer.LastName)
+                                        <br>
+                                        }
                                     </td>
                                 </tr>
                             }

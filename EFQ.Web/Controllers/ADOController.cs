@@ -196,7 +196,7 @@ namespace JDege.EFQ.Web.Controllers
                             var selectListItem = new SelectListItem
                             {
                                 Value = artistId,
-                                Text = $"{artistId} - {name}"
+                                Text = $"{name} [{artistId}]"
                             };
 
                             rows.Add(selectListItem);
@@ -241,7 +241,7 @@ namespace JDege.EFQ.Web.Controllers
                             var selectListItem = new SelectListItem
                             {
                                 Value = customerId,
-                                Text = $"{customerId} - {firstName} {lastName}"
+                                Text = $"{firstName} {lastName} [{customerId}]"
                             };
 
                             rows.Add(selectListItem);

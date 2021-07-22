@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EFQ.Web.DbContexts;
+using EFQ.Web.Entities;
 using JDege.EFQ.Web.Extensions;
 using JDege.EFQ.Web.Models;
 using Microsoft.AspNetCore.Hosting;
@@ -15,10 +16,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using PeteMontgomery.PredicateBuilder;
 
 namespace JDege.EFQ.Web.Controllers
 {
-    public class PlainEFController : Controller
+    public class PredicateBuilderController : Controller
     {
         private readonly IDbContextFactory<ChinookContext> _contextFactory;
         // Injecting AutoMapper configuration
@@ -26,7 +28,7 @@ namespace JDege.EFQ.Web.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<ADOController> _logger;
 
-        public PlainEFController(IDbContextFactory<ChinookContext> contextFactory,
+        public PredicateBuilderController(IDbContextFactory<ChinookContext> contextFactory,
         IConfigurationProvider configurationProvider, IWebHostEnvironment webHostEnvironment, ILogger<ADOController> logger)
         {
             _contextFactory = contextFactory;
@@ -38,7 +40,7 @@ namespace JDege.EFQ.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/ADO_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/pb_docs.html");
             ViewBag.explanationActive = "active";
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = null;
@@ -56,7 +58,7 @@ namespace JDege.EFQ.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> IndexAsync(TrackFormModel trackFormModel)
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/ADO_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/pb_docs.html");
             ViewBag.explanationActive = null;
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = "active";
@@ -74,23 +76,25 @@ namespace JDege.EFQ.Web.Controllers
             if (String.IsNullOrWhiteSpace(artistId) && String.IsNullOrWhiteSpace(customerId))
                 throw new ArgumentException("Must supply at least one of ArtistId or CustomerId");
 
+            var predicate = PredicateBuilder.Create<Track>(t => true);
+
+            if (!string.IsNullOrEmpty(artistId))
+            {
+                var a = int.Parse(artistId);
+
+                predicate = predicate.And(PredicateBuilder.Create<Track>(t => t.Album.ArtistId == a));
+            }
+
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                var c = int.Parse(customerId);
+
+                predicate = predicate.And(PredicateBuilder.Create<Track>(t => t.InvoiceLines.Any(il => il.Invoice.CustomerId == c)));
+            }
+
             using (var dbContext = _contextFactory.CreateDbContext())
             {
-                var query = dbContext.Tracks.AsQueryable();
-
-                if (!string.IsNullOrEmpty(artistId))
-                {
-                    var a = int.Parse(artistId);
-
-                    query = query.Where(t => t.Album.ArtistId == a);
-                }
-
-                if (!string.IsNullOrEmpty(customerId))
-                {
-                    var c = int.Parse(customerId);
-
-                    query = query.Where(t => t.InvoiceLines.Any(il => il.Invoice.CustomerId == c));
-                }
+                var query = dbContext.Tracks.Where(predicate);
 
                 var trackModelList = await query
                     .OrderBy(t => t.Name)
