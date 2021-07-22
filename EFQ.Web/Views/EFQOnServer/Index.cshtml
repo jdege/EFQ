@@ -127,14 +127,14 @@
     </div>
 </div>
 
-@section css {
+@section Css {
 }
 
-@section scripts {
+@section Scripts {
 
     <script type="text/javascript">
-    
         var fillSelect = function($select, result) {
+            debugger;
             if (result.success) {
                 $select.empty().append("<option value=''></option>");
                 $.each(result.data, function(index, item) {
@@ -157,6 +157,5 @@
                 fillSelect($customerSelect, result);
             });
         });
-
     </script>
 }

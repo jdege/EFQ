@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace JDege.EFQ.Web.ApiControllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ArtistController : ControllerBase
     {
         private readonly ILogger<CustomerController> _logger;
@@ -30,16 +30,16 @@ namespace JDege.EFQ.Web.ApiControllers
 
         [HttpGet]
         [Route("GetDropdown")]
-        public async Task<IEnumerable<ArtistDropdownModel>> GetDropdownAsync()
+        public async Task<IEnumerable<DropdownModel>> GetDropdownAsync()
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
-                var artistDropdownModels = await dbContext.Artists
+                var dropdownModels = await dbContext.Artists
                     .OrderBy(a => a.Name)
-                    .ProjectTo<ArtistDropdownModel>(_configurationProvider)
+                    .ProjectTo<DropdownModel>(_configurationProvider)
                     .ToListAsync();
 
-                return artistDropdownModels;
+                return dropdownModels;
             }
         }
 

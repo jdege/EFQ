@@ -10,7 +10,7 @@ DropdownService = {
 
     getArtists: function (callback)
     {
-        var url = "api/Artists/GetDropdown";
+        var url = "api/Artist/GetDropdown";
 
         var settings = {
             type: "GET",
@@ -31,7 +31,7 @@ DropdownService = {
 
     getCustomers: function (callback)
     {
-        var url = "api/Customers/GetDropdown";
+        var url = "api/Customer/GetDropdown";
 
         var settings = {
             type: "GET",
