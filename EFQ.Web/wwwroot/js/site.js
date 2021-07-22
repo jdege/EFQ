@@ -10,10 +10,10 @@ DropdownService = {
 
     getArtists: function (callback)
     {
-        var url = "api/Artists";
+        var url = "api/Artists/GetDropdown";
 
         var settings = {
-            type: "POST",
+            type: "GET",
             dataType: "json",
             contentType: "application/json"
         };
@@ -31,10 +31,10 @@ DropdownService = {
 
     getCustomers: function (callback)
     {
-        var url = "api/Customers";
+        var url = "api/Customers/GetDropdown";
 
         var settings = {
-            type: "POST",
+            type: "GET",
             dataType: "json",
             contentType: "application/json"
         };

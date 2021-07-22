@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace JDege.EFQ.Web.ApiControllers
+namespace JDege.EFQ.Web.Controllers
 {
     public class RunQueryController : Controller
     {
