@@ -12,6 +12,7 @@ namespace JDege.EFQ.Web.Models
         }
         public string TrackName { get; internal set; }
         public string AlbumTitle { get; internal set; }
+        public string ArtistName { get; internal set; }
         public string TrackComposer { get; internal set; }
         public IList<Customer> Customers { get; internal set; }
 
@@ -30,6 +31,7 @@ namespace JDege.EFQ.Web.Models
             CreateMap<Track, TrackModel>()
                 .ForMember(dest => dest.TrackName, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.AlbumTitle, opt => opt.MapFrom(src => src.Album.Title))
+                .ForMember(dest => dest.ArtistName, opt => opt.MapFrom(src => src.Album.Artist.Name))
                 .ForMember(dest => dest.TrackComposer, opt => opt.MapFrom(src => src.Composer))
                 .ForMember(dest => dest.Customers, opt => opt.MapFrom(src => src.InvoiceLines))
                 ;

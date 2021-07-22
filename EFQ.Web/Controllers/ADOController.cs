@@ -82,12 +82,15 @@ namespace JDege.EFQ.Web.Controllers
                 query.Append("SELECT ");
                 query.Append("	t.[Name] AS [TrackName], ");
                 query.Append("	a.[Title] AS [AlbumTitle], ");
+                query.Append("	ar.[Name] AS [ArtistName], ");
                 query.Append("	t.[Composer] as [TrackComposer], ");
                 query.Append("	c.[FirstName] AS [CustomerFirstName], ");
                 query.Append("	c.[LastName] as [CustomerLastName] ");
                 query.Append("FROM Track t ");
                 query.Append("JOIN Album a ");
                 query.Append("	ON a.AlbumId = t.AlbumId ");
+                query.Append("JOIN Artist ar ");
+                query.Append("	ON ar.ArtistId = a.ArtistId ");
                 query.Append("JOIN InvoiceLine il ");
                 query.Append("	ON il.TrackId = t.TrackId ");
                 query.Append("JOIN Invoice i ");
@@ -100,12 +103,28 @@ namespace JDege.EFQ.Web.Controllers
                     query.Append("WHERE a.[ArtistId] = @artistId ");
                     if (!String.IsNullOrWhiteSpace(customerId))
                     {
-                        query.Append("AND c.[CustomerId] = @customerId ");
+                        query.Append("AND ");
+                        query.Append("EXISTS ( ");
+                        query.Append("	SELECT 0 ");
+                        query.Append("	FROM InvoiceLine il2 ");
+                        query.Append("	JOIN Invoice i2 ");
+                        query.Append("	ON il2.InvoiceId = i2.InvoiceId ");
+                        query.Append("	WHERE il2.TrackId = t.TrackId ");
+                        query.Append("	AND i2.CustomerId = @customerId ");
+                        query.Append(") ");
                     }
                 }
                 else
                 {
-                    query.Append("WHERE c.[CustomerId] = @customerId ");
+                    query.Append("WHERE ");
+                    query.Append("EXISTS ( ");
+                    query.Append("	SELECT 0 ");
+                    query.Append("	FROM InvoiceLine il2 ");
+                    query.Append("	JOIN Invoice i2 ");
+                    query.Append("	ON il2.InvoiceId = i2.InvoiceId ");
+                    query.Append("	WHERE il2.TrackId = t.TrackId ");
+                    query.Append("	AND i2.CustomerId = @customerId ");
+                    query.Append(") ");
                 }
 
                 query.Append("ORDER BY t.[Name] ASC ");
@@ -129,6 +148,7 @@ namespace JDege.EFQ.Web.Controllers
                         {
                             var trackName = rdr.getValue<string>("TrackName");
                             var albumTitle = rdr.getValue<string>("AlbumTitle");
+                            var artistName = rdr.getValue<string>("ArtistName");
                             var trackComposer = rdr.getValue<string>("TrackComposer");
                             var customerFirstName = rdr.getValue<string>("CustomerFirstName");
                             var customerLastName = rdr.getValue<string>("CustomerLastName");
@@ -141,6 +161,7 @@ namespace JDege.EFQ.Web.Controllers
                                 trackModel = new TrackModel
                                 {
                                     TrackName = trackName,
+                                    ArtistName = artistName,
                                     AlbumTitle = albumTitle,
                                     TrackComposer = trackComposer
                                 };
