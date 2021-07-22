@@ -22,6 +22,7 @@ namespace JDege.EFQ.Web.Controllers
 {
     public class EFQueryController : Controller
     {
+        private const string PageTitle = "Plain EFQ";
         private readonly IDbContextFactory<ChinookContext> _contextFactory;
         // Injecting AutoMapper configuration
         private readonly IConfigurationProvider _configurationProvider;
@@ -47,7 +48,7 @@ namespace JDege.EFQ.Web.Controllers
 
             var trackFormModel = new TrackFormModel
             {
-                Title = "Plain EFQ",
+                Title = PageTitle,
                 Artists = await GetArtistSelectionListAsync(),
                 Customers = await GetCustomerSelectionListAsync()
             };
@@ -63,6 +64,7 @@ namespace JDege.EFQ.Web.Controllers
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = "active";
 
+            trackFormModel.Title = PageTitle;
             trackFormModel.Artists = await GetArtistSelectionListAsync();
             trackFormModel.Customers = await GetCustomerSelectionListAsync();
 

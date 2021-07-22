@@ -20,6 +20,7 @@ namespace JDege.EFQ.Web.Controllers
 {
     public class PlainEFController : Controller
     {
+        private const string PageTitle = "Plain Entity Framework";
         private readonly IDbContextFactory<ChinookContext> _contextFactory;
         // Injecting AutoMapper configuration
         private readonly IConfigurationProvider _configurationProvider;
@@ -45,7 +46,7 @@ namespace JDege.EFQ.Web.Controllers
 
             var trackFormModel = new TrackFormModel
             {
-                Title = "Plain Entity Framework",
+                Title = PageTitle,
                 Artists = await GetArtistSelectionListAsync(),
                 Customers = await GetCustomerSelectionListAsync()
             };
@@ -61,6 +62,7 @@ namespace JDege.EFQ.Web.Controllers
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = "active";
 
+            trackFormModel.Title = PageTitle;
             trackFormModel.Artists = await GetArtistSelectionListAsync();
             trackFormModel.Customers = await GetCustomerSelectionListAsync();
 

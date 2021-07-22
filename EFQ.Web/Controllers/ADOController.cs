@@ -19,6 +19,7 @@ namespace JDege.EFQ.Web.Controllers
 {
     public class ADOController : Controller
     {
+        private const string PageTitle = "Simple ADO";
         private readonly IDbContextFactory<ChinookContext> _contextFactory;
         // Injecting AutoMapper configuration
         private readonly IConfigurationProvider _configurationProvider;
@@ -44,7 +45,7 @@ namespace JDege.EFQ.Web.Controllers
 
             var trackFormModel = new TrackFormModel
             {
-                Title = "Simple ADO",
+                Title = PageTitle,
                 Artists = await GetArtistSelectionListAsync(),
                 Customers = await GetCustomerSelectionListAsync()
             };
@@ -60,6 +61,7 @@ namespace JDege.EFQ.Web.Controllers
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = "active";
 
+            trackFormModel.Title = PageTitle;
             trackFormModel.Artists = await GetArtistSelectionListAsync();
             trackFormModel.Customers = await GetCustomerSelectionListAsync();
 
@@ -77,26 +79,35 @@ namespace JDege.EFQ.Web.Controllers
                 if (String.IsNullOrWhiteSpace(artistId) && String.IsNullOrWhiteSpace(customerId))
                     throw new ArgumentException("Must supply at least one of ArtistId or CustomerId");
 
-                var query = new StringBuilder();
+                var query = new StringBuilder(@"
+SELECT 
+    t.[Name] AS [TrackName], 
+    a.[Title] AS [AlbumTitle], 
+    ar.[Name] AS [ArtistName], 
+    t.[Composer] as [TrackComposer], 
+    c.[FirstName] AS [CustomerFirstName], 
+    c.[LastName] as [CustomerLastName] 
+FROM Track t 
+JOIN Album a 
+    ON a.AlbumId = t.AlbumId 
+JOIN Artist ar 
+    ON ar.ArtistId = a.ArtistId 
+JOIN InvoiceLine il 
+    ON il.TrackId = t.TrackId 
+JOIN Invoice i 
+    ON i.InvoiceId = il.InvoiceId 
+JOIN Customer c 
+    ON c.CustomerId = i.CustomerId ");
 
-                query.Append("SELECT ");
-                query.Append("	t.[Name] AS [TrackName], ");
-                query.Append("	a.[Title] AS [AlbumTitle], ");
-                query.Append("	ar.[Name] AS [ArtistName], ");
-                query.Append("	t.[Composer] as [TrackComposer], ");
-                query.Append("	c.[FirstName] AS [CustomerFirstName], ");
-                query.Append("	c.[LastName] as [CustomerLastName] ");
-                query.Append("FROM Track t ");
-                query.Append("JOIN Album a ");
-                query.Append("	ON a.AlbumId = t.AlbumId ");
-                query.Append("JOIN Artist ar ");
-                query.Append("	ON ar.ArtistId = a.ArtistId ");
-                query.Append("JOIN InvoiceLine il ");
-                query.Append("	ON il.TrackId = t.TrackId ");
-                query.Append("JOIN Invoice i ");
-                query.Append("	ON i.InvoiceId = il.InvoiceId ");
-                query.Append("JOIN Customer c ");
-                query.Append("	ON c.CustomerId = i.CustomerId ");
+                var customerExistSubquery = @"
+EXISTS ( 
+    SELECT 0 
+    FROM InvoiceLine il2 
+    JOIN Invoice i2 
+        ON il2.InvoiceId = i2.InvoiceId 
+    WHERE il2.TrackId = t.TrackId 
+        AND i2.CustomerId = @customerId 
+) ";
 
                 if (!String.IsNullOrWhiteSpace(artistId))
                 {
@@ -104,27 +115,13 @@ namespace JDege.EFQ.Web.Controllers
                     if (!String.IsNullOrWhiteSpace(customerId))
                     {
                         query.Append("AND ");
-                        query.Append("EXISTS ( ");
-                        query.Append("	SELECT 0 ");
-                        query.Append("	FROM InvoiceLine il2 ");
-                        query.Append("	JOIN Invoice i2 ");
-                        query.Append("	ON il2.InvoiceId = i2.InvoiceId ");
-                        query.Append("	WHERE il2.TrackId = t.TrackId ");
-                        query.Append("	AND i2.CustomerId = @customerId ");
-                        query.Append(") ");
+                        query.Append(customerExistSubquery);
                     }
                 }
                 else
                 {
                     query.Append("WHERE ");
-                    query.Append("EXISTS ( ");
-                    query.Append("	SELECT 0 ");
-                    query.Append("	FROM InvoiceLine il2 ");
-                    query.Append("	JOIN Invoice i2 ");
-                    query.Append("	ON il2.InvoiceId = i2.InvoiceId ");
-                    query.Append("	WHERE il2.TrackId = t.TrackId ");
-                    query.Append("	AND i2.CustomerId = @customerId ");
-                    query.Append(") ");
+                    query.Append(customerExistSubquery);
                 }
 
                 query.Append("ORDER BY t.[Name] ASC ");
