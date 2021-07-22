@@ -1,3 +1,20 @@
+<script type="text/javascript"
+    src="http://ajblk.github.io/SyntaxHighlightGenerator-v3.0/scripts/sh-v3.0-min.js"></script>
+<link type="text/css" rel="stylesheet"
+    href="http://ajblk.github.io/SyntaxHighlightGenerator-v3.0/styles/shCoreDefault.css" />
+
+<p>
+    In this demo, we show how to solve the problem in plain Entity Framework.
+</p>
+<p>
+    The user selects a client, a worker, or both, from the &lt;select&gt; elements,
+    and clicks "Search" to submit the form.
+</p>
+<p>
+    The POST action receives a clientid and a workerid, either of which can be null.
+    We build a query using EFQuery:
+</p>
+
 <!-- formatted code using http://ajblk.github.io/SyntaxHighlightGenerator-v3.0/OnlineGenerator.html
 Language: C#
 Theme: Default
@@ -11,51 +28,150 @@ Hightlight Line no.:
 Title Above Code:
 -->
 
-<script type="text/javascript" src="http://ajblk.github.io/SyntaxHighlightGenerator-v3.0/scripts/sh-v3.0-min.js"></script><link type="text/css" rel="stylesheet" href="http://ajblk.github.io/SyntaxHighlightGenerator-v3.0/styles/shCoreDefault.css" />
+<!-- Code pasted below -->
 
-<p>
-	In this demo, we show how to solve the problem in plain Entity Framework.
-</p>
-<p>
-	The user selects a client, a worker, or both, from the &lt;select&gt; elements,
-	and clicks "Search" to submit the form.
-</p>
-<p>
-	The POST action receives a clientid and a workerid, either of which can be null.
-	We build a query using EFQuery:
-</p>
-
-<div class="panel">
-	<div class="syntaxhighlighter nogutter csharp ie" id="highlighterMainDiv_978270"><table border="0" cellSpacing="0" cellPadding="0"><tbody><tr><td>&nbsp;</td></tr><tr><td class="code" id="codeContainer_978270"><div class="container" id="container_978270"><div class="line number1 index0 alt2"><code class="csharp keyword">private</code> <code class="csharp plain">IList&lt;TaskModel&gt; getTaskModels(</code><code class="csharp keyword">string</code> <code class="csharp plain">clientId, </code><code class="csharp keyword">string</code> <code class="csharp plain">workerId)</code></div><div class="line number2 index1 alt1"><code class="csharp plain">{</code></div><div class="line number3 index2 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">if</code> <code class="csharp plain">(String.IsNullOrWhiteSpace(clientId) &amp;&amp; String.IsNullOrWhiteSpace(workerId))</code></div><div class="line number4 index3 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">throw</code> <code class="csharp keyword">new</code> <code class="csharp plain">ArgumentException(</code><code class="csharp string">"Must supply at least one of ClientId or WorkerId"</code><code class="csharp plain">);</code></div><div class="line number5 index4 alt2">&nbsp;</div><div class="line number6 index5 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">var andQueries = </code><code class="csharp keyword">new</code> <code class="csharp plain">List&lt;EFQuery&gt;();</code></div><div class="line number7 index6 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">andQueries.Add(EFQuery.equal(</code><code class="csharp string">"CustomerId"</code><code class="csharp plain">, </code><code class="csharp string">"WECUTGRASS"</code><code class="csharp plain">));</code></div><div class="line number8 index7 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">if</code> <code class="csharp plain">(!String.IsNullOrWhiteSpace(clientId))</code></div><div class="line number9 index8 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">andQueries.Add(EFQuery.equal(</code><code class="csharp string">"ClientId"</code><code class="csharp plain">, clientId));</code></div><div class="line number10 index9 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">if</code> <code class="csharp plain">(!String.IsNullOrWhiteSpace(workerId))</code></div><div class="line number11 index10 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">andQueries.Add(EFQuery.any(</code><code class="csharp string">"WorkerTasks"</code><code class="csharp plain">, EFQuery.equal(</code><code class="csharp string">"WorkerId"</code><code class="csharp plain">, workerId)));</code></div><div class="line number12 index11 alt1">&nbsp;</div><div class="line number13 index12 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">var query = EFQuery.and(andQueries);</code></div><div class="line number14 index13 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">var predicate = query.constructPredicate&lt;Task&gt;();</code></div><div class="line number15 index14 alt2">&nbsp;</div><div class="line number16 index15 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">using</code> <code class="csharp plain">(var dbContext = </code><code class="csharp keyword">new</code> <code class="csharp plain">EFQueryDemoDatabaseContext())</code></div><div class="line number17 index16 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number18 index17 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">var tasks = dbContext.Tasks.Where(predicate);</code></div><div class="line number19 index18 alt2">&nbsp;</div><div class="line number20 index19 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">foreach</code> <code class="csharp plain">(var task </code><code class="csharp keyword">in</code> <code class="csharp plain">tasks)</code></div><div class="line number21 index20 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div></div></td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></tbody></table></div>
-	<pre id="presourcecode_978270" class="displaysourcecode">private IList&lt;TaskModel&gt; getTaskModels(string clientId, string workerId)
-{
-    if (String.IsNullOrWhiteSpace(clientId) &amp;&amp; String.IsNullOrWhiteSpace(workerId))
-        throw new ArgumentException("Must supply at least one of ClientId or WorkerId");
-    var andQueries = new List&lt;EFQuery&gt;();
-    andQueries.Add(EFQuery.equal("CustomerId", "WECUTGRASS"));
-    if (!String.IsNullOrWhiteSpace(clientId))
-        andQueries.Add(EFQuery.equal("ClientId", clientId));
-    if (!String.IsNullOrWhiteSpace(workerId))
-        andQueries.Add(EFQuery.any("WorkerTasks", EFQuery.equal("WorkerId", workerId)));
-    var query = EFQuery.and(andQueries);
-    var predicate = query.constructPredicate&lt;Task&gt;();
-    using (var dbContext = new EFQueryDemoDatabaseContext())
-    {
-        var tasks = dbContext.Tasks.Where(predicate);
-        foreach (var task in tasks)
-        {</pre>
+<div id="highlighterMainDiv_216157" class="syntaxhighlighter nogutter csharp">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td id="codeContainer_216157" class="code">
+                    <div id="container_216157" class="container">
+                        <div class="line number1 index0 alt2"><code class="csharp keyword">private</code> <code
+                                class="csharp plain">async Task&lt;IList&lt;TrackModel&gt;&gt; GetTrackModels(</code><code
+                                class="csharp keyword">string</code> <code class="csharp plain">artistId, </code><code
+                                class="csharp keyword">string</code> <code class="csharp plain">customerId)</code></div>
+                        <div class="line number2 index1 alt1"><code class="csharp plain">{</code></div>
+                        <div class="line number3 index2 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">if</code> <code
+                                class="csharp plain">(String.IsNullOrWhiteSpace(artistId) &amp;&amp; String.IsNullOrWhiteSpace(customerId))</code>
+                        </div>
+                        <div class="line number4 index3 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">throw</code> <code class="csharp keyword">new</code> <code
+                                class="csharp plain">ArgumentException(</code><code
+                                class="csharp string">"Must supply at least one of ArtistId or CustomerId"</code><code
+                                class="csharp plain">);</code></div>
+                        <div class="line number5 index4 alt2">&nbsp;</div>
+                        <div class="line number6 index5 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">var andQueriesList = </code><code class="csharp keyword">new</code>
+                            <code class="csharp plain">List&lt;EFQ&gt;();</code></div>
+                        <div class="line number7 index6 alt2">&nbsp;</div>
+                        <div class="line number8 index7 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">andQueriesList.Add(EFQ.IsTrue());</code></div>
+                        <div class="line number9 index8 alt2">&nbsp;</div>
+                        <div class="line number10 index9 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">if</code> <code class="csharp plain">(!</code><code
+                                class="csharp keyword">string</code><code
+                                class="csharp plain">.IsNullOrEmpty(artistId))</code></div>
+                        <div class="line number11 index10 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code>
+                        </div>
+                        <div class="line number12 index11 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">var a = </code><code class="csharp keyword">int</code><code
+                                class="csharp plain">.Parse(artistId);</code></div>
+                        <div class="line number13 index12 alt2">&nbsp;</div>
+                        <div class="line number14 index13 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">andQueriesList.Add(EFQ.Equal(</code><code
+                                class="csharp string">"Album.ArtistId"</code><code class="csharp plain">, a));</code>
+                        </div>
+                        <div class="line number15 index14 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code>
+                        </div>
+                        <div class="line number16 index15 alt1">&nbsp;</div>
+                        <div class="line number17 index16 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">if</code> <code class="csharp plain">(!</code><code
+                                class="csharp keyword">string</code><code
+                                class="csharp plain">.IsNullOrEmpty(customerId))</code></div>
+                        <div class="line number18 index17 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code>
+                        </div>
+                        <div class="line number19 index18 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">var c = </code><code class="csharp keyword">int</code><code
+                                class="csharp plain">.Parse(customerId);</code></div>
+                        <div class="line number20 index19 alt1">&nbsp;</div>
+                        <div class="line number21 index20 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">andQueriesList.Add(EFQ.Any(</code><code
+                                class="csharp string">"InvoiceLines"</code><code
+                                class="csharp plain">, EFQ.Equal(</code><code
+                                class="csharp string">"Invoice.CustomerId"</code><code
+                                class="csharp plain">, c)));</code></div>
+                        <div class="line number22 index21 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code>
+                        </div>
+                        <div class="line number23 index22 alt2">&nbsp;</div>
+                        <div class="line number24 index23 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">var query = EFQ.And(andQueriesList);</code></div>
+                        <div class="line number25 index24 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">var predicate = query.ConstructPredicate&lt;Track&gt;();</code>
+                        </div>
+                        <div class="line number26 index25 alt1">&nbsp;</div>
+                        <div class="line number27 index26 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">using</code> <code
+                                class="csharp plain">(var dbContext = _contextFactory.CreateDbContext())</code></div>
+                        <div class="line number28 index27 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code>
+                        </div>
+                        <div class="line number29 index28 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">var trackModelList = await dbContext.Tracks.Where(predicate)</code>
+                        </div>
+                        <div class="line number30 index29 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">.OrderBy(t =&gt; t.Name)</code></div>
+                        <div class="line number31 index30 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">.ProjectTo&lt;TrackModel&gt;(_configurationProvider)</code></div>
+                        <div class="line number32 index31 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">.ToListAsync();</code></div>
+                        <div class="line number33 index32 alt2">&nbsp;</div>
+                        <div class="line number34 index33 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">return</code> <code class="csharp plain">trackModelList;</code>
+                        </div>
+                        <div class="line number35 index34 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code>
+                        </div>
+                        <div class="line number36 index35 alt1"><code class="csharp plain">}</code></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
+<!-- Code pasted above -->
+
 <p>
-	This is about the same as PredicateBuilder in complexity. It loses functionality in that it's
-	not type-safe. It uses strings containing field names to identify fields, rather than using lambda expressions,
-	which the compiler can check.
+    This is about the same as PredicateBuilder in complexity. It loses functionality in that it's
+    not type-safe. It uses strings containing field names to identify fields, rather than using lambda expressions,
+    which the compiler can check.
 </p>
 
 <p>
-	What it gains, though, is the ability to serialize the query, which is useful in a number of
-	scenarios, the most common of which might be passing partial queries back and forth from the client.
+    What it gains, though, is the ability to serialize the query, which is useful in a number of
+    scenarios, the most common of which might be passing partial queries back and forth from the client.
 </p>
 
 <script type="text/javascript">SyntaxHighlighter.initialize();</script>
-

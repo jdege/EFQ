@@ -20,7 +20,7 @@ using PeteMontgomery.PredicateBuilder;
 
 namespace JDege.EFQ.Web.Controllers
 {
-    public class PredicateBuilderController : Controller
+    public class EFQueryController : Controller
     {
         private readonly IDbContextFactory<ChinookContext> _contextFactory;
         // Injecting AutoMapper configuration
@@ -28,7 +28,7 @@ namespace JDege.EFQ.Web.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<ADOController> _logger;
 
-        public PredicateBuilderController(IDbContextFactory<ChinookContext> contextFactory,
+        public EFQueryController(IDbContextFactory<ChinookContext> contextFactory,
         IConfigurationProvider configurationProvider, IWebHostEnvironment webHostEnvironment, ILogger<ADOController> logger)
         {
             _contextFactory = contextFactory;
@@ -40,14 +40,14 @@ namespace JDege.EFQ.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/pb_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/efq_docs.html");
             ViewBag.explanationActive = "active";
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = null;
 
             var trackFormModel = new TrackFormModel
             {
-                Title = "Plain Entity Framework",
+                Title = "Plain EFQ",
                 Artists = await GetArtistSelectionListAsync(),
                 Customers = await GetCustomerSelectionListAsync()
             };
@@ -76,21 +76,26 @@ namespace JDege.EFQ.Web.Controllers
             if (String.IsNullOrWhiteSpace(artistId) && String.IsNullOrWhiteSpace(customerId))
                 throw new ArgumentException("Must supply at least one of ArtistId or CustomerId");
 
-            var predicate = PredicateBuilder.Create<Track>(t => true);
+            var andQueriesList = new List<EFQ>();
+
+            andQueriesList.Add(EFQ.IsTrue());
 
             if (!string.IsNullOrEmpty(artistId))
             {
                 var a = int.Parse(artistId);
 
-                predicate = predicate.And(PredicateBuilder.Create<Track>(t => t.Album.ArtistId == a));
+                andQueriesList.Add(EFQ.Equal("Album.ArtistId", a));
             }
 
             if (!string.IsNullOrEmpty(customerId))
             {
                 var c = int.Parse(customerId);
 
-                predicate = predicate.And(PredicateBuilder.Create<Track>(t => t.InvoiceLines.Any(il => il.Invoice.CustomerId == c)));
+                andQueriesList.Add(EFQ.Any("InvoiceLines", EFQ.Equal("Invoice.CustomerId", c)));
             }
+
+            var query = EFQ.And(andQueriesList);
+            var predicate = query.ConstructPredicate<Track>();
 
             using (var dbContext = _contextFactory.CreateDbContext())
             {
