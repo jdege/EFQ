@@ -85,9 +85,12 @@ SELECT
     a.[Title] AS [AlbumTitle], 
     ar.[Name] AS [ArtistName], 
     t.[Composer] as [TrackComposer], 
+    m.[Name] as [MediaType], 
     c.[FirstName] AS [CustomerFirstName], 
     c.[LastName] as [CustomerLastName] 
 FROM Track t 
+JOIN MediaType m
+    ON m.MediaTypeId = t.MediaTypeId
 JOIN Album a 
     ON a.AlbumId = t.AlbumId 
 JOIN Artist ar 
@@ -147,6 +150,7 @@ EXISTS (
                             var albumTitle = rdr.getValue<string>("AlbumTitle");
                             var artistName = rdr.getValue<string>("ArtistName");
                             var trackComposer = rdr.getValue<string>("TrackComposer");
+                            var mediaType = rdr.getValue<string>("MediaType");
                             var customerFirstName = rdr.getValue<string>("CustomerFirstName");
                             var customerLastName = rdr.getValue<string>("CustomerLastName");
 
@@ -160,6 +164,7 @@ EXISTS (
                                     TrackName = trackName,
                                     ArtistName = artistName,
                                     AlbumTitle = albumTitle,
+                                    MediaType = mediaType,
                                     TrackComposer = trackComposer
                                 };
 

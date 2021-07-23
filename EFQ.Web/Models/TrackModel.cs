@@ -14,6 +14,7 @@ namespace JDege.EFQ.Web.Models
         public string AlbumTitle { get; internal set; }
         public string ArtistName { get; internal set; }
         public string TrackComposer { get; internal set; }
+        public string MediaType { get; internal set; }
         public IList<Customer> Customers { get; internal set; }
 
         public class Customer
@@ -33,6 +34,7 @@ namespace JDege.EFQ.Web.Models
                 .ForMember(dest => dest.AlbumTitle, opt => opt.MapFrom(src => src.Album.Title))
                 .ForMember(dest => dest.ArtistName, opt => opt.MapFrom(src => src.Album.Artist.Name))
                 .ForMember(dest => dest.TrackComposer, opt => opt.MapFrom(src => src.Composer))
+                .ForMember(dest => dest.MediaType, opt => opt.MapFrom(src => src.MediaType.Name))
                 .ForMember(dest => dest.Customers, opt => opt.MapFrom(src => src.InvoiceLines))
                 ;
 
