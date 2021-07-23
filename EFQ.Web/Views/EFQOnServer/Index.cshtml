@@ -97,7 +97,24 @@
             { title: "AlbumTitle", data: "albumTitle" },
             { title: "ArtistName", data: "artistName" },
             { title: "TrackComposer", data: "trackComposer" },
-            { title: "Customers", data: "customers" }
+            {
+                title: "Customers",
+                data: "customers",
+                render: function (data, type, row)
+                {
+                    var rVal = '';
+
+                    $.each(data, function (index, value)
+                    {
+                        rVal += value.firstName;
+                        rVal += ' '
+                        rVal += value.lastName;
+                        rVal += '<br>'
+                    });
+
+                    return rVal;
+                }
+            }
         ]
     });
 
