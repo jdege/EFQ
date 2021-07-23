@@ -1,11 +1,4 @@
 ﻿
-// DropdownService.getArtists(function(result) {
-//     fillSelect($artistSelect, result);
-// });
-
-// DropdownService.getCustomers(function(result) {
-
-
 DropdownService = {
 
     getArtists: function (callback)
@@ -108,5 +101,48 @@ DropdownService = {
     //         {
     //             callback({ success: false, error: errorThrown });
     //         });
+    // }
+};
+
+TrackQueryService = {
+    getTracks: function (artistId, customerId, callback)
+    {
+        var url = "api/Tracks";
+        var data = { artistId: artistId, customerId: customerId };
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data)
+        };
+
+        $.ajax(url, settings)
+            .done(function (result, status, jqXHR)
+            {
+                callback({ success: true, data: result });
+            })
+            .fail(function (jqXHR, textStatus, errorThrown)
+            {
+                callback({ success: false, error: errorThrown });
+            });
+    }
+    // ,
+    // getTasks2: function(efQuery, callback) {
+    // 	var url = "api/Tasks2";
+    // 	var data = { efQuery: efQuery };
+    // 	var settings = {
+    // 		type: "POST",
+    // 		dataType: "json",
+    // 		contentType: "application/json",
+    // 		data: JSON.stringify(data)
+    // 	};
+
+    // 	$.ajax(url, settings)
+    // 		.done(function(result, status, jqXHR) {
+    // 			callback({ success: true, data: result });
+    // 		})
+    // 		.fail(function(jqXHR, textStatus, errorThrown) {
+    // 			callback({ success: false, error: errorThrown });
+    // 		});
     // }
 };

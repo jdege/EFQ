@@ -1,8 +1,13 @@
+<h1>EFQ on Server</h1>
 
-@{
-}
-
-@* <h1>@Model.Title</h1> *@
+<ul class="list-inline">
+    <li class="list-inline-item"><a asp-controller="ADO" list-group-item-action>Simple ADO</a></li>
+    <li class="list-inline-item"><a asp-controller="PlainEF" list-group-item-action>Plain Entity Framework</a></li>
+    <li class="list-inline-item"><a asp-controller="PredicateBuilder" list-group-item-action>Predicate Builder</a></li>
+    <li class="list-inline-item"><a asp-controller="EFQuery" list-group-item-action>EFQuery</a></li>
+    <li class="list-inline-item"><a asp-controller="EFQOnServer" list-group-item-action>EFQuery on server</a></li>
+    <li class="list-inline-item"><a href="EFQueryOnClient" list-group-item-action>EFQuery on client</a></li>
+</ul>
 
 <div class="container">
     <ul class="nav nav-tabs" role="tablist">
@@ -59,7 +64,7 @@
                     <div class="col-sm-9">
                     </div>
                     <div class="col-sm-3">
-                        <input type="submit" value="Search" class="btn btn-primary" />
+                        <input id="Submit" type="button" value="Search" class="btn btn-primary" />
                     </div>
                 </div>
             }
@@ -67,61 +72,8 @@
         <div id="results" class="tab-pane fade show @ViewBag.resultsActive">
             <h3>Results</h3>
             <div class="container">
-
-                @* @if (Model.TrackModels != null && Model.TrackModels.Count > 0)
-                {
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.TrackModels[0].TrackName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.TrackModels[0].AlbumTitle)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.TrackModels[0].ArtistName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.TrackModels[0].TrackComposer)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.TrackModels[0].Customers)
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.TrackModels)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TrackName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.AlbumTitle)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ArtistName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TrackComposer)
-                                    </td>
-                                    <td>
-                                        @foreach (var customer in item.Customers)
-                                        {
-@Html.DisplayFor(modelItem => customer.FirstName)<text>&nbsp;</text>@Html.DisplayFor(modelItem => customer.LastName)
-                                        <br>
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
-                else *@
-                {
-                    <p>No results.</p>
-                }
+                <table id="TracksTable" class="col-sm-12">
+                </table>
             </div>
         </div>
     </div>
@@ -132,30 +84,72 @@
 
 @section Scripts {
 
-    <script type="text/javascript">
-        var fillSelect = function($select, result) {
-            debugger;
-            if (result.success) {
-                $select.empty().append("<option value=''></option>");
-                $.each(result.data, function(index, item) {
-                    $select.append("<option value='" + item.value + "'>" + item.text + "</option>");
-                });
-            } else {
+<script type="text/javascript">
+    debugger;
+    var $artistSelect = $("#ArtistId");
+    var $customerSelect = $("#CustomerId");
+    var $submitButton = $("#Submit");
+
+    var $tracksTable = $("#TracksTable").DataTable({
+        data: [],
+        columns: [
+            { title: "TrackName", data: "TrackName" },
+            { title: "AlbumTitle", data: "AlbumTitle" },
+            { title: "ArtistName", data: "ArtistName" },
+            { title: "TrackComposer", data: "TrackComposer" },
+            { title: "Customers", data: "Customers" }
+        ]
+    });
+
+    var fillSelect = function ($select, result)
+    {
+        debugger;
+        if (result.success)
+        {
+            $select.empty().append("<option value=''></option>");
+            $.each(result.data, function (index, item)
+            {
+                $select.append("<option value='" + item.value + "'>" + item.text + "</option>");
+            });
+        } else
+        {
+            alert(result.error);
+        }
+    };
+
+    $("#Submit").click(function ()
+    {
+        debugger;
+        var artistId = $artistSelect.val();
+        var customerId = $customerSelect.val();
+
+        TrackQueryService.getTracks(artistId, customerId, function (result)
+        {
+            if (result.success)
+            {
+                var data = result.data;
+                $tracksTable.clear();
+                $tracksTable.rows.add(data);
+                $tracksTable.draw();
+            } else
+            {
                 alert(result.error);
             }
-        };
-
-        $(document).ready(function() {
-            var $artistSelect = $("#ArtistId");
-            var $customerSelect = $("#CustomerId");
-
-            DropdownService.getArtists(function(result) {
-                fillSelect($artistSelect, result);
-            });
-
-            DropdownService.getCustomers(function(result) {
-                fillSelect($customerSelect, result);
-            });
         });
-    </script>
+    });
+
+    $(document).ready(function ()
+    {
+        debugger;
+        DropdownService.getArtists(function (result)
+        {
+            fillSelect($artistSelect, result);
+        });
+
+        DropdownService.getCustomers(function (result)
+        {
+            fillSelect($customerSelect, result);
+        });
+    });
+</script>
 }
