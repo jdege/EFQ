@@ -107,10 +107,10 @@ DropdownService = {
 TrackQueryService = {
     getTracks: function (artistId, customerId, callback)
     {
-        var url = "api/Tracks";
+        var url = "api/Track";
         var data = { artistId: artistId, customerId: customerId };
         var settings = {
-            type: "POST",
+            type: "GET",
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data)
