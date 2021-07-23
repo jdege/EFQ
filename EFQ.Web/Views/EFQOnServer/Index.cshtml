@@ -155,12 +155,12 @@
 
     $(document).ready(function ()
     {
-        DropdownService.getArtists(function (result)
+        DropdownService.getArtists({ includeQueries: false }, function (result)
         {
             fillSelect($artistSelect, result);
         });
 
-        DropdownService.getCustomers(function (result)
+        DropdownService.getCustomers({ includeQueries: false }, function (result)
         {
             fillSelect($customerSelect, result);
         });

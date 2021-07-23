@@ -30,7 +30,7 @@ namespace JDege.EFQ.Web.ApiControllers
 
         [HttpGet]
         [Route("GetDropdown")]
-        public async Task<IEnumerable<DropdownModel>> GetDropdownAsync()
+        public async Task<IEnumerable<DropdownModel>> GetDropdownAsync(bool includeQueries)
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
@@ -42,6 +42,5 @@ namespace JDege.EFQ.Web.ApiControllers
                 return dropdownModels;
             }
         }
-
     }
 }

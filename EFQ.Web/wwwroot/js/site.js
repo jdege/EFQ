@@ -1,13 +1,14 @@
 ﻿
 DropdownService = {
 
-    getArtists: function (callback)
+    getArtists: function (options, callback)
     {
         var url = "api/Artist/GetDropdown";
 
         var settings = {
             type: "GET",
             dataType: "json",
+            data: { includeQueries: options.includeQueries },
             contentType: "application/json"
         };
 
@@ -22,13 +23,14 @@ DropdownService = {
             });
     },
 
-    getCustomers: function (callback)
+    getCustomers: function (options, callback)
     {
         var url = "api/Customer/GetDropdown";
 
         var settings = {
             type: "GET",
             dataType: "json",
+            data: { includeQueries: options.includeQueries },
             contentType: "application/json"
         };
 
