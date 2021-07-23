@@ -8,6 +8,7 @@ using JDege.EFQ.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace JDege.EFQ.Web.ApiControllers
 {
@@ -38,6 +39,15 @@ namespace JDege.EFQ.Web.ApiControllers
                     .OrderBy(a => a.Name)
                     .ProjectTo<DropdownModel>(_configurationProvider)
                     .ToListAsync();
+
+                if (includeQueries)
+                {
+                    foreach (var model in dropdownModels)
+                    {
+                        var efq = EFQ.Equal("Album.ArtistId", model.value);
+                        model.queryJson = JsonConvert.SerializeObject(efq);
+                    }
+                }
 
                 return dropdownModels;
             }

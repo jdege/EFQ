@@ -8,6 +8,7 @@ using JDege.EFQ.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace JDege.EFQ.Web.ApiControllers
 {
@@ -39,6 +40,15 @@ namespace JDege.EFQ.Web.ApiControllers
                     .ThenBy(c => c.FirstName)
                     .ProjectTo<DropdownModel>(_configurationProvider)
                     .ToListAsync();
+
+                if (includeQueries)
+                {
+                    foreach (var model in dropdownModels)
+                    {
+                        var efq = EFQ.Any("InvoiceLines", EFQ.Equal("Invoice.CustomerId", model.value));
+                        model.queryJson = JsonConvert.SerializeObject(efq);
+                    }
+                }
 
                 return dropdownModels;
             }

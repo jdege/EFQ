@@ -9,7 +9,7 @@
     <li class="list-inline-item"><a asp-controller="PredicateBuilder" list-group-item-action>Predicate Builder</a></li>
     <li class="list-inline-item"><a asp-controller="EFQuery" list-group-item-action>EFQuery</a></li>
     <li class="list-inline-item"><a asp-controller="EFQOnServer" list-group-item-action>EFQuery on server</a></li>
-    <li class="list-inline-item"><a href="EFQueryOnClient" list-group-item-action>EFQuery on client</a></li>
+    <li class="list-inline-item"><a asp-controller="EFQOnClient" list-group-item-action>EFQuery on client</a></li>
 </ul>
 
 <p>
@@ -52,16 +52,16 @@
         will allow you to construct a query from pieces in more complicated ways that using plain EF.
     </li>
     <li>
-        <a asp-controller="EFQuery">EFQuery</a> -
-        EFQuery wraps PredicateBuilder, and when used directly works much the same way.
+        <a asp-controller="EFQuery">EFQ</a> -
+        EFQ wraps PredicateBuilder, and when used directly works much the same way.
     </li>
     <li>
-        <a asp-controller="EFQOnServer">EFQuery on server</a> - EFQuery allows you to create partial
-        queries and combine the separately. Here we're combining them on the server.
+        <a asp-controller="EFQOnServer">EFQ on server</a> - EFQ allows you to create partial
+        queries and combine them separately. Here we're combining them on the server.
     </li>
     <li>
-        <a href="EFQueryOnClient">EFQuery on client</a> -EFQuery allows you to create partial
-        queries and combine the separately. Here we're combining them on the client.
+        <a asp-controller="EFQOnClient">EFQ on client</a> -EFQ allows you to create partial
+        queries and combine them separately. Here we're combining them on the client.
     </li>
 </ol>
 </p>

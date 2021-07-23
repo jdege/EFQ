@@ -43,25 +43,25 @@
 <p>
 	The Demos:
 <ol>
-	<li><a href="ADO">Simple ADO</a> - When using ADO, a query is simply a string containing SQL</li>
-	<li><a href="PlainEF">Plain Entity Framework</a> - With EF, in the simple case you can build up a query using
-		IQueryable obects.</li>
+	<li><a asp-controller="ADO">Simple ADO</a> - When using ADO, a query is simply a string containing SQL</li>
+	<li><a asp-controller="PlainEF">Plain Entity Framework</a> - With EF, in the simple case you can build up a query
+		using IQueryable obects.</li>
 	<li>
-		<a href="PredicateBuilder">Predicate Builder</a> -
+		<a asp-controller="PredicateBuilder">Predicate Builder</a> -
 		Pete Montgomery's <a
 			href="https://petemontgomery.wordpress.com/2011/02/10/a-universal-predicatebuilder/">PredicateBuilder</a>
 		will allow you to construct a query from pieces in more complicated ways that using plain EF.
 	</li>
 	<li>
-		<a href="EFQuery">EFQuery</a> -
+		<a asp-controller="EFQuery">EFQuery</a> -
 		EFQuery wraps PredicateBuilder, and when used directly works much the same way.
 	</li>
 	<li>
-		<a href="EFQueryOnServer">EFQuery on server</a> - EFQuery allows you to create partial
+		<a asp-controller="EFQOnServer">EFQuery on server</a> - EFQuery allows you to create partial
 		queries and combine the separately. Here we're combining them on the server.
 	</li>
 	<li>
-		<a href="EFQueryOnClient">EFQuery on client</a> -EFQuery allows you to create partial
+		<a asp-controller="EFQOnClient">EFQuery on client</a> -EFQuery allows you to create partial
 		queries and combine the separately. Here we're combining them on the client.
 	</li>
 </ol>

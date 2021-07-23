@@ -7,7 +7,7 @@
     <li class="list-inline-item"><a asp-controller="EFQOnClient" list-group-item-action>EFQuery on client</a></li>
 </ul>
 
-<h1>EFQ on Server</h1>
+<h1>EFQ on Client</h1>
 
 <div class="container">
     <ul class="nav nav-tabs" role="tablist">
@@ -156,12 +156,12 @@
 
     $(document).ready(function ()
     {
-        DropdownService.getArtists({ includeQueries: false }, function (result)
+        DropdownService.getArtists({ includeQueries: true }, function (result)
         {
             fillSelect($artistSelect, result);
         });
 
-        DropdownService.getCustomers({ includeQueries: false }, function (result)
+        DropdownService.getCustomers({ includeQueries: true }, function (result)
         {
             fillSelect($customerSelect, result);
         });
