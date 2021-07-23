@@ -1,5 +1,3 @@
-<h1>EFQ on Server</h1>
-
 <ul class="list-inline">
     <li class="list-inline-item"><a asp-controller="ADO" list-group-item-action>Simple ADO</a></li>
     <li class="list-inline-item"><a asp-controller="PlainEF" list-group-item-action>Plain Entity Framework</a></li>
@@ -8,6 +6,8 @@
     <li class="list-inline-item"><a asp-controller="EFQOnServer" list-group-item-action>EFQuery on server</a></li>
     <li class="list-inline-item"><a href="EFQueryOnClient" list-group-item-action>EFQuery on client</a></li>
 </ul>
+
+<h1>EFQ on Server</h1>
 
 <div class="container">
     <ul class="nav nav-tabs" role="tablist">
@@ -93,17 +93,16 @@
     var $tracksTable = $("#TracksTable").DataTable({
         data: [],
         columns: [
-            { title: "TrackName", data: "TrackName" },
-            { title: "AlbumTitle", data: "AlbumTitle" },
-            { title: "ArtistName", data: "ArtistName" },
-            { title: "TrackComposer", data: "TrackComposer" },
-            { title: "Customers", data: "Customers" }
+            { title: "TrackName", data: "trackName" },
+            { title: "AlbumTitle", data: "albumTitle" },
+            { title: "ArtistName", data: "artistName" },
+            { title: "TrackComposer", data: "trackComposer" },
+            { title: "Customers", data: "customers" }
         ]
     });
 
     var fillSelect = function ($select, result)
     {
-        debugger;
         if (result.success)
         {
             $select.empty().append("<option value=''></option>");
@@ -119,7 +118,6 @@
 
     $("#Submit").click(function ()
     {
-        debugger;
         var artistId = $artistSelect.val();
         var customerId = $customerSelect.val();
 
@@ -131,6 +129,7 @@
                 $tracksTable.clear();
                 $tracksTable.rows.add(data);
                 $tracksTable.draw();
+                $('#tab-results').trigger('click');
             } else
             {
                 alert(result.error);
@@ -140,7 +139,6 @@
 
     $(document).ready(function ()
     {
-        debugger;
         DropdownService.getArtists(function (result)
         {
             fillSelect($artistSelect, result);

@@ -113,7 +113,7 @@ TrackQueryService = {
             type: "GET",
             dataType: "json",
             contentType: "application/json",
-            data: JSON.stringify(data)
+            data: data
         };
 
         $.ajax(url, settings)
