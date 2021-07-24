@@ -46,7 +46,7 @@ namespace JDege.EFQ.Web.ApiControllers
                     foreach (var model in dropdownModels)
                     {
                         var efq = EFQ.Any("InvoiceLines", EFQ.Equal("Invoice.CustomerId", model.value));
-                        model.queryJson = JsonConvert.SerializeObject(efq);
+                        model.query = efq;
                     }
                 }
 

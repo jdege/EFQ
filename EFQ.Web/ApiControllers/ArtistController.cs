@@ -45,7 +45,7 @@ namespace JDege.EFQ.Web.ApiControllers
                     foreach (var model in dropdownModels)
                     {
                         var efq = EFQ.Equal("Album.ArtistId", model.value);
-                        model.queryJson = JsonConvert.SerializeObject(efq);
+                        model.query = efq;
                     }
                 }
 

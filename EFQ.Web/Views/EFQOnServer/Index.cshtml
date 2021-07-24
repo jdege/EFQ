@@ -125,7 +125,7 @@
             $select.empty().append("<option value=''></option>");
             $.each(result.data, function (index, item)
             {
-                $select.append("<option value='" + item.value + "'>" + item.text + "</option>");
+                $select.append($("<option />").val(item.value || index).text(item.text));
             });
         } else
         {

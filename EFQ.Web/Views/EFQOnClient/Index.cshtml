@@ -128,7 +128,7 @@
             $select.empty().append("<option value=''></option>");
             $.each(result.data, function (index, item)
             {
-                $select.append("<option value='" + item.value + "'>" + item.text + "</option>");
+                $select.append($("<option />").val(item.value || index).text(item.text).data('query', item.query));
             });
         } else
         {
@@ -138,10 +138,24 @@
 
     $("#Submit").click(function ()
     {
-        var artistId = $artistSelect.val();
-        var customerId = $customerSelect.val();
+        var andQueries = [EFQ.isTrue()];
 
-        TrackQueryService.getTracks(artistId, customerId, function (result)
+        var artistSelected = $artistSelect.find(':selected');
+        var artistQuery = artistSelected.data('query');// $artistSelect.find(':selected').data('query');
+        if (artistQuery)
+        {
+            andQueries.push(artistQuery);
+        }
+
+        var customer = $customerSelect.find(':selected').data('query');
+        if (customer)
+        {
+            andQueries.push(customer);
+        }
+
+        var query = EFQ.and(andQueries);
+
+        TrackQueryService.getTracks2(query, function (result)
         {
             if (result.success)
             {
