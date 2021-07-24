@@ -18,6 +18,14 @@ namespace JDege.EFQ.Web.Controllers
         {
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
+
+            var assembly = typeof(EFQ).Assembly;
+            var resources = assembly.GetManifestResourceNames();
+            using (var resourceStream = assembly.GetManifestResourceStream("EFQ.JavaScript.EFQ.js"))
+            {
+                var rdr = new StreamReader(resourceStream);
+                var contents = rdr.ReadToEnd();
+            }
         }
 
         [HttpGet]
