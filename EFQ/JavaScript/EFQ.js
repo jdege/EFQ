@@ -1,7 +1,9 @@
-﻿var EFQuery = (function() {
+﻿var EFQ = (function ()
+{
 	'use strict';
 
-	function EFQuery(selectionComparison, fieldName, fieldValue, aggregateList, innerCriteria) {
+	function EFQ(selectionComparison, fieldName, fieldValue, aggregateList, innerCriteria)
+	{
 		this.selectionComparison = selectionComparison;
 		this.fieldName = fieldName;
 		this.fieldValue = fieldValue;
@@ -9,99 +11,120 @@
 		this.innerCriteria = innerCriteria;
 	}
 
-	EFQuery.compare = function(comparison, fieldName, fieldValue) {
-		return new EFQuery(comparison, fieldName, fieldValue);
+	EFQ.compare = function (comparison, fieldName, fieldValue)
+	{
+		return new EFQ(comparison, fieldName, fieldValue);
 	};
 
-	EFQuery.isTrue = function() {
-		return new EFQuery("IsTrue");
+	EFQ.isTrue = function ()
+	{
+		return new EFQ("IsTrue");
 	};
 
-	EFQuery.isFalse = function() {
-		return new EFQuery("IsFalse");
+	EFQ.isFalse = function ()
+	{
+		return new EFQ("IsFalse");
 	};
 
-	EFQuery.contains = function(fieldName, fieldValue) {
-		return new EFQuery("Contains", fieldName, fieldValue);
+	EFQ.contains = function (fieldName, fieldValue)
+	{
+		return new EFQ("Contains", fieldName, fieldValue);
 	};
 
-	EFQuery.startsWith = function(fieldName, fieldValue) {
-		return new EFQuery("StartsWith", fieldName, fieldValue);
+	EFQ.startsWith = function (fieldName, fieldValue)
+	{
+		return new EFQ("StartsWith", fieldName, fieldValue);
 	};
 
-	EFQuery.endsWith = function(fieldName, fieldValue) {
-		return new EFQuery("EndsWith", fieldName, fieldValue);
+	EFQ.endsWith = function (fieldName, fieldValue)
+	{
+		return new EFQ("EndsWith", fieldName, fieldValue);
 	};
 
-	EFQuery.like = function(fieldName, fieldValue) {
-		return new EFQuery("Like", fieldName, fieldValue);
+	EFQ.like = function (fieldName, fieldValue)
+	{
+		return new EFQ("Like", fieldName, fieldValue);
 	};
 
-	EFQuery.any = function(fieldName, innerCriteria) {
-		return new EFQuery("Any", fieldName, null, null, innerCriteria);
+	EFQ.any = function (fieldName, innerCriteria)
+	{
+		return new EFQ("Any", fieldName, null, null, innerCriteria);
 	};
 
-	EFQuery.equal = function(fieldName, fieldValue) {
-		return new EFQuery("Equal", fieldName, fieldValue);
+	EFQ.equal = function (fieldName, fieldValue)
+	{
+		return new EFQ("Equal", fieldName, fieldValue);
 	};
 
-	EFQuery.notEqual = function(fieldName, fieldValue) {
-		return new EFQuery("NotEqual", fieldName, fieldValue);
+	EFQ.notEqual = function (fieldName, fieldValue)
+	{
+		return new EFQ("NotEqual", fieldName, fieldValue);
 	};
 
-	EFQuery.greaterThan = function(fieldName, fieldValue) {
-		return new EFQuery("GreaterThan", fieldName, fieldValue);
+	EFQ.greaterThan = function (fieldName, fieldValue)
+	{
+		return new EFQ("GreaterThan", fieldName, fieldValue);
 	};
 
-	EFQuery.greaterThanOrEqual = function(fieldName, fieldValue) {
-		return new EFQuery("GreaterThanOrEqual", fieldName, fieldValue);
+	EFQ.greaterThanOrEqual = function (fieldName, fieldValue)
+	{
+		return new EFQ("GreaterThanOrEqual", fieldName, fieldValue);
 	};
 
-	EFQuery.lessThan = function(fieldName, fieldValue) {
-		return new EFQuery("LessThan", fieldName, fieldValue);
+	EFQ.lessThan = function (fieldName, fieldValue)
+	{
+		return new EFQ("LessThan", fieldName, fieldValue);
 	};
 
-	EFQuery.lessThanOrEqual = function(fieldName, fieldValue) {
-		return new EFQuery("LessThanOrEqual", fieldName, fieldValue);
+	EFQ.lessThanOrEqual = function (fieldName, fieldValue)
+	{
+		return new EFQ("LessThanOrEqual", fieldName, fieldValue);
 	};
 
-	EFQuery.and = function(selectionCriteriae) {
-		return new EFQuery("And", undefined, undefined, selectionCriteriae);
+	EFQ.and = function (selectionCriteriae)
+	{
+		return new EFQ("And", undefined, undefined, selectionCriteriae);
 	};
 
-	EFQuery.or = function(selectionCriteriae) {
-		return new EFQuery("Or", undefined, undefined, selectionCriteriae);
+	EFQ.or = function (selectionCriteriae)
+	{
+		return new EFQ("Or", undefined, undefined, selectionCriteriae);
 	};
 
-	EFQuery.nand = function(selectionCriteriae) {
-		return new EFQuery("Nand", undefined, undefined, selectionCriteriae);
+	EFQ.nand = function (selectionCriteriae)
+	{
+		return new EFQ("Nand", undefined, undefined, selectionCriteriae);
 	};
 
-	EFQuery.nor = function(selectionCriteriae) {
-		return new EFQuery("Nor", undefined, undefined, selectionCriteriae);
+	EFQ.nor = function (selectionCriteriae)
+	{
+		return new EFQ("Nor", undefined, undefined, selectionCriteriae);
 	};
 
-	EFQuery.not = function(selectionCriteria) {
-		return new EFQuery("Nand", undefined, undefined, [selectionCriteria]);
+	EFQ.not = function (selectionCriteria)
+	{
+		return new EFQ("Nand", undefined, undefined, [selectionCriteria]);
 	};
 
-	EFQuery.containedIn = function(fieldName, values) {
+	EFQ.containedIn = function (fieldName, values)
+	{
 		var criteriae = [];
 		for (var i = 0; i < values.length; i++)
-			criteriae.push(EFQuery.equal(fieldName, values[i]));
+			criteriae.push(EFQ.equal(fieldName, values[i]));
 
-		return new EFQuery("Or", undefined, undefined, criteriae);
+		return new EFQ("Or", undefined, undefined, criteriae);
 	};
 
-	EFQuery.between = function(fieldName, left, right) {
+	EFQ.between = function (fieldName, left, right)
+	{
 		var criteriae = [
-			EFQuery.greaterThanOrEqual(fieldName, left),
-			EFQuery.lessThanOrEqual(fieldName, right)
+			EFQ.greaterThanOrEqual(fieldName, left),
+			EFQ.lessThanOrEqual(fieldName, right)
 		];
-		return new EFQuery("And", undefined, undefined, criteriae);
+		return new EFQ("And", undefined, undefined, criteriae);
 	};
 
-	return EFQuery;
+	return EFQ;
 
 })();
 

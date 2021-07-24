@@ -84,7 +84,10 @@
 
 @section Scripts {
 
+<script src="~/efq/EFQ.js"></script>
+
 <script type="text/javascript">
+    debugger;
     var $artistSelect = $("#ArtistId");
     var $customerSelect = $("#CustomerId");
     var $submitButton = $("#Submit");
@@ -156,6 +159,9 @@
 
     $(document).ready(function ()
     {
+        var foo = EFQ;
+        var bar = EFQ.isTrue();
+
         DropdownService.getArtists({ includeQueries: true }, function (result)
         {
             fillSelect($artistSelect, result);

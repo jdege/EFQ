@@ -1,9 +1,13 @@
+using System.Reflection;
+using EFQ;
 using EFQ.Web.DbContexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 
 namespace JDege.EFQ.Web
@@ -33,6 +37,14 @@ namespace JDege.EFQ.Web
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EFQ.Web", Version = "v1" });
             });
+
+
+            // var efqManifestEmbeddedProvider =
+            //     new ManifestEmbeddedFileProvider(typeof(EFQ).Assembly);
+            // // var compositeProvider =
+            // //     new CompositeFileProvider(efqManifestEmbeddedProvider);
+
+            // services.AddSingleton<IFileProvider>(efqManifestEmbeddedProvider);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +69,28 @@ namespace JDege.EFQ.Web
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
             });
+
+            app.MapEFQ("/efq");
+            // app.Map("/efq", builder =>
+            // {
+            //     var provider = new ManifestEmbeddedFileProvider(
+            //         assembly: Assembly.GetAssembly(typeof(EFQ)), "JavaScript");
+            //     builder.UseStaticFiles(new StaticFileOptions
+            //     {
+            //         FileProvider = provider
+            //     });
+            //     // builder.Run(async context =>
+            //     // {
+            //     //     await context.Response.SendFileAsync(provider.GetFileInfo("EFQ.js"));
+            //     // });
+            // });
+
+            // app.UseFileServer(new FileServerOptions
+            // {
+            //     RequestPath = "/efq",
+            //     FileProvider = new ManifestEmbeddedFileProvider(
+            //             assembly: Assembly.GetAssembly(typeof(EFQ)))
+            // });
         }
     }
 }

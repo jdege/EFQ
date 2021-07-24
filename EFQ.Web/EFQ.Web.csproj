@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EFQ\EFQ.csproj" />
+    <ProjectReference Include="../EFQ/EFQ.csproj" />
   </ItemGroup>
 
 </Project>
