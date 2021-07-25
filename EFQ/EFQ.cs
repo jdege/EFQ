@@ -23,7 +23,7 @@ namespace JDege.EFQ
         // #TODO: better name for SelectionComparison?
         [NJ.JsonConverter(typeof(NJC.StringEnumConverter))]
         [SJS.JsonConverter(typeof(SJS.JsonStringEnumConverter))]
-        public SelectionComparison SelectionComparison { get; set; }
+        public EFQType EFQType { get; set; }
 
         // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public string FieldName { get; set; }
@@ -65,11 +65,11 @@ namespace JDege.EFQ
     {
         #region static convenience functions
 
-        public static EFQ Compare(SelectionComparison comparison, string fieldName, object rightHandSide)
+        public static EFQ Compare(EFQType comparison, string fieldName, object rightHandSide)
         {
             return new EFQ
             {
-                SelectionComparison = comparison,
+                EFQType = comparison,
                 FieldName = fieldName,
                 RightHandSide = rightHandSide as EFQ ?? EFQBuilder.Constant(rightHandSide)
             };
@@ -81,7 +81,7 @@ namespace JDege.EFQ
         /// <returns>EFQuery</returns>
         public static EFQ IsTrue()
         {
-            return new EFQ { SelectionComparison = SelectionComparison.IsTrue };
+            return new EFQ { EFQType = EFQType.IsTrue };
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace JDege.EFQ
         /// <returns>EFQuery</returns>
         public static EFQ IsFalse()
         {
-            return new EFQ { SelectionComparison = SelectionComparison.IsFalse };
+            return new EFQ { EFQType = EFQType.IsFalse };
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace JDege.EFQ
         /// <returns>EFQuery</returns>
         public static EFQ Contains(string fieldName, object rightHandSide)
         {
-            return Compare(SelectionComparison.Contains, fieldName, rightHandSide);
+            return Compare(EFQType.Contains, fieldName, rightHandSide);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace JDege.EFQ
         /// <returns>EFQuery</returns>
         public static EFQ StartsWith(string fieldName, object rightHandSide)
         {
-            return Compare(SelectionComparison.StartsWith, fieldName, rightHandSide);
+            return Compare(EFQType.StartsWith, fieldName, rightHandSide);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace JDege.EFQ
         /// <returns>EFQuery</returns>
         public static EFQ EndsWith(string fieldName, object rightHandSide)
         {
-            return Compare(SelectionComparison.EndsWith, fieldName, rightHandSide);
+            return Compare(EFQType.EndsWith, fieldName, rightHandSide);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace JDege.EFQ
         /// <returns>EFQuery</returns>
         public static EFQ Like(string fieldName, object rightHandSide)
         {
-            return Compare(SelectionComparison.Like, fieldName, rightHandSide);
+            return Compare(EFQType.Like, fieldName, rightHandSide);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace JDege.EFQ
         {
             return new EFQ
             {
-                SelectionComparison = SelectionComparison.Any,
+                EFQType = EFQType.Any,
                 FieldName = fieldName,
                 InnerCriteria = innerCriteria
             };
@@ -150,7 +150,7 @@ namespace JDege.EFQ
         /// <returns>EFQuery</returns>
         public static EFQ Equal(string fieldName, object rightHandSide)
         {
-            return Compare(SelectionComparison.Equal, fieldName, rightHandSide);
+            return Compare(EFQType.Equal, fieldName, rightHandSide);
         }
 
         // #TODO: Fix the doc comments
@@ -160,7 +160,7 @@ namespace JDege.EFQ
         /// <returns>EFQuery</returns>
         public static EFQ NotEqual(string fieldName, object rightHandSide)
         {
-            return Compare(SelectionComparison.NotEqual, fieldName, rightHandSide);
+            return Compare(EFQType.NotEqual, fieldName, rightHandSide);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace JDege.EFQ
         /// <returns>EFQuery</returns>
         public static EFQ GreaterThan(string fieldName, object rightHandSide)
         {
-            return Compare(SelectionComparison.GreaterThan, fieldName, rightHandSide);
+            return Compare(EFQType.GreaterThan, fieldName, rightHandSide);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace JDege.EFQ
         /// <returns>EFQuery</returns>
         public static EFQ GreaterThanOrEqual(string fieldName, object rightHandSide)
         {
-            return Compare(SelectionComparison.GreaterThanOrEqual, fieldName, rightHandSide);
+            return Compare(EFQType.GreaterThanOrEqual, fieldName, rightHandSide);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace JDege.EFQ
         /// <returns>EFQuery</returns>
         public static EFQ LessThan(string fieldName, object rightHandSide)
         {
-            return Compare(SelectionComparison.LessThan, fieldName, rightHandSide);
+            return Compare(EFQType.LessThan, fieldName, rightHandSide);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace JDege.EFQ
         /// <returns>EFQuery</returns>
         public static EFQ LessThanOrEqual(string fieldName, object rightHandSide)
         {
-            return Compare(SelectionComparison.LessThanOrEqual, fieldName, rightHandSide);
+            return Compare(EFQType.LessThanOrEqual, fieldName, rightHandSide);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace JDege.EFQ
         {
             return new EFQ
             {
-                SelectionComparison = SelectionComparison.And,
+                EFQType = EFQType.And,
                 AggregateList = efQueries
             };
         }
@@ -228,7 +228,7 @@ namespace JDege.EFQ
         {
             return new EFQ
             {
-                SelectionComparison = SelectionComparison.Or,
+                EFQType = EFQType.Or,
                 AggregateList = efQueries
             };
         }
@@ -245,7 +245,7 @@ namespace JDege.EFQ
         {
             return new EFQ
             {
-                SelectionComparison = SelectionComparison.Nand,
+                EFQType = EFQType.Nand,
                 AggregateList = efQueries
             };
         }
@@ -263,7 +263,7 @@ namespace JDege.EFQ
         {
             return new EFQ
             {
-                SelectionComparison = SelectionComparison.Nor,
+                EFQType = EFQType.Nor,
                 AggregateList = efQueries
             };
         }
@@ -304,7 +304,7 @@ namespace JDege.EFQ
         {
             return new EFQ
             {
-                SelectionComparison = SelectionComparison.Constant,
+                EFQType = EFQType.Constant,
                 ConstantValue = value
             };
         }
@@ -313,7 +313,7 @@ namespace JDege.EFQ
         {
             return new EFQ
             {
-                SelectionComparison = SelectionComparison.Add,
+                EFQType = EFQType.Add,
                 AggregateList = new[]
                 {
                     EFQBuilder.Constant(left),
@@ -331,7 +331,7 @@ namespace JDege.EFQ
         {
             // #TODO: Move IsUnary, etc., to extension methods
             if (efq.IsUnary())
-                return efq.SelectionComparison == SelectionComparison.IsTrue
+                return efq.EFQType == EFQType.IsTrue
                     ? PredicateBuilder.True<T>()
                     : PredicateBuilder.False<T>();
 
@@ -385,8 +385,8 @@ namespace JDege.EFQ
                 throw new MissingMemberException(type.Name, efq.FieldName);
 
             MethodInfo method;
-            if (!methodMap.TryGetValue(efq.SelectionComparison, out method))
-                throw new ArgumentOutOfRangeException("selectionComparison", efq.SelectionComparison, "Invalid filter operation");
+            if (!methodMap.TryGetValue(efq.EFQType, out method))
+                throw new ArgumentOutOfRangeException("selectionComparison", efq.EFQType, "Invalid filter operation");
 
             var parameter = Expression.Parameter(type);
             var member = Expression.PropertyOrField(parameter, efq.FieldName);
@@ -429,7 +429,7 @@ namespace JDege.EFQ
                     ? (Expression)Expression.Convert(value, member.Type)
                     : (Expression)value;
 
-                var methodExpression = efq.getStaticCallMethod(efq.SelectionComparison, member, converted);
+                var methodExpression = efq.getStaticCallMethod(efq.EFQType, member, converted);
 
                 var lambda = Expression.Lambda<Func<T, bool>>(methodExpression, parameter);
 
@@ -445,11 +445,11 @@ namespace JDege.EFQ
 
         private static Expression getStaticCallMethod(
             this EFQ efq,
-            SelectionComparison selectionComparison,
+            EFQType selectionComparison,
             MemberExpression member,
             Expression converted)
         {
-            if (selectionComparison == SelectionComparison.Like)
+            if (selectionComparison == EFQType.Like)
             {
                 var methodExpression = Expression.Call(
                     typeof(DbFunctionsExtensions), "Like", Type.EmptyTypes,
@@ -500,8 +500,8 @@ namespace JDege.EFQ
             var value = efq.constructConstantExpression<T>(efq.RightHandSide, context);
 
             ExpressionType operation;
-            if (!operationMap.TryGetValue(efq.SelectionComparison, out operation))
-                throw new ArgumentOutOfRangeException("selectionComparison", efq.SelectionComparison, "Invalid filter operation");
+            if (!operationMap.TryGetValue(efq.EFQType, out operation))
+                throw new ArgumentOutOfRangeException("selectionComparison", efq.EFQType, "Invalid filter operation");
 
             try
             {
@@ -719,21 +719,21 @@ namespace JDege.EFQ
 
         private static bool IsAdd(this EFQ efq)
         {
-            return efq.SelectionComparison == SelectionComparison.Add;
+            return efq.EFQType == EFQType.Add;
         }
 
         private static bool IsConstant(this EFQ efq)
         {
-            return efq.SelectionComparison == SelectionComparison.Constant;
+            return efq.EFQType == EFQType.Constant;
         }
 
         private static bool IsMethodCall(this EFQ efq)
         {
-            switch (efq.SelectionComparison)
+            switch (efq.EFQType)
             {
-                case SelectionComparison.Contains:
-                case SelectionComparison.StartsWith:
-                case SelectionComparison.EndsWith:
+                case EFQType.Contains:
+                case EFQType.StartsWith:
+                case EFQType.EndsWith:
                     return true;
                 default:
                     return false;
@@ -742,9 +742,9 @@ namespace JDege.EFQ
 
         private static bool IsStaticCall(this EFQ efq)
         {
-            switch (efq.SelectionComparison)
+            switch (efq.EFQType)
             {
-                case SelectionComparison.Like:
+                case EFQType.Like:
                     return true;
                 default:
                     return false;
@@ -753,9 +753,9 @@ namespace JDege.EFQ
 
         private static bool IsAny(this EFQ efq)
         {
-            switch (efq.SelectionComparison)
+            switch (efq.EFQType)
             {
-                case SelectionComparison.Any:
+                case EFQType.Any:
                     return true;
                 default:
                     return false;
@@ -764,12 +764,12 @@ namespace JDege.EFQ
 
         private static bool IsAggregate(this EFQ efq)
         {
-            switch (efq.SelectionComparison)
+            switch (efq.EFQType)
             {
-                case SelectionComparison.And:
-                case SelectionComparison.Or:
-                case SelectionComparison.Nand:
-                case SelectionComparison.Nor:
+                case EFQType.And:
+                case EFQType.Or:
+                case EFQType.Nand:
+                case EFQType.Nor:
                     return true;
                 default:
                     return false;
@@ -778,10 +778,10 @@ namespace JDege.EFQ
 
         private static bool IsNegate(this EFQ efq)
         {
-            switch (efq.SelectionComparison)
+            switch (efq.EFQType)
             {
-                case SelectionComparison.Nand:
-                case SelectionComparison.Nor:
+                case EFQType.Nand:
+                case EFQType.Nor:
                     return true;
                 default:
                     return false;
@@ -790,10 +790,10 @@ namespace JDege.EFQ
 
         private static bool IsAnd(this EFQ efq)
         {
-            switch (efq.SelectionComparison)
+            switch (efq.EFQType)
             {
-                case SelectionComparison.And:
-                case SelectionComparison.Nand:
+                case EFQType.And:
+                case EFQType.Nand:
                     return true;
                 default:
                     return false;
@@ -802,10 +802,10 @@ namespace JDege.EFQ
 
         private static bool IsUnary(this EFQ efq)
         {
-            switch (efq.SelectionComparison)
+            switch (efq.EFQType)
             {
-                case SelectionComparison.IsTrue:
-                case SelectionComparison.IsFalse:
+                case EFQType.IsTrue:
+                case EFQType.IsFalse:
                     return true;
                 default:
                     return false;
@@ -817,32 +817,32 @@ namespace JDege.EFQ
 
         #region internal dictionaries
 
-        private static readonly Dictionary<SelectionComparison, ExpressionType> operationMap =
-            new Dictionary<SelectionComparison, ExpressionType>
+        private static readonly Dictionary<EFQType, ExpressionType> operationMap =
+            new Dictionary<EFQType, ExpressionType>
             {
-                { SelectionComparison.Equal, ExpressionType.Equal },
-                { SelectionComparison.NotEqual, ExpressionType.NotEqual },
-                { SelectionComparison.LessThan, ExpressionType.LessThan },
-                { SelectionComparison.LessThanOrEqual, ExpressionType.LessThanOrEqual },
-                { SelectionComparison.GreaterThan, ExpressionType.GreaterThan },
-                { SelectionComparison.GreaterThanOrEqual, ExpressionType.GreaterThanOrEqual },
-                { SelectionComparison.IsTrue, ExpressionType.IsTrue },
-                { SelectionComparison.IsFalse, ExpressionType.IsFalse },
+                { EFQType.Equal, ExpressionType.Equal },
+                { EFQType.NotEqual, ExpressionType.NotEqual },
+                { EFQType.LessThan, ExpressionType.LessThan },
+                { EFQType.LessThanOrEqual, ExpressionType.LessThanOrEqual },
+                { EFQType.GreaterThan, ExpressionType.GreaterThan },
+                { EFQType.GreaterThanOrEqual, ExpressionType.GreaterThanOrEqual },
+                { EFQType.IsTrue, ExpressionType.IsTrue },
+                { EFQType.IsFalse, ExpressionType.IsFalse },
             };
 
 
-        private static readonly Dictionary<SelectionComparison, MethodInfo> methodMap =
-            new Dictionary<SelectionComparison, MethodInfo>
+        private static readonly Dictionary<EFQType, MethodInfo> methodMap =
+            new Dictionary<EFQType, MethodInfo>
             {
-                { SelectionComparison.Contains, typeof(string).GetMethod("Contains", new[] { typeof(string) }) },
-                { SelectionComparison.StartsWith, typeof(string).GetMethod("StartsWith", new[] { typeof(string) }) },
-                { SelectionComparison.EndsWith, typeof(string).GetMethod("EndsWith", new[] { typeof(string) }) },
+                { EFQType.Contains, typeof(string).GetMethod("Contains", new[] { typeof(string) }) },
+                { EFQType.StartsWith, typeof(string).GetMethod("StartsWith", new[] { typeof(string) }) },
+                { EFQType.EndsWith, typeof(string).GetMethod("EndsWith", new[] { typeof(string) }) },
             };
         #endregion
     }
 
     // #TODO: Rename SelectionComparison enum
-    public enum SelectionComparison
+    public enum EFQType
     {
         Equal,
         NotEqual,
