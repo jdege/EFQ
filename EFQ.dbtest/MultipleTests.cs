@@ -27,7 +27,7 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQ.ContainedIn("itemId", new[]
+            var sc = JDege.EFQ.EFQBuilder.ContainedIn("itemId", new[]
                 {
                     "Item 0",
                     "Item 2",
@@ -54,7 +54,7 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "f"},
             });
 
-            var sc = JDege.EFQ.EFQ.Between("itemId", "c", "e");
+            var sc = JDege.EFQ.EFQBuilder.Between("itemId", "c", "e");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {

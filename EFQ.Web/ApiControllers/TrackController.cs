@@ -38,23 +38,23 @@ namespace JDege.EFQ.Web.ApiControllers
 
             var andQueriesList = new List<EFQ>();
 
-            andQueriesList.Add(EFQ.IsTrue());
+            andQueriesList.Add(EFQBuilder.IsTrue());
 
             if (!string.IsNullOrEmpty(artistId))
             {
                 var a = int.Parse(artistId);
 
-                andQueriesList.Add(EFQ.Equal("Album.ArtistId", a));
+                andQueriesList.Add(EFQBuilder.Equal("Album.ArtistId", a));
             }
 
             if (!string.IsNullOrEmpty(customerId))
             {
                 var c = int.Parse(customerId);
 
-                andQueriesList.Add(EFQ.Any("InvoiceLines", EFQ.Equal("Invoice.CustomerId", c)));
+                andQueriesList.Add(EFQBuilder.Any("InvoiceLines", EFQBuilder.Equal("Invoice.CustomerId", c)));
             }
 
-            var query = EFQ.And(andQueriesList);
+            var query = EFQBuilder.And(andQueriesList);
 
             var predicate = query.ConstructPredicate<Track>();
 

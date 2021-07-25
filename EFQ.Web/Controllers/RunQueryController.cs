@@ -36,7 +36,7 @@ namespace JDege.EFQ.Web.Controllers
                 }
 
                 var efq = JsonConvert.DeserializeObject<EFQ>(storedQuery.StoredQueryJson);
-                var predicate = efq.ConstructSinglePredicate<Album>(null);
+                var predicate = efq.ConstructPredicate<Album>(null);
 
                 var albumModels = await dbContext.Albums
                     .Where(predicate)

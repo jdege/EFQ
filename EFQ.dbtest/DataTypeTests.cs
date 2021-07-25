@@ -33,7 +33,7 @@ namespace JDege.EFQ.dbtest
                 new Item {itemId = "Item 3", when = date3},
             });
 
-            var sc = JDege.EFQ.EFQ.GreaterThan("when", date2);
+            var sc = JDege.EFQ.EFQBuilder.GreaterThan("when", date2);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -42,7 +42,7 @@ namespace JDege.EFQ.dbtest
                 results[0].itemId.ShouldBe("Item 3");
             }
 
-            sc = JDege.EFQ.EFQ.GreaterThanOrEqual("when", date2);
+            sc = JDege.EFQ.EFQBuilder.GreaterThanOrEqual("when", date2);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -65,7 +65,7 @@ namespace JDege.EFQ.dbtest
                 new Item {itemId = "Item 3", amount = 12},
             });
 
-            var sc = JDege.EFQ.EFQ.GreaterThan("amount", 11);
+            var sc = JDege.EFQ.EFQBuilder.GreaterThan("amount", 11);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -74,7 +74,7 @@ namespace JDege.EFQ.dbtest
                 results[0].itemId.ShouldBe("Item 3");
             }
 
-            sc = JDege.EFQ.EFQ.GreaterThanOrEqual("amount", 11);
+            sc = JDege.EFQ.EFQBuilder.GreaterThanOrEqual("amount", 11);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {

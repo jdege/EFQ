@@ -27,7 +27,7 @@ namespace JDege.EFQ.dbtest
                 new Item{ itemId = "Item 2", name = "Another item"},
             });
 
-            var sc = JDege.EFQ.EFQ.Equal("itemId", "Item 1");
+            var sc = JDege.EFQ.EFQBuilder.Equal("itemId", "Item 1");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -47,7 +47,7 @@ namespace JDege.EFQ.dbtest
                     new Item{itemId = "Item 2", name = "Another item"},
                 });
 
-            var sc = JDege.EFQ.EFQ.NotEqual("itemId", "Item 2");
+            var sc = JDege.EFQ.EFQBuilder.NotEqual("itemId", "Item 2");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -66,7 +66,7 @@ namespace JDege.EFQ.dbtest
                     new Item{itemId = "Item 2", name = "Another item"},
                 });
 
-            var sc = JDege.EFQ.EFQ.GreaterThan("itemId", "Item 1");
+            var sc = JDege.EFQ.EFQBuilder.GreaterThan("itemId", "Item 1");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -85,7 +85,7 @@ namespace JDege.EFQ.dbtest
                     new Item{itemId = "Item 2", name = "Another item"},
                 });
 
-            var sc = JDege.EFQ.EFQ.GreaterThanOrEqual("itemId", "Item 2");
+            var sc = JDege.EFQ.EFQBuilder.GreaterThanOrEqual("itemId", "Item 2");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -104,7 +104,7 @@ namespace JDege.EFQ.dbtest
                     new Item{itemId = "Item 2", name = "Another item"},
                 });
 
-            var sc = JDege.EFQ.EFQ.LessThan("itemId", "Item 2");
+            var sc = JDege.EFQ.EFQBuilder.LessThan("itemId", "Item 2");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -123,7 +123,7 @@ namespace JDege.EFQ.dbtest
                     new Item{itemId = "Item 2", name = "Another item"},
                 });
 
-            var sc = JDege.EFQ.EFQ.LessThanOrEqual("itemId", "Item 1");
+            var sc = JDege.EFQ.EFQBuilder.LessThanOrEqual("itemId", "Item 1");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -143,7 +143,7 @@ namespace JDege.EFQ.dbtest
                     new Item{itemId = "efgh"},
                 });
 
-            var sc = JDege.EFQ.EFQ.Contains("itemId", "cd");
+            var sc = JDege.EFQ.EFQBuilder.Contains("itemId", "cd");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -165,7 +165,7 @@ namespace JDege.EFQ.dbtest
                     new Item{itemId = "efgh"},
                 });
 
-            var sc = JDege.EFQ.EFQ.StartsWith("itemId", "cd");
+            var sc = JDege.EFQ.EFQBuilder.StartsWith("itemId", "cd");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -186,7 +186,7 @@ namespace JDege.EFQ.dbtest
                     new Item{itemId = "efgh"},
                 });
 
-            var sc = JDege.EFQ.EFQ.EndsWith("itemId", "cd");
+            var sc = JDege.EFQ.EFQBuilder.EndsWith("itemId", "cd");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -207,7 +207,7 @@ namespace JDege.EFQ.dbtest
                     new Item{itemId = "efgh"},
                 });
 
-            var sc = JDege.EFQ.EFQ.Like("itemId", "%d%");
+            var sc = JDege.EFQ.EFQBuilder.Like("itemId", "%d%");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {

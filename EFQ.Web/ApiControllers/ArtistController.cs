@@ -44,7 +44,7 @@ namespace JDege.EFQ.Web.ApiControllers
                 {
                     foreach (var model in dropdownModels)
                     {
-                        var efq = EFQ.Equal("Album.ArtistId", model.value);
+                        var efq = EFQBuilder.Equal("Album.ArtistId", model.value);
                         model.query = efq;
                     }
                 }

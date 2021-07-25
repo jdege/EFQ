@@ -33,7 +33,7 @@ namespace JDege.EFQ.dbtest
                     new Item {itemId = "Item 3", name = "A third item", parentId = "Parent 3"},
                 });
 
-            var sc = JDege.EFQ.EFQ.Equal("parent.name", "A parent");
+            var sc = JDege.EFQ.EFQBuilder.Equal("parent.name", "A parent");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
@@ -59,7 +59,7 @@ namespace JDege.EFQ.dbtest
                     new Child {childId = "Child 3", name = "A third child", itemId = "Item 3"},
                 });
 
-            var sc = JDege.EFQ.EFQ.Any("Children", JDege.EFQ.EFQ.Equal("name", "A child"));
+            var sc = JDege.EFQ.EFQBuilder.Any("Children", JDege.EFQ.EFQBuilder.Equal("name", "A child"));
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {

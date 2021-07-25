@@ -19,7 +19,7 @@ namespace JDege.EFQ.Web.Controllers
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
 
-            var assembly = typeof(EFQ).Assembly;
+            var assembly = typeof(EFQBuilder).Assembly;
             var resources = assembly.GetManifestResourceNames();
             using (var resourceStream = assembly.GetManifestResourceStream("EFQ.JavaScript.EFQ.js"))
             {
