@@ -4,6 +4,7 @@ using SJ = System.Text.Json;
 using SJS = System.Text.Json.Serialization;
 using NJ = Newtonsoft.Json;
 using NJC = Newtonsoft.Json.Converters;
+using System;
 
 namespace JDege.EFQ
 {
@@ -23,15 +24,26 @@ namespace JDege.EFQ
         // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public EFQ RightHandSide { get; set; }
 
-        // #TODO: No longer using FieldValue?
-        // // This is here so we can deserialize old-style EFQuery strings
-        // public object FieldValue
-        // {
-        //     set { this.RightHandSide = EFQBuilder.Constant((value)); }
-        // }
+        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
+        public string ConstantString { get; set; }
 
         // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
-        public object ConstantValue { get; set; }
+        public int? ConstantInt { get; set; }
+
+        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
+        public double? ConstantDouble { get; set; }
+
+        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
+        public decimal? ConstantDecimal { get; set; }
+
+        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
+        public DateTime? ConstantDateTime { get; set; }
+
+        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
+        public DateTimeOffset? ConstantDateTimeOffset { get; set; }
+
+        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
+        public TimeSpan? ConstantTimeSpan { get; set; }
 
         // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public EFQ InnerCriteria { get; set; }

@@ -27,8 +27,7 @@ namespace JDege.EFQ.test
             }
         }
 
-        // #TODO: Restore after I fix serialization issues
-        // [Fact]
+        [Fact]
         public void SystemTextJsonDeserializeItself()
         {
             foreach (var efq in _testEfqs)
@@ -50,8 +49,7 @@ namespace JDege.EFQ.test
             }
         }
 
-        // #TODO: Restore after I fix serialization issues
-        // [Fact]
+        [Fact]
         public void SystemTextJsonDeserializeNewtonsoft()
         {
             foreach (var efq in _testEfqs)
@@ -61,13 +59,5 @@ namespace JDege.EFQ.test
                 d.ShouldBeEquivalentTo(efq);
             }
         }
-
-        public class NVP
-        {
-            public string Name { get; set; }
-            public object Value { get; set; }
-        }
-
-
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -245,11 +246,39 @@ namespace JDege.EFQ
 
         public static EFQ Constant(object value)
         {
-            return new EFQ
+            var efq = new EFQ
             {
-                EFQType = EFQType.Constant,
-                ConstantValue = value
+                EFQType = EFQType.Constant
             };
+
+            switch (value)
+            {
+                case string valueString:
+                    efq.ConstantString = valueString;
+                    break;
+                case int valueInt:
+                    efq.ConstantInt = valueInt;
+                    break;
+                case double valueDouble:
+                    efq.ConstantDouble = valueDouble;
+                    break;
+                case decimal valueDecimal:
+                    efq.ConstantDecimal = valueDecimal;
+                    break;
+                case DateTime valueDateTime:
+                    efq.ConstantDateTime = valueDateTime;
+                    break;
+                case DateTimeOffset valueDateTimeOffset:
+                    efq.ConstantDateTimeOffset = valueDateTimeOffset;
+                    break;
+                case TimeSpan valueTimeSpan:
+                    efq.ConstantTimeSpan = valueTimeSpan;
+                    break;
+                default:
+                    throw new NotSupportedException($"Type {value.GetType().Name} is not supported in EFQ constants");
+            }
+
+            return efq;
         }
 
         public static EFQ Add(object left, object right)

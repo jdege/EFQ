@@ -236,7 +236,7 @@ namespace JDege.EFQ
                 if (sc.IsAdd())
                     value = executeAddExpression<T>(sc, context);
                 else if (sc.IsConstant())
-                    value = sc.ConstantValue;
+                    value = sc.ConstantValue();
             }
 
             value = getConstantValue(value, context);
@@ -245,6 +245,25 @@ namespace JDege.EFQ
                 return Expression.Constant(null);
 
             return Expression.Constant(value, value.GetType());
+        }
+
+        private static object ConstantValue(this EFQ efq)
+        {
+            if (efq.ConstantString != null)
+                return efq.ConstantString;
+            if (efq.ConstantInt != null)
+                return efq.ConstantInt;
+            if (efq.ConstantDouble != null)
+                return efq.ConstantDouble;
+            if (efq.ConstantDecimal != null)
+                return efq.ConstantDecimal;
+            if (efq.ConstantDateTime != null)
+                return efq.ConstantDateTime;
+            if (efq.ConstantDateTimeOffset != null)
+                return efq.ConstantDateTimeOffset;
+            if (efq.ConstantTimeSpan != null)
+                return efq.ConstantTimeSpan;
+            return null;
         }
 
         private static object executeAddExpression<T>(EFQ sc, object context)
@@ -258,11 +277,11 @@ namespace JDege.EFQ
 
                 if (result == null)
                 {
-                    result = getConstantValue(arg.ConstantValue, context);
+                    result = getConstantValue(arg.ConstantValue(), context);
                     continue;
                 }
 
-                var value = getConstantValue(arg.ConstantValue, context);
+                var value = getConstantValue(arg.ConstantValue(), context);
 
                 // Until we figure out how to make Json.NET deserialize into TimeSpan objects ...
                 var s = value as string;
