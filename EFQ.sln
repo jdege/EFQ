@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFQ.Web", "EFQ.Web\EFQ.Web.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFQ.dbtest", "EFQ.dbtest\EFQ.dbtest.csproj", "{0829DAF3-1EE0-456C-AC93-11621D468B8B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFQ.test", "EFQ.test\EFQ.test.csproj", "{15203643-A9E1-4503-B2E5-C6C229CD7E59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,5 +60,17 @@ Global
 		{0829DAF3-1EE0-456C-AC93-11621D468B8B}.Release|x64.Build.0 = Release|Any CPU
 		{0829DAF3-1EE0-456C-AC93-11621D468B8B}.Release|x86.ActiveCfg = Release|Any CPU
 		{0829DAF3-1EE0-456C-AC93-11621D468B8B}.Release|x86.Build.0 = Release|Any CPU
+		{15203643-A9E1-4503-B2E5-C6C229CD7E59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15203643-A9E1-4503-B2E5-C6C229CD7E59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15203643-A9E1-4503-B2E5-C6C229CD7E59}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{15203643-A9E1-4503-B2E5-C6C229CD7E59}.Debug|x64.Build.0 = Debug|Any CPU
+		{15203643-A9E1-4503-B2E5-C6C229CD7E59}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{15203643-A9E1-4503-B2E5-C6C229CD7E59}.Debug|x86.Build.0 = Debug|Any CPU
+		{15203643-A9E1-4503-B2E5-C6C229CD7E59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15203643-A9E1-4503-B2E5-C6C229CD7E59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15203643-A9E1-4503-B2E5-C6C229CD7E59}.Release|x64.ActiveCfg = Release|Any CPU
+		{15203643-A9E1-4503-B2E5-C6C229CD7E59}.Release|x64.Build.0 = Release|Any CPU
+		{15203643-A9E1-4503-B2E5-C6C229CD7E59}.Release|x86.ActiveCfg = Release|Any CPU
+		{15203643-A9E1-4503-B2E5-C6C229CD7E59}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

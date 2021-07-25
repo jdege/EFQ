@@ -27,11 +27,12 @@ namespace JDege.EFQ
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public EFQ RightHandSide { get; set; }
 
-        // This is here so we can deserialize old-style EFQuery strings
-        public object FieldValue
-        {
-            set { this.RightHandSide = EFQBuilder.Constant((value)); }
-        }
+        // #TODO: No longer using FieldValue?
+        // // This is here so we can deserialize old-style EFQuery strings
+        // public object FieldValue
+        // {
+        //     set { this.RightHandSide = EFQBuilder.Constant((value)); }
+        // }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public object ConstantValue { get; set; }
