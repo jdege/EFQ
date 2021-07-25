@@ -6,9 +6,12 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using PeteMontgomery.PredicateBuilder;
+
+using SJ = System.Text.Json;
+using SJS = System.Text.Json.Serialization;
+using NJ = Newtonsoft.Json;
+using NJC = Newtonsoft.Json.Converters;
 
 namespace JDege.EFQ
 {
@@ -18,13 +21,14 @@ namespace JDege.EFQ
 
         // #TODO: Work with both json serializers!
         // #TODO: better name for SelectionComparison?
-        [JsonConverter(typeof(StringEnumConverter))]
+        [NJ.JsonConverter(typeof(NJC.StringEnumConverter))]
+        [SJS.JsonConverter(typeof(SJS.JsonStringEnumConverter))]
         public SelectionComparison SelectionComparison { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public string FieldName { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public EFQ RightHandSide { get; set; }
 
         // #TODO: No longer using FieldValue?
@@ -34,10 +38,10 @@ namespace JDege.EFQ
         //     set { this.RightHandSide = EFQBuilder.Constant((value)); }
         // }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public object ConstantValue { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public EFQ InnerCriteria { get; set; }
 
         private IEnumerable<EFQ> _aggregateList = null;
