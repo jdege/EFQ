@@ -13,59 +13,43 @@ namespace JDege.EFQ
         #region Member variables
 
         // #TODO: Work with both json serializers!
-        // #TODO: better name for SelectionComparison?
         [NJ.JsonConverter(typeof(NJC.StringEnumConverter))]
         [SJS.JsonConverter(typeof(SJS.JsonStringEnumConverter))]
         public EFQType EFQType { get; set; }
 
-        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public string FieldName { get; set; }
 
-        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public EFQ RightHandSide { get; set; }
 
-        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public string ConstantString { get; set; }
 
-        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public int? ConstantInt { get; set; }
 
-        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public double? ConstantDouble { get; set; }
 
-        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public decimal? ConstantDecimal { get; set; }
 
-        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public DateTime? ConstantDateTime { get; set; }
 
-        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public DateTimeOffset? ConstantDateTimeOffset { get; set; }
 
-        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
-        public TimeSpan? ConstantTimeSpan { get; set; }
+        // System.Text.Json doesn't support TimeSpans, yet
+        // https://github.com/dotnet/runtime/issues/29932
+        // public TimeSpan? ConstantTimeSpan { get; set; }
 
-        // [NJ.JsonProperty(NullValueHandling = NJ.NullValueHandling.Ignore)]
         public EFQ InnerCriteria { get; set; }
 
-        private IEnumerable<EFQ> _aggregateList = null;
+        private IEnumerable<EFQ> _aggregateList = new List<EFQ>();
 
         public IEnumerable<EFQ> AggregateList
         {
-            get { return this._aggregateList ?? (this._aggregateList = new List<EFQ>()); }
+            get { return this._aggregateList; }
             set { this._aggregateList = value; }
         }
 
         #endregion
-
-        // // This just tells JSON.net whether to include aggregateList when serializing an object
-        // public bool ShouldSerializeaggregateList()
-        // {
-        //     return this._aggregateList != null;
-        // }
     }
 
-    // #TODO: Rename SelectionComparison enum
     public enum EFQType
     {
         Equal,

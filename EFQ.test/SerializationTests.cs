@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using SJ = System.Text.Json;
 using NJ = Newtonsoft.Json;
+using System;
 
 namespace JDege.EFQ.test
 {
@@ -13,7 +14,17 @@ namespace JDege.EFQ.test
         private IEnumerable<EFQ> _testEfqs = new[] {
                 EFQBuilder.IsTrue(),
                 EFQBuilder.IsFalse(),
-                EFQBuilder.Contains("fieldname", "123")
+                EFQBuilder.Equal("fieldname", "123"),
+                EFQBuilder.Equal("fieldname", 1),
+                EFQBuilder.Equal("fieldname", 1.1),
+                EFQBuilder.Equal("fieldname", 1D),
+                EFQBuilder.Equal("fieldname", DateTime.Now),
+                EFQBuilder.Equal("fieldname", DateTimeOffset.Now),
+                EFQBuilder.Equal("fieldname", DateTimeOffset.Now),
+                EFQBuilder.Any("fieldname", EFQBuilder.Equal("child.fieldname", "123")),
+                EFQBuilder.Contains("fieldname", "123"),
+                // System.Text.Json doesn't support TimeSpans, yet
+                // EFQBuilder.Contains("fieldname", TimeSpan.FromHours(1))
             };
 
         [Fact]

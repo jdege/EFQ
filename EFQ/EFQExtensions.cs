@@ -261,8 +261,10 @@ namespace JDege.EFQ
                 return efq.ConstantDateTime;
             if (efq.ConstantDateTimeOffset != null)
                 return efq.ConstantDateTimeOffset;
-            if (efq.ConstantTimeSpan != null)
-                return efq.ConstantTimeSpan;
+            // System.Text.Json doesn't support TimeSpans, yet
+            // https://github.com/dotnet/runtime/issues/29932
+            // if (efq.ConstantTimeSpan != null)
+            //     return efq.ConstantTimeSpan;
             return null;
         }
 
@@ -283,6 +285,7 @@ namespace JDege.EFQ
 
                 var value = getConstantValue(arg.ConstantValue(), context);
 
+                // System.Text.Json doesn't support TimeSpans, yet
                 // Until we figure out how to make Json.NET deserialize into TimeSpan objects ...
                 var s = value as string;
                 if (s != null)

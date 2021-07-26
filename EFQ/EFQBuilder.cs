@@ -271,9 +271,13 @@ namespace JDege.EFQ
                 case DateTimeOffset valueDateTimeOffset:
                     efq.ConstantDateTimeOffset = valueDateTimeOffset;
                     break;
-                case TimeSpan valueTimeSpan:
-                    efq.ConstantTimeSpan = valueTimeSpan;
-                    break;
+
+                // System.Text.Json doesn't support TimeSpans, yet
+                // https://github.com/dotnet/runtime/issues/29932
+                // case TimeSpan valueTimeSpan:
+                //     efq.ConstantTimeSpan = valueTimeSpan;
+                //     break;
+
                 default:
                     throw new NotSupportedException($"Type {value.GetType().Name} is not supported in EFQ constants");
             }
