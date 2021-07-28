@@ -23,6 +23,11 @@ namespace JDege.EFQ.Web.Models
                 .ForMember(dest => dest.text, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName} [{src.CustomerId}]"))
                 .ForMember(dest => dest.query, opt => opt.Ignore())
                 ;
+            CreateMap<MediaType, DropdownModel>()
+                .ForMember(dest => dest.value, opt => opt.MapFrom(src => src.MediaTypeId))
+                .ForMember(dest => dest.text, opt => opt.MapFrom(src => $"{src.Name} [{src.MediaTypeId}]"))
+                .ForMember(dest => dest.query, opt => opt.Ignore())
+                ;
         }
     }
 }

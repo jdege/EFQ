@@ -69,7 +69,6 @@ namespace JDege.EFQ.Web.ApiControllers
             }
         }
 
-
         [HttpPost]
         [Route("Query")]
         public async Task<ActionResult<IEnumerable<TrackModel>>> QueryAsync(EFQ query)

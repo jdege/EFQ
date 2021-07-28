@@ -29,7 +29,7 @@
             {
                 <div class="row">
                     <div class="col-sm-12">
-                        Select a Client, a Worker, or both, and click "Search"
+                        Select an Artist, a Customer, or both, and maybe a Media Type and click "Search"
                     </div>
                 </div>
 
@@ -52,6 +52,16 @@
                         </div>
                         <div class="editor-field col-sm-12">
                             <select id="CustomerId" name="CustomerId">
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="editor-label col-sm-12">
+                            <label for="MediaType">MediaType</label>
+                        </div>
+                        <div class="editor-field col-sm-12">
+                            <select id="MediaType" name="MediaType">
                                 <option></option>
                             </select>
                         </div>
@@ -90,6 +100,7 @@
     debugger;
     var $artistSelect = $("#ArtistId");
     var $customerSelect = $("#CustomerId");
+    var $mediaTypeSelect = $("#MediaType");
     var $submitButton = $("#Submit");
 
     var $tracksTable = $("#TracksTable").DataTable({
@@ -153,6 +164,12 @@
             andQueries.push(customer);
         }
 
+        var mediaType = $mediaTypeSelect.find(':selected').data('query');
+        if (mediaType)
+        {
+            andQueries.push(mediaType);
+        }
+
         var query = EFQ.and(andQueries);
 
         TrackQueryService.queryTracks(query, function (result)
@@ -173,9 +190,6 @@
 
     $(document).ready(function ()
     {
-        var foo = EFQ;
-        var bar = EFQ.isTrue();
-
         DropdownService.getArtists({ includeQueries: true }, function (result)
         {
             fillSelect($artistSelect, result);
@@ -185,6 +199,12 @@
         {
             fillSelect($customerSelect, result);
         });
+
+        DropdownService.getMediaTypes({ includeQueries: true }, function (result)
+        {
+            fillSelect($mediaTypeSelect, result);
+        });
+
     });
 </script>
 }

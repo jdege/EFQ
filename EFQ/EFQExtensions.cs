@@ -67,15 +67,13 @@ namespace JDege.EFQ
         {
             var type = typeof(T);
 
-            if (type.GetProperty(efq.FieldName) == null && type.GetField(efq.FieldName) == null)
-                throw new MissingMemberException(type.Name, efq.FieldName);
+            var parameter = Expression.Parameter(type);
+            var member = efq.getMember<T>(type, parameter);
 
             MethodInfo method;
             if (!methodMap.TryGetValue(efq.EFQType, out method))
                 throw new ArgumentOutOfRangeException("EFQType", efq.EFQType, "Invalid filter operation");
 
-            var parameter = Expression.Parameter(type);
-            var member = Expression.PropertyOrField(parameter, efq.FieldName);
             var value = efq.constructConstantExpression<T>(efq.RightHandSide, context);
 
             try
