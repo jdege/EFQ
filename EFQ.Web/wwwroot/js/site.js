@@ -127,24 +127,26 @@ TrackQueryService = {
             {
                 callback({ success: false, error: errorThrown });
             });
-    }
-    // ,
-    // getTasks2: function(efQuery, callback) {
-    // 	var url = "api/Tasks2";
-    // 	var data = { efQuery: efQuery };
-    // 	var settings = {
-    // 		type: "POST",
-    // 		dataType: "json",
-    // 		contentType: "application/json",
-    // 		data: JSON.stringify(data)
-    // 	};
+    },
+    queryTracks: function (efq, callback)
+    {
+        var url = "api/Track/Query";
+        var data = JSON.stringify(efq);
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: data
+        };
 
-    // 	$.ajax(url, settings)
-    // 		.done(function(result, status, jqXHR) {
-    // 			callback({ success: true, data: result });
-    // 		})
-    // 		.fail(function(jqXHR, textStatus, errorThrown) {
-    // 			callback({ success: false, error: errorThrown });
-    // 		});
-    // }
+        $.ajax(url, settings)
+            .done(function (result, status, jqXHR)
+            {
+                callback({ success: true, data: result });
+            })
+            .fail(function (jqXHR, textStatus, errorThrown)
+            {
+                callback({ success: false, error: errorThrown });
+            });
+    }
 };

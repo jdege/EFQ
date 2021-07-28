@@ -155,7 +155,7 @@
 
         var query = EFQ.and(andQueries);
 
-        TrackQueryService.getTracks2(query, function (result)
+        TrackQueryService.queryTracks(query, function (result)
         {
             if (result.success)
             {

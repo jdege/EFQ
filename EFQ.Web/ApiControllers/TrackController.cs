@@ -68,5 +68,31 @@ namespace JDege.EFQ.Web.ApiControllers
                 return trackModelList;
             }
         }
+
+
+        [HttpPost]
+        [Route("Query")]
+        public async Task<ActionResult<IEnumerable<TrackModel>>> QueryAsync(EFQ query)
+        {
+            try
+            {
+                var predicate = query.ConstructPredicate<Track>();
+
+                using (var dbContext = _contextFactory.CreateDbContext())
+                {
+                    var trackModelList = await dbContext.Tracks.Where(predicate)
+                        .OrderBy(t => t.Name)
+                        .ProjectTo<TrackModel>(_configurationProvider)
+                        .ToListAsync();
+
+                    return trackModelList;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception encounterer");
+                throw;
+            }
+        }
     }
 }

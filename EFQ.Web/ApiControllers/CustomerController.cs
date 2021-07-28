@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace JDege.EFQ.Web.ApiControllers
                 {
                     foreach (var model in dropdownModels)
                     {
-                        var efq = EFQBuilder.Any("InvoiceLines", EFQBuilder.Equal("Invoice.CustomerId", model.value));
+                        var efq = EFQBuilder.Any("InvoiceLines", EFQBuilder.Equal("Invoice.CustomerId", Int32.Parse(model.value)));
                         model.query = efq;
                     }
                 }

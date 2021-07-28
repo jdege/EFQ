@@ -72,7 +72,7 @@ namespace JDege.EFQ
 
             MethodInfo method;
             if (!methodMap.TryGetValue(efq.EFQType, out method))
-                throw new ArgumentOutOfRangeException("selectionComparison", efq.EFQType, "Invalid filter operation");
+                throw new ArgumentOutOfRangeException("EFQType", efq.EFQType, "Invalid filter operation");
 
             var parameter = Expression.Parameter(type);
             var member = Expression.PropertyOrField(parameter, efq.FieldName);
@@ -131,11 +131,11 @@ namespace JDege.EFQ
 
         private static Expression getStaticCallMethod(
             this EFQ efq,
-            EFQType selectionComparison,
+            EFQType efqType,
             MemberExpression member,
             Expression converted)
         {
-            if (selectionComparison == EFQType.Like)
+            if (efqType == EFQType.Like)
             {
                 var methodExpression = Expression.Call(
                     typeof(DbFunctionsExtensions), "Like", Type.EmptyTypes,
@@ -145,7 +145,7 @@ namespace JDege.EFQ
             }
 
             // #TODO: use string interpolation
-            throw new InvalidExpressionException(String.Format("Invalid SelectionComparison {0}", selectionComparison));
+            throw new InvalidExpressionException(String.Format("Invalid EFQType {0}", efqType));
         }
 
         public static Expression<Func<T, bool>> ConstructAnyPredicate<T>(this EFQ efq, object context)
@@ -187,7 +187,7 @@ namespace JDege.EFQ
 
             ExpressionType operation;
             if (!operationMap.TryGetValue(efq.EFQType, out operation))
-                throw new ArgumentOutOfRangeException("selectionComparison", efq.EFQType, "Invalid filter operation");
+                throw new ArgumentOutOfRangeException("EFQType", efq.EFQType, "Invalid filter operation");
 
             try
             {

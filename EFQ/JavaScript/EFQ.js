@@ -2,9 +2,9 @@
 {
 	'use strict';
 
-	function EFQ(selectionComparison, fieldName, fieldValue, aggregateList, innerCriteria)
+	function EFQ(efqType, fieldName, fieldValue, aggregateList, innerCriteria)
 	{
-		this.selectionComparison = selectionComparison;
+		this.efqType = efqType;
 		this.fieldName = fieldName;
 		this.fieldValue = fieldValue;
 		this.aggregateList = aggregateList;
