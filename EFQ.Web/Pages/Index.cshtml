@@ -7,7 +7,9 @@
 <h1>EFQ</h1>
 <h2>Serializable Entity Framework Queries</h2>
 
-<p>EFQ is a .net 5.0 library to enable serializing Entity Framework queries</p>
+<p>EFQ is a .NET 5.0 library to enable serializing Entity Framework queries.<br>
+    The code can be found on GitHub, at <a href="https://github.com/jdege/EFQ">https://github.com/jdege/EFQ</a></p>
+
 <p>When we started working with Entity Framework, there were two functionalities
     we had been using that EF, out of the box, did not support:</p>
 
@@ -19,7 +21,21 @@
 <p>Both of these are pretty simple to do in SQL, and we wanted to be able to do something
     similar using Entity Framework.</p>
 
-<p>The code can be found on GitHub, at <a href="https://github.com/jdege/EFQ">https://github.com/jdege/EFQ</a></p>
+<p>The menu at the top of this site provides links to a number of different pages:</p>
+
+<ol>
+    <li><a class="nav-link text-dark" asp-controller="MotivationalExercises">Motivational exercises</a> -
+        A series of tutorials explaining the why and how of EFQ. </li>
+
+    <li><a class="nav-link text-dark" asp-controller="StoredQuery">~/StoredQuery</a> -
+        An MVC page that displays a list of queries that have been stored in the database, and allows you to run them
+        and see the results.</li>
+
+    <li><a class="nav-link text-dark" href="/Swagger" target="_blank">~/Swagger</a> -
+        The Swagger UI for the REST endpoints in this project (opens in a new browser tab) </li>
+</ol>
+
+
 
 <p>There are three .NET projects, in this solution:</p>
 
@@ -30,30 +46,3 @@
 </ol>
 
 <p>This, of course, is the EFQ.Web home page.</p>
-
-<p>EFQ.Web connects to a SQLServer instance running on localhost.<br>
-    It contains migrations that will create a database named "Chinook",
-    and migrations to populate it with tables and data from the Chinook sample database
-    (<a href="https://github.com/lerocha/chinook-database" )>https://github.com/lerocha/chinook-database</a>.
-    If you don't have a SqlServer instance running on your machine (I don't, I'm developing this on Linux),
-    there is a docker-compose.yml file in EFQ.Web that will launch a container based the mssql-2019 image.<br>
-    <code>docker-compose -f EFQ.Web/docker-compose.yml up -d</code><br>
-    The launched container will map the SqlServer's standard port, and will mount its volumes
-    in ~/EFQ.Web/Sql1DockerVolumes.<br>
-    Note - this SQL instance runs as root, within the container, which you will <em>not</em> want to do
-    in a production environment.
-</p>
-
-<p>There are a number of pages within it:</p>
-
-<ol>
-    <li><a class="nav-link text-dark" asp-controller="DynamicQuery">~/DynamicQuery</a> -
-        A series of tutorials explaining the why and how of EFQ. </li>
-
-    <li><a class="nav-link text-dark" asp-controller="StoredQuery">~/StoredQuery</a> -
-        An MVC page that displays a list of queries that have been stored in the database, and allows you to run them
-        and see the results.</li>
-
-    <li><a class="nav-link text-dark" href="/Swagger" target="_blank">~/Swagger</a> -
-        The Swagger UI for the REST endpoints in this project (opens in a new browser tab) </li>
-</ol>

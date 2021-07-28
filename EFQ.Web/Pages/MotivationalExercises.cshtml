@@ -1,16 +1,6 @@
 ﻿@page
-@model JDege.EFQ.Web.Pages.DynamicQueryModel
-@{
-}
 
-<ul class="list-inline">
-    <li class="list-inline-item"><a asp-controller="ADO" list-group-item-action>Simple ADO</a></li>
-    <li class="list-inline-item"><a asp-controller="PlainEF" list-group-item-action>Plain Entity Framework</a></li>
-    <li class="list-inline-item"><a asp-controller="PredicateBuilder" list-group-item-action>Predicate Builder</a></li>
-    <li class="list-inline-item"><a asp-controller="EFQuery" list-group-item-action>EFQuery</a></li>
-    <li class="list-inline-item"><a asp-controller="EFQOnServer" list-group-item-action>EFQuery on server</a></li>
-    <li class="list-inline-item"><a asp-controller="EFQOnClient" list-group-item-action>EFQuery on client</a></li>
-</ul>
+<partial name="_DemoMenu" />
 
 <p>
     This is a collection of simple demos exploring the motivation behind and the use of
@@ -20,26 +10,15 @@
     and server, etc.
 </p>
 <p>
-    The source code is available on GitHub: <a href="https://github.com/jdege/EFQ">EFQ</a>.
-</p>
-<p>
-    These demos run against a copy of the <a href="https://github.com/lerocha/chinook-database" )>Chinook</a> database:
-</p>
-<img src="images/Chinook_Erd.png" alt="Chinook DB ERD" />
-
-<p>
-    The task we're addressing, in the initial demos, is presenting the user with a query
-    form in which the user can choose a Customer and/or an Artist from select lists, click "Search",
-    and see a table containing information about the Tracks associated with the selected Client, Aorker,
-    or both.
-</p>
-<p>
-    The problem is building a query that might contain a comparison against CustomerId, might contain a
-    comparison against ArtistId, or might contain both.
+    The task we're addressing, in these demos, is presenting the user with a
+    form in which the user can select among multiple items to construct the query.
 </p>
 <p>
     The Demos:
 <ol>
+    <li><a asp-controller="DatabaseConfiguration">Database Configuration</a>
+        - Information about the database that these demos run agains.</li>
+
     <li><a asp-controller="ADO">Simple ADO</a> - When using ADO, a query is simply a string containing SQL</li>
 
     <li><a asp-controller="PlainEF">Plain Entity Framework</a> - With EF, in the simple case you can build up a query

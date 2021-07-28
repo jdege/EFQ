@@ -1,0 +1,23 @@
+﻿@page
+@{
+}
+
+<partial name="_DemoMenu" />
+
+<p>
+    These demos run against a copy of the <a href="https://github.com/lerocha/chinook-database" )>Chinook</a> database:
+</p>
+<img src="images/Chinook_Erd.png" alt="Chinook DB ERD" />
+
+<p>EFQ.Web connects to a SQLServer instance running on localhost.<br>
+    It contains migrations that will create a database named "Chinook",
+    and migrations to populate it with tables and data from the Chinook sample database
+    (<a href="https://github.com/lerocha/chinook-database" )>https://github.com/lerocha/chinook-database</a>.
+    If you don't have a SqlServer instance running on your machine (I don't, I'm developing this on Linux),
+    there is a docker-compose.yml file in EFQ.Web that will launch a container based the mssql-2019 image.<br>
+    <code>docker-compose -f EFQ.Web/docker-compose.yml up -d</code><br>
+    The launched container will map the SqlServer's standard port, and will mount its volumes
+    in ~/EFQ.Web/Sql1DockerVolumes.<br>
+    Note - this SQL instance runs as root, within the container, which you will <em>not</em> want to do
+    in a production environment.
+</p>
