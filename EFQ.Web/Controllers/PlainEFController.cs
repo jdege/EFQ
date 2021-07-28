@@ -25,10 +25,10 @@ namespace JDege.EFQ.Web.Controllers
         // Injecting AutoMapper configuration
         private readonly IConfigurationProvider _configurationProvider;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly ILogger<ADOController> _logger;
+        private readonly ILogger<SqlStatementController> _logger;
 
         public PlainEFController(IDbContextFactory<ChinookContext> contextFactory,
-        IConfigurationProvider configurationProvider, IWebHostEnvironment webHostEnvironment, ILogger<ADOController> logger)
+        IConfigurationProvider configurationProvider, IWebHostEnvironment webHostEnvironment, ILogger<SqlStatementController> logger)
         {
             _contextFactory = contextFactory;
             _configurationProvider = configurationProvider;

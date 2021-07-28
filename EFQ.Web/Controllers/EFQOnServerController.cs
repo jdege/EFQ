@@ -11,10 +11,10 @@ namespace JDege.EFQ.Web.Controllers
     {
         private const string PageTitle = "EFQ On Server";
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly ILogger<ADOController> _logger;
+        private readonly ILogger<SqlStatementController> _logger;
 
         public EFQOnServerController(IConfigurationProvider configurationProvider,
-            IWebHostEnvironment webHostEnvironment, ILogger<ADOController> logger)
+            IWebHostEnvironment webHostEnvironment, ILogger<SqlStatementController> logger)
         {
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;

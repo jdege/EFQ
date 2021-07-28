@@ -17,17 +17,17 @@ using Microsoft.Extensions.Logging;
 
 namespace JDege.EFQ.Web.Controllers
 {
-    public class ADOController : Controller
+    public class SqlStatementController : Controller
     {
-        private const string PageTitle = "Simple ADO";
+        private const string PageTitle = "Sql Statements";
         private readonly IDbContextFactory<ChinookContext> _contextFactory;
         // Injecting AutoMapper configuration
         private readonly IConfigurationProvider _configurationProvider;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly ILogger<ADOController> _logger;
+        private readonly ILogger<SqlStatementController> _logger;
 
-        public ADOController(IDbContextFactory<ChinookContext> contextFactory,
-        IConfigurationProvider configurationProvider, IWebHostEnvironment webHostEnvironment, ILogger<ADOController> logger)
+        public SqlStatementController(IDbContextFactory<ChinookContext> contextFactory,
+        IConfigurationProvider configurationProvider, IWebHostEnvironment webHostEnvironment, ILogger<SqlStatementController> logger)
         {
             _contextFactory = contextFactory;
             _configurationProvider = configurationProvider;
@@ -38,7 +38,7 @@ namespace JDege.EFQ.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/ADO_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/SqlStatement_docs.html");
             ViewBag.explanationActive = "active";
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = null;
@@ -79,6 +79,7 @@ namespace JDege.EFQ.Web.Controllers
                 if (String.IsNullOrWhiteSpace(artistId) && String.IsNullOrWhiteSpace(customerId))
                     throw new ArgumentException("Must supply at least one of ArtistId or CustomerId");
 
+                // We need to do a multi-way join in order to pull together all the data we need.
                 var query = new StringBuilder(@"
 SELECT 
     t.[Name] AS [TrackName], 
@@ -144,6 +145,9 @@ EXISTS (
                     {
                         con.Open();
                         var rdr = await cmd.ExecuteReaderAsync();
+
+                        // Because there is a one-to-many relationship between Track and Invoice, our join
+                        // returns multiple rows for each Track record.
                         while (await rdr.ReadAsync())
                         {
                             var trackName = rdr.getValue<string>("TrackName");
@@ -154,6 +158,9 @@ EXISTS (
                             var customerFirstName = rdr.getValue<string>("CustomerFirstName");
                             var customerLastName = rdr.getValue<string>("CustomerLastName");
 
+                            // If this is the first time we've seen this Track, we add a new model to the list
+                            // And whether it is the first time or not, we need to add the customer data
+                            // to the model's customer list.
                             var trackModel = trackModelList.SingleOrDefault(t => t.TrackName == trackName);
 
                             var addingNew = false;
@@ -171,6 +178,7 @@ EXISTS (
                                 addingNew = true;
                             }
 
+                            // 
                             trackModel.Customers.Add(new TrackModel.Customer
                             {
                                 FirstName = customerFirstName,
