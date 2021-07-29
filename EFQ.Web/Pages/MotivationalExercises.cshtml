@@ -10,8 +10,14 @@
     and server, etc.
 </p>
 <p>
-    The task we're addressing, in these demos, is presenting the user with a
-    form in which the user can select among multiple items to construct the query.
+    The task we're addressing, in the initial demos, is presenting the user with a query
+    form in which the user can choose a Artist and/or a Customer from select lists, click "Search",
+    and see a table containing information about the Tracks associated with the selected Artist, Customer,
+    or both.
+</p>
+<p>
+    The problem is building a query that might contain a comparison against ArtistID, might contain a
+    comparison against CustomerID, or might contain both.
 </p>
 <p>
     The Demos:
@@ -36,12 +42,17 @@
         EFQ wraps PredicateBuilder, and when used directly works much the same way.
     </li>
     <li>
-        <a asp-controller="EFQOnServer">EFQ on server</a> - EFQ allows you to create partial
-        queries and combine them separately. Here we're combining them on the server.
+        <a asp-controller="EFQOnServer">EFQ on server</a> - The change here is to use AJAX.
+        The MVC controller returns a view that contains no data.
+        We use Javascript to call Web API endpoints to populate the &lt;select&gt;s.
+        The handler on the Search button calls a Web API endpoint passing ArtistID and CustomerId, which returns the
+        TrackModels.
     </li>
     <li>
-        <a asp-controller="EFQOnClient">EFQ on client</a> -EFQ allows you to create partial
-        queries and combine them separately. Here we're combining them on the client.
+        <a asp-controller="EFQOnClient">EFQ on client</a> - This still uses AJAX.
+        The difference here is that we've attached EFQ objects to each element in the &lt;select&gt;s.
+        The handler on the Search button builds an EFQ object that ands the EFQ objects of the selected elements,
+        and passes that to the Web API endpoint.
     </li>
 </ol>
 </p>
