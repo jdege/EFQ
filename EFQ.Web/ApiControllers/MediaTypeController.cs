@@ -72,34 +72,6 @@ namespace JDege.EFQ.Web.ApiControllers
 
                 return dropdownModels;
             }
-            // var dropdownModels = new List<DropdownModel>
-            // {
-            //     new DropdownModel{
-            //         value = "1",
-            //         text = "Audio",
-            //         query = EFQBuilder.Equal("MediaType.Name", "MPEG audio file")
-            //         // query = EFQBuilder.Any("MediaType",
-            //         //     EFQBuilder.Contains("Name", "Audio")
-            //         // )
-            //     },
-            //     new DropdownModel{
-            //         value = "2",
-            //         text = "Video",
-            //         // query = EFQBuilder.Any("MediaType",
-            //         //     EFQBuilder.Contains("Name", "Video")
-            //         // )
-            //     },
-            //     new DropdownModel{
-            //         value = "3",
-            //         text = "Protected or Purchased",
-            //         // query = EFQBuilder.Or(
-            //         //     EFQBuilder.Contains("MediaType.Name", "Protected"),
-            //         //     EFQBuilder.Contains("MediaType.Name", "Purchased")
-            //         // )
-            //     }
-            // };
-
-            // return dropdownModels;
         }
     }
 }

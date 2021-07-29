@@ -37,14 +37,6 @@ namespace JDege.EFQ.Web
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EFQ.Web", Version = "v1" });
             });
-
-
-            // var efqManifestEmbeddedProvider =
-            //     new ManifestEmbeddedFileProvider(typeof(EFQ).Assembly);
-            // // var compositeProvider =
-            // //     new CompositeFileProvider(efqManifestEmbeddedProvider);
-
-            // services.AddSingleton<IFileProvider>(efqManifestEmbeddedProvider);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,26 +63,6 @@ namespace JDege.EFQ.Web
             });
 
             app.MapEFQ("/efq");
-            // app.Map("/efq", builder =>
-            // {
-            //     var provider = new ManifestEmbeddedFileProvider(
-            //         assembly: Assembly.GetAssembly(typeof(EFQ)), "JavaScript");
-            //     builder.UseStaticFiles(new StaticFileOptions
-            //     {
-            //         FileProvider = provider
-            //     });
-            //     // builder.Run(async context =>
-            //     // {
-            //     //     await context.Response.SendFileAsync(provider.GetFileInfo("EFQ.js"));
-            //     // });
-            // });
-
-            // app.UseFileServer(new FileServerOptions
-            // {
-            //     RequestPath = "/efq",
-            //     FileProvider = new ManifestEmbeddedFileProvider(
-            //             assembly: Assembly.GetAssembly(typeof(EFQ)))
-            // });
         }
     }
 }

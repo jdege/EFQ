@@ -1,0 +1,615 @@
+<script type="text/javascript"
+    src="http://ajblk.github.io/SyntaxHighlightGenerator-v3.0/scripts/sh-v3.0-min.js"></script>
+<link type="text/css" rel="stylesheet"
+    href="http://ajblk.github.io/SyntaxHighlightGenerator-v3.0/styles/shCoreDefault.css" />
+
+<p>
+    This demo differs from the <a href="EFQueryOnServer">previous</a> in that we're attaching an EFQ object
+    to each element in the select lists.
+</p>
+<p>
+    In the JavaScript handler, we extract the EFQ objects from the selected elements and combine them with an EFQ.And().
+    This relies upon the EFQ.js file being included on the page. EFQ.js is an embedded resource in EFQ.dll.
+</p>
+<p>
+    To make EFQ.js available, you need to call the IApplicationBuilder.MapEFQ() extension method in Startup, passing the
+    base url
+    you want it to be mapped into:
+</p>
+
+<!-- formatted code using http://ajblk.github.io/SyntaxHighlightGenerator-v3.0/OnlineGenerator.html
+Language: C#
+Theme: Default
+Show Gutter: No
+Show Toolbar: No
+Collapse All: No
+Blogger Mode: No
+Start Line number:
+Line no. padding:
+Hightlight Line no.:
+Title Above Code:
+-->
+
+<!-- Code pasted below -->
+
+<div id="highlighterMainDiv_74746" class="syntaxhighlighter nogutter csharp">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td id="codeContainer_74746" class="code">
+                    <div id="container_74746" class="container">
+                        <div class="line number1 index0 alt2"><code class="csharp keyword">public</code> <code
+                                class="csharp keyword">void</code> <code
+                                class="csharp plain">Configure(IApplicationBuilder app, IWebHostEnvironment env)</code>
+                        </div>
+                        <div class="line number2 index1 alt1"><code class="csharp plain">{</code></div>
+                        <div class="line number3 index2 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp comments">// ...</code></div>
+                        <div class="line number4 index3 alt1">&nbsp;</div>
+                        <div class="line number5 index4 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">app.MapEFQ(</code><code class="csharp string">"/efq"</code><code
+                                class="csharp plain">);</code></div>
+                        <div class="line number6 index5 alt1"><code class="csharp plain">}</code></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Code pasted above -->
+
+And then you need to include the script in your view:
+
+<!-- Code pasted below -->
+
+<div id="highlighterMainDiv_319349" class="syntaxhighlighter nogutter csharp">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td id="codeContainer_319349" class="code">
+                    <div id="container_319349" class="container">
+                        <div class="line number1 index0 alt2"><code class="csharp plain">@section Scripts {</code></div>
+                        <div class="line number2 index1 alt1">&nbsp;</div>
+                        <div class="line number3 index2 alt2"><code class="csharp plain">&lt;script src=</code><code
+                                class="csharp string">"~/efq/EFQ.js"</code><code
+                                class="csharp plain">&gt;&lt;/script&gt;</code></div>
+                        <div class="line number4 index3 alt1">&nbsp;</div>
+                        <div class="line number5 index4 alt2"><code class="csharp plain">}</code></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<pre id="presourcecode_319349" class="displaysourcecode">
+@section Scripts {
+
+&lt;script src="~/efq/EFQ.js"&gt;&lt;/script&gt;
+
+}
+</pre>
+
+
+<!-- Code pasted above -->
+
+<p>
+    We've added a third &lt;select&gt; in this demo, for MediaType, and in it we're adding some more complicated
+    subqueries than simple
+    equality checks.
+</p>
+
+<!-- Code pasted below -->
+
+<div id="highlighterMainDiv_752080" class="syntaxhighlighter nogutter csharp">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td id="codeContainer_752080" class="code">
+                    <div id="container_752080" class="container">
+                        <div class="line number1 index0 alt2"><code class="csharp plain">[HttpGet]</code></div>
+                        <div class="line number2 index1 alt1"><code class="csharp plain">[Route(</code><code
+                                class="csharp string">"GetDropdown"</code><code class="csharp plain">)]</code></div>
+                        <div class="line number3 index2 alt2"><code class="csharp keyword">public</code> <code
+                                class="csharp plain">async Task&lt;IEnumerable&lt;DropdownModel&gt;&gt; GetDropdownAsync(</code><code
+                                class="csharp keyword">bool</code> <code class="csharp plain">includeQueries)</code>
+                        </div>
+                        <div class="line number4 index3 alt1"><code class="csharp plain">{</code></div>
+                        <div class="line number5 index4 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">using</code> <code
+                                class="csharp plain">(var dbContext = _contextFactory.CreateDbContext())</code></div>
+                        <div class="line number6 index5 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code>
+                        </div>
+                        <div class="line number7 index6 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">var dropdownModels = await dbContext.MediaTypes</code></div>
+                        <div class="line number8 index7 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">.OrderBy(c =&gt; c.Name)</code></div>
+                        <div class="line number9 index8 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">.ProjectTo&lt;DropdownModel&gt;(_configurationProvider)</code>
+                        </div>
+                        <div class="line number10 index9 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">.ToListAsync();</code></div>
+                        <div class="line number11 index10 alt2">&nbsp;</div>
+                        <div class="line number12 index11 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">if</code> <code class="csharp plain">(includeQueries)</code>
+                        </div>
+                        <div class="line number13 index12 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">{</code></div>
+                        <div class="line number14 index13 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">foreach</code> <code class="csharp plain">(var model </code><code
+                                class="csharp keyword">in</code> <code class="csharp plain">dropdownModels)</code></div>
+                        <div class="line number15 index14 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">{</code></div>
+                        <div class="line number16 index15 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">var efq = EFQBuilder.Equal(</code><code
+                                class="csharp string">"MediaTypeId"</code><code
+                                class="csharp plain">, Int32.Parse(model.value));</code></div>
+                        <div class="line number17 index16 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">model.query = efq;</code></div>
+                        <div class="line number18 index17 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">}</code></div>
+                        <div class="line number19 index18 alt2">&nbsp;</div>
+                        <div class="line number20 index19 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">dropdownModels.AddRange(</code><code
+                                class="csharp keyword">new</code><code class="csharp plain">[] {</code></div>
+                        <div class="line number21 index20 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">new</code> <code class="csharp plain">DropdownModel{</code></div>
+                        <div class="line number22 index21 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">value = </code><code class="csharp string">""</code><code
+                                class="csharp plain">,</code></div>
+                        <div class="line number23 index22 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">text = </code><code class="csharp string">"Audio"</code><code
+                                class="csharp plain">,</code></div>
+                        <div class="line number24 index23 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">query = EFQBuilder.Contains(</code><code
+                                class="csharp string">"MediaType.Name"</code><code class="csharp plain">, </code><code
+                                class="csharp string">"Audio"</code><code class="csharp plain">)</code></div>
+                        <div class="line number25 index24 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">},</code></div>
+                        <div class="line number26 index25 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">new</code> <code class="csharp plain">DropdownModel{</code></div>
+                        <div class="line number27 index26 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">value = </code><code class="csharp string">""</code><code
+                                class="csharp plain">,</code></div>
+                        <div class="line number28 index27 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">text = </code><code class="csharp string">"Video"</code><code
+                                class="csharp plain">,</code></div>
+                        <div class="line number29 index28 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">query = EFQBuilder.Contains(</code><code
+                                class="csharp string">"MediaType.Name"</code><code class="csharp plain">, </code><code
+                                class="csharp string">"Video"</code><code class="csharp plain">)</code></div>
+                        <div class="line number30 index29 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">},</code></div>
+                        <div class="line number31 index30 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">new</code> <code class="csharp plain">DropdownModel{</code></div>
+                        <div class="line number32 index31 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">value = </code><code class="csharp string">""</code><code
+                                class="csharp plain">,</code></div>
+                        <div class="line number33 index32 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">text = </code><code
+                                class="csharp string">"Protected or Purchased"</code><code class="csharp plain">,</code>
+                        </div>
+                        <div class="line number34 index33 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">query = EFQBuilder.Or(</code></div>
+                        <div class="line number35 index34 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">EFQBuilder.Contains(</code><code
+                                class="csharp string">"MediaType.Name"</code><code class="csharp plain">, </code><code
+                                class="csharp string">"Protected"</code><code class="csharp plain">),</code></div>
+                        <div class="line number36 index35 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">EFQBuilder.Contains(</code><code
+                                class="csharp string">"MediaType.Name"</code><code class="csharp plain">, </code><code
+                                class="csharp string">"Purchased"</code><code class="csharp plain">))</code></div>
+                        <div class="line number37 index36 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">}</code></div>
+                        <div class="line number38 index37 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">});</code></div>
+                        <div class="line number39 index38 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">}</code></div>
+                        <div class="line number40 index39 alt1">&nbsp;</div>
+                        <div class="line number41 index40 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">return</code> <code class="csharp plain">dropdownModels;</code>
+                        </div>
+                        <div class="line number42 index41 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code>
+                        </div>
+                        <div class="line number43 index42 alt2"><code class="csharp plain">}</code></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Code pasted above -->
+
+When we populate the &lt;select&gt; lists, we save the query in data attributes.
+
+<!-- Code pasted below -->
+
+<div id="highlighterMainDiv_329726" class="syntaxhighlighter nogutter jscript">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td id="codeContainer_329726" class="code">
+                    <div id="container_329726" class="container">
+                        <div class="line number1 index0 alt2"><code class="jscript keyword">var</code> <code
+                                class="jscript plain">fillSelect = </code><code class="jscript keyword">function</code>
+                            <code class="jscript plain">($select, result)</code>
+                        </div>
+                        <div class="line number2 index1 alt1"><code class="jscript plain">{</code></div>
+                        <div class="line number3 index2 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript keyword">if</code> <code class="jscript plain">(result.success)</code>
+                        </div>
+                        <div class="line number4 index3 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">{</code></div>
+                        <div class="line number5 index4 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">$select.empty().append(</code><code
+                                class="jscript string">"&lt;option value=''&gt;&lt;/option&gt;"</code><code
+                                class="jscript plain">);</code></div>
+                        <div class="line number6 index5 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">$.each(result.data, </code><code
+                                class="jscript keyword">function</code> <code class="jscript plain">(index, item)</code>
+                        </div>
+                        <div class="line number7 index6 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">{</code></div>
+                        <div class="line number8 index7 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">$select.append($(</code><code
+                                class="jscript string">"&lt;option /&gt;"</code><code
+                                class="jscript plain">).val(item.value || index).text(item.text).data(</code><code
+                                class="jscript string">'query'</code><code class="jscript plain">, item.query));</code>
+                        </div>
+                        <div class="line number9 index8 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">});</code></div>
+                        <div class="line number10 index9 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">} </code><code class="jscript keyword">else</code></div>
+                        <div class="line number11 index10 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">{</code></div>
+                        <div class="line number12 index11 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">alert(result.error);</code></div>
+                        <div class="line number13 index12 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">}</code></div>
+                        <div class="line number14 index13 alt1"><code class="jscript plain">};</code></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Code pasted above -->
+
+When the user clicks on Search, we extract them, wrap them in an EFQ.and(), and pass the result off to the Web API
+endpoint.
+
+<!-- Code pasted below -->
+
+<div id="highlighterMainDiv_576135" class="syntaxhighlighter nogutter jscript">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td id="codeContainer_576135" class="code">
+                    <div id="container_576135" class="container">
+                        <div class="line number1 index0 alt2"><code class="jscript plain">$(</code><code
+                                class="jscript string">"#Submit"</code><code class="jscript plain">).click(</code><code
+                                class="jscript keyword">function</code> <code class="jscript plain">()</code></div>
+                        <div class="line number2 index1 alt1"><code class="jscript plain">{</code></div>
+                        <div class="line number3 index2 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript keyword">var</code> <code
+                                class="jscript plain">andQueries = [EFQ.isTrue()];</code></div>
+                        <div class="line number4 index3 alt1">&nbsp;</div>
+                        <div class="line number5 index4 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript keyword">var</code> <code
+                                class="jscript plain">artistSelected = $artistSelect.find(</code><code
+                                class="jscript string">':selected'</code><code class="jscript plain">);</code></div>
+                        <div class="line number6 index5 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript keyword">var</code> <code
+                                class="jscript plain">artistQuery = artistSelected.data(</code><code
+                                class="jscript string">'query'</code><code class="jscript plain">);</code><code
+                                class="jscript comments">// $artistSelect.find(':selected').data('query');</code></div>
+                        <div class="line number7 index6 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript keyword">if</code> <code class="jscript plain">(artistQuery)</code></div>
+                        <div class="line number8 index7 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">{</code></div>
+                        <div class="line number9 index8 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">andQueries.push(artistQuery);</code></div>
+                        <div class="line number10 index9 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">}</code></div>
+                        <div class="line number11 index10 alt2">&nbsp;</div>
+                        <div class="line number12 index11 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript keyword">var</code> <code
+                                class="jscript plain">customer = $customerSelect.find(</code><code
+                                class="jscript string">':selected'</code><code class="jscript plain">).data(</code><code
+                                class="jscript string">'query'</code><code class="jscript plain">);</code></div>
+                        <div class="line number13 index12 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript keyword">if</code> <code class="jscript plain">(customer)</code></div>
+                        <div class="line number14 index13 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">{</code></div>
+                        <div class="line number15 index14 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">andQueries.push(customer);</code></div>
+                        <div class="line number16 index15 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">}</code></div>
+                        <div class="line number17 index16 alt2">&nbsp;</div>
+                        <div class="line number18 index17 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript keyword">var</code> <code
+                                class="jscript plain">mediaType = $mediaTypeSelect.find(</code><code
+                                class="jscript string">':selected'</code><code class="jscript plain">).data(</code><code
+                                class="jscript string">'query'</code><code class="jscript plain">);</code></div>
+                        <div class="line number19 index18 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript keyword">if</code> <code class="jscript plain">(mediaType)</code></div>
+                        <div class="line number20 index19 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">{</code></div>
+                        <div class="line number21 index20 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">andQueries.push(mediaType);</code></div>
+                        <div class="line number22 index21 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">}</code></div>
+                        <div class="line number23 index22 alt2">&nbsp;</div>
+                        <div class="line number24 index23 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript keyword">var</code> <code
+                                class="jscript plain">query = EFQ.and(andQueries);</code></div>
+                        <div class="line number25 index24 alt2">&nbsp;</div>
+                        <div class="line number26 index25 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">TrackQueryService.queryTracks(query, </code><code
+                                class="jscript keyword">function</code> <code class="jscript plain">(result)</code>
+                        </div>
+                        <div class="line number27 index26 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">{</code></div>
+                        <div class="line number28 index27 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript keyword">if</code> <code class="jscript plain">(result.success)</code>
+                        </div>
+                        <div class="line number29 index28 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">{</code></div>
+                        <div class="line number30 index29 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript keyword">var</code> <code
+                                class="jscript plain">data = result.data;</code></div>
+                        <div class="line number31 index30 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">$tracksTable.clear();</code></div>
+                        <div class="line number32 index31 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">$tracksTable.rows.add(data);</code></div>
+                        <div class="line number33 index32 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">$tracksTable.draw();</code></div>
+                        <div class="line number34 index33 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">$(</code><code class="jscript string">'#tab-results'</code><code
+                                class="jscript plain">).trigger(</code><code class="jscript string">'click'</code><code
+                                class="jscript plain">);</code></div>
+                        <div class="line number35 index34 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">} </code><code class="jscript keyword">else</code></div>
+                        <div class="line number36 index35 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">{</code></div>
+                        <div class="line number37 index36 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">alert(result.error);</code></div>
+                        <div class="line number38 index37 alt1"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">}</code></div>
+                        <div class="line number39 index38 alt2"><code
+                                class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="jscript plain">});</code></div>
+                        <div class="line number40 index39 alt1"><code class="jscript plain">});</code></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Code pasted above -->
+
+The endpoint, then, builds a predicate out of what it receives and runs it against the database.
+
+<!-- Code pasted below -->
+<div id="highlighterMainDiv_815982" class="syntaxhighlighter nogutter csharp">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td id="codeContainer_815982" class="code">
+                    <div id="container_815982" class="container">
+                        <div class="line number1 index0 alt2"><code class="csharp plain">[HttpPost]</code></div>
+                        <div class="line number2 index1 alt1"><code class="csharp plain">[Route(</code><code
+                                class="csharp string">"Query"</code><code class="csharp plain">)]</code></div>
+                        <div class="line number3 index2 alt2"><code class="csharp keyword">public</code> <code
+                                class="csharp plain">async Task&lt;ActionResult&lt;IEnumerable&lt;TrackModel&gt;&gt;&gt; QueryAsync(EFQ query)</code>
+                        </div>
+                        <div class="line number4 index3 alt1"><code class="csharp plain">{</code></div>
+                        <div class="line number5 index4 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">try</code></div>
+                        <div class="line number6 index5 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code>
+                        </div>
+                        <div class="line number7 index6 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">var predicate = query.ConstructPredicate&lt;Track&gt;();</code>
+                        </div>
+                        <div class="line number8 index7 alt1">&nbsp;</div>
+                        <div class="line number9 index8 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">using</code> <code
+                                class="csharp plain">(var dbContext = _contextFactory.CreateDbContext())</code></div>
+                        <div class="line number10 index9 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">{</code></div>
+                        <div class="line number11 index10 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">var trackModelList = await dbContext.Tracks.Where(predicate)</code>
+                        </div>
+                        <div class="line number12 index11 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">.OrderBy(t =&gt; t.Name)</code></div>
+                        <div class="line number13 index12 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">.ProjectTo&lt;TrackModel&gt;(_configurationProvider)</code></div>
+                        <div class="line number14 index13 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">.ToListAsync();</code></div>
+                        <div class="line number15 index14 alt2">&nbsp;</div>
+                        <div class="line number16 index15 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">return</code> <code class="csharp plain">trackModelList;</code>
+                        </div>
+                        <div class="line number17 index16 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">}</code></div>
+                        <div class="line number18 index17 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code>
+                        </div>
+                        <div class="line number19 index18 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">catch</code> <code class="csharp plain">(Exception ex)</code>
+                        </div>
+                        <div class="line number20 index19 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code>
+                        </div>
+                        <div class="line number21 index20 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp plain">_logger.LogError(ex, </code><code
+                                class="csharp string">"Exception encounterer"</code><code class="csharp plain">);</code>
+                        </div>
+                        <div class="line number22 index21 alt1"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="csharp keyword">throw</code><code class="csharp plain">;</code></div>
+                        <div class="line number23 index22 alt2"><code
+                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code>
+                        </div>
+                        <div class="line number24 index23 alt1"><code class="csharp plain">}</code></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Code pasted above -->
+
+
+<script type="text/javascript">SyntaxHighlighter.initialize();</script>

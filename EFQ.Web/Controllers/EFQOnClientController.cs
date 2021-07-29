@@ -31,7 +31,7 @@ namespace JDege.EFQ.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/efqc_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/EFQClient_docs.html");
             ViewBag.explanationActive = "active";
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = null;
