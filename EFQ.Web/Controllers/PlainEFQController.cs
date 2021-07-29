@@ -20,7 +20,7 @@ using PeteMontgomery.PredicateBuilder;
 
 namespace JDege.EFQ.Web.Controllers
 {
-    public class EFQueryController : Controller
+    public class PlainEFQController : Controller
     {
         private const string PageTitle = "Plain EFQ";
         private readonly IDbContextFactory<ChinookContext> _contextFactory;
@@ -29,7 +29,7 @@ namespace JDege.EFQ.Web.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<SqlStatementController> _logger;
 
-        public EFQueryController(IDbContextFactory<ChinookContext> contextFactory,
+        public PlainEFQController(IDbContextFactory<ChinookContext> contextFactory,
         IConfigurationProvider configurationProvider, IWebHostEnvironment webHostEnvironment, ILogger<SqlStatementController> logger)
         {
             _contextFactory = contextFactory;
@@ -41,7 +41,7 @@ namespace JDege.EFQ.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/efq_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/PlainEFQ_docs.html");
             ViewBag.explanationActive = "active";
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = null;
@@ -59,7 +59,7 @@ namespace JDege.EFQ.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> IndexAsync(TrackFormModel trackFormModel)
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/pb_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/PlainEFQ_docs.html");
             ViewBag.explanationActive = null;
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = "active";

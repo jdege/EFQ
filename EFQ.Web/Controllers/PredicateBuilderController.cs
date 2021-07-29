@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PeteMontgomery.PredicateBuilder;
 
+// #TODO: DO a general cleanup - removing unused "usings", etc.
 namespace JDege.EFQ.Web.Controllers
 {
     public class PredicateBuilderController : Controller
@@ -41,7 +42,7 @@ namespace JDege.EFQ.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/pb_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/PredicateBuilder_docs.html");
             ViewBag.explanationActive = "active";
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = null;
@@ -59,7 +60,7 @@ namespace JDege.EFQ.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> IndexAsync(TrackFormModel trackFormModel)
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/pb_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/PredicateBuilder_docs.html");
             ViewBag.explanationActive = null;
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = "active";
@@ -91,6 +92,9 @@ namespace JDege.EFQ.Web.Controllers
                 predicate = predicate.And(PredicateBuilder.Create<Track>(t => t.InvoiceLines.Any(il => il.Invoice.CustomerId == c)));
             }
 
+            // Because we're using AutoMapper's IQueryable.ProjectTo() extension method, EF is filtering the results
+            // on the server, returning only the data that is needed to populate the models.
+            // (This significantly reduces the amount of data we put on the wire.)
             using (var dbContext = _contextFactory.CreateDbContext())
             {
                 var trackModelList = await dbContext.Tracks.Where(predicate)

@@ -17,6 +17,12 @@
         We build a query using PredicateBuilder by chaining And() expressions:
 </p>
 
+<p>
+        This is about equal to the plain EF when it comes to concision and clarity. What it offers that plain
+        EF does not is the ability to join subqueries with more complex logic, like "Or" and "Not",
+        though we're not using that here.
+</p>
+
 <!-- formatted code using http://ajblk.github.io/SyntaxHighlightGenerator-v3.0/OnlineGenerator.html
 Language: C#
 Theme: Default
@@ -32,15 +38,15 @@ Title Above Code:
 
 <!-- Code pasted below -->
 
-<div id="highlighterMainDiv_382782" class="syntaxhighlighter nogutter csharp">
+<div id="highlighterMainDiv_407524" class="syntaxhighlighter nogutter csharp">
         <table border="0" cellpadding="0" cellspacing="0">
                 <tbody>
                         <tr>
                                 <td>&nbsp;</td>
                         </tr>
                         <tr>
-                                <td id="codeContainer_382782" class="code">
-                                        <div id="container_382782" class="container">
+                                <td id="codeContainer_407524" class="code">
+                                        <div id="container_407524" class="container">
                                                 <div class="line number1 index0 alt2"><code
                                                                 class="csharp keyword">private</code> <code
                                                                 class="csharp plain">async Task&lt;IList&lt;TrackModel&gt;&gt; GetTrackModels(</code><code
@@ -52,75 +58,70 @@ Title Above Code:
                                                                 class="csharp plain">{</code></div>
                                                 <div class="line number3 index2 alt2"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
-                                                                class="csharp keyword">if</code> <code
-                                                                class="csharp plain">(String.IsNullOrWhiteSpace(artistId) &amp;&amp; String.IsNullOrWhiteSpace(customerId))</code>
-                                                </div>
-                                                <div class="line number4 index3 alt1"><code
-                                                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
-                                                                class="csharp keyword">throw</code> <code
-                                                                class="csharp keyword">new</code> <code
-                                                                class="csharp plain">ArgumentException(</code><code
-                                                                class="csharp string">"Must supply at least one of ArtistId or CustomerId"</code><code
-                                                                class="csharp plain">);</code></div>
-                                                <div class="line number5 index4 alt2">&nbsp;</div>
-                                                <div class="line number6 index5 alt1"><code
-                                                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
                                                                 class="csharp plain">var predicate = PredicateBuilder.Create&lt;Track&gt;(t =&gt; </code><code
                                                                 class="csharp keyword">true</code><code
                                                                 class="csharp plain">);</code></div>
-                                                <div class="line number7 index6 alt2">&nbsp;</div>
-                                                <div class="line number8 index7 alt1"><code
+                                                <div class="line number4 index3 alt1">&nbsp;</div>
+                                                <div class="line number5 index4 alt2"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
                                                                 class="csharp keyword">if</code> <code
                                                                 class="csharp plain">(!</code><code
                                                                 class="csharp keyword">string</code><code
                                                                 class="csharp plain">.IsNullOrEmpty(artistId))</code>
                                                 </div>
-                                                <div class="line number9 index8 alt2"><code
+                                                <div class="line number6 index5 alt1"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
-                                                                class="csharp plain">{</code>
-                                                </div>
-                                                <div class="line number10 index9 alt1"><code
+                                                                class="csharp plain">{</code></div>
+                                                <div class="line number7 index6 alt2"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
                                                                 class="csharp plain">var a = </code><code
                                                                 class="csharp keyword">int</code><code
                                                                 class="csharp plain">.Parse(artistId);</code></div>
-                                                <div class="line number11 index10 alt2">&nbsp;</div>
-                                                <div class="line number12 index11 alt1"><code
+                                                <div class="line number8 index7 alt1">&nbsp;</div>
+                                                <div class="line number9 index8 alt2"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
                                                                 class="csharp plain">predicate = predicate.And(PredicateBuilder.Create&lt;Track&gt;(t =&gt; t.Album.ArtistId == a));</code>
                                                 </div>
-                                                <div class="line number13 index12 alt2"><code
+                                                <div class="line number10 index9 alt1"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
-                                                                class="csharp plain">}</code>
-                                                </div>
-                                                <div class="line number14 index13 alt1">&nbsp;</div>
-                                                <div class="line number15 index14 alt2"><code
+                                                                class="csharp plain">}</code></div>
+                                                <div class="line number11 index10 alt2">&nbsp;</div>
+                                                <div class="line number12 index11 alt1"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
                                                                 class="csharp keyword">if</code> <code
                                                                 class="csharp plain">(!</code><code
                                                                 class="csharp keyword">string</code><code
                                                                 class="csharp plain">.IsNullOrEmpty(customerId))</code>
                                                 </div>
-                                                <div class="line number16 index15 alt1"><code
+                                                <div class="line number13 index12 alt2"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
-                                                                class="csharp plain">{</code>
-                                                </div>
-                                                <div class="line number17 index16 alt2"><code
+                                                                class="csharp plain">{</code></div>
+                                                <div class="line number14 index13 alt1"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
                                                                 class="csharp plain">var c = </code><code
                                                                 class="csharp keyword">int</code><code
                                                                 class="csharp plain">.Parse(customerId);</code></div>
-                                                <div class="line number18 index17 alt1">&nbsp;</div>
-                                                <div class="line number19 index18 alt2"><code
+                                                <div class="line number15 index14 alt2">&nbsp;</div>
+                                                <div class="line number16 index15 alt1"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
                                                                 class="csharp plain">predicate = predicate.And(PredicateBuilder.Create&lt;Track&gt;(t =&gt; t.InvoiceLines.Any(il =&gt; il.Invoice.CustomerId == c)));</code>
                                                 </div>
+                                                <div class="line number17 index16 alt2"><code
+                                                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                                                class="csharp plain">}</code></div>
+                                                <div class="line number18 index17 alt1">&nbsp;</div>
+                                                <div class="line number19 index18 alt2"><code
+                                                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                                                class="csharp comments">// Because we're using AutoMapper's IQueryable.ProjectTo() extension method, EF is filtering the results</code>
+                                                </div>
                                                 <div class="line number20 index19 alt1"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
-                                                                class="csharp plain">}</code>
+                                                                class="csharp comments">// on the server, returning only the data that is needed to populate the models.</code>
                                                 </div>
-                                                <div class="line number21 index20 alt2">&nbsp;</div>
+                                                <div class="line number21 index20 alt2"><code
+                                                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                                                class="csharp comments">// (This significantly reduces the amount of data we put on the wire.)</code>
+                                                </div>
                                                 <div class="line number22 index21 alt1"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
                                                                 class="csharp keyword">using</code> <code
@@ -128,39 +129,31 @@ Title Above Code:
                                                 </div>
                                                 <div class="line number23 index22 alt2"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
-                                                                class="csharp plain">{</code>
-                                                </div>
+                                                                class="csharp plain">{</code></div>
                                                 <div class="line number24 index23 alt1"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
-                                                                class="csharp plain">var query = dbContext.Tracks.Where(predicate);</code>
+                                                                class="csharp plain">var trackModelList = await dbContext.Tracks.Where(predicate)</code>
                                                 </div>
-                                                <div class="line number25 index24 alt2">&nbsp;</div>
-                                                <div class="line number26 index25 alt1"><code
-                                                                class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
-                                                                class="csharp plain">var trackModelList = await query</code>
-                                                </div>
-                                                <div class="line number27 index26 alt2"><code
+                                                <div class="line number25 index24 alt2"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
                                                                 class="csharp plain">.OrderBy(t =&gt; t.Name)</code>
                                                 </div>
-                                                <div class="line number28 index27 alt1"><code
+                                                <div class="line number26 index25 alt1"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
                                                                 class="csharp plain">.ProjectTo&lt;TrackModel&gt;(_configurationProvider)</code>
                                                 </div>
-                                                <div class="line number29 index28 alt2"><code
+                                                <div class="line number27 index26 alt2"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
                                                                 class="csharp plain">.ToListAsync();</code></div>
-                                                <div class="line number30 index29 alt1">&nbsp;</div>
-                                                <div class="line number31 index30 alt2"><code
+                                                <div class="line number28 index27 alt1">&nbsp;</div>
+                                                <div class="line number29 index28 alt2"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
                                                                 class="csharp keyword">return</code> <code
-                                                                class="csharp plain">trackModelList;</code>
-                                                </div>
-                                                <div class="line number32 index31 alt1"><code
+                                                                class="csharp plain">trackModelList;</code></div>
+                                                <div class="line number30 index29 alt1"><code
                                                                 class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
-                                                                class="csharp plain">}</code>
-                                                </div>
-                                                <div class="line number33 index32 alt2"><code
+                                                                class="csharp plain">}</code></div>
+                                                <div class="line number31 index30 alt2"><code
                                                                 class="csharp plain">}</code></div>
                                         </div>
                                 </td>
@@ -175,12 +168,7 @@ Title Above Code:
         </table>
 </div>
 
-<!-- Code pasted above -->
 
-<p>
-        This is about equal to the plain EF when it comes to concision and clarity. What it offers that plain
-        EF does not is the ability to join subqueries with more complex logic, like "Or" and "Not",
-        though we're not using that here.
-</p>
+<!-- Code pasted above -->
 
 <script type="text/javascript">SyntaxHighlighter.initialize();</script>
