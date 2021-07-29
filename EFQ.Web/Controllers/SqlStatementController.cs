@@ -56,7 +56,7 @@ namespace JDege.EFQ.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> IndexAsync(TrackFormModel trackFormModel)
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/ADO_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/SqlStatement_docs.html");
             ViewBag.explanationActive = null;
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = "active";
@@ -75,9 +75,6 @@ namespace JDege.EFQ.Web.Controllers
             using (var dbContext = _contextFactory.CreateDbContext())
             {
                 var connectionString = dbContext.Database.GetConnectionString();
-
-                if (String.IsNullOrWhiteSpace(artistId) && String.IsNullOrWhiteSpace(customerId))
-                    throw new ArgumentException("Must supply at least one of ArtistId or CustomerId");
 
                 // We need to do a multi-way join in order to pull together all the data we need.
                 var query = new StringBuilder(@"

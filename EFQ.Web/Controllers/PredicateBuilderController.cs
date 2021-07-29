@@ -75,9 +75,6 @@ namespace JDege.EFQ.Web.Controllers
 
         private async Task<IList<TrackModel>> GetTrackModels(string artistId, string customerId)
         {
-            if (String.IsNullOrWhiteSpace(artistId) && String.IsNullOrWhiteSpace(customerId))
-                throw new ArgumentException("Must supply at least one of ArtistId or CustomerId");
-
             var predicate = PredicateBuilder.Create<Track>(t => true);
 
             if (!string.IsNullOrEmpty(artistId))

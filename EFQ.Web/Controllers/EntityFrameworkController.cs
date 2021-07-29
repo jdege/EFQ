@@ -18,20 +18,19 @@ using Microsoft.Extensions.Logging;
 
 namespace JDege.EFQ.Web.Controllers
 {
-    public class PlainEFController : Controller
+    public class EntityFrameworkController : Controller
     {
-        private const string PageTitle = "Plain Entity Framework";
+        private const string PageTitle = "Entity Framework";
         private readonly IDbContextFactory<ChinookContext> _contextFactory;
-        // Injecting AutoMapper configuration
-        private readonly IConfigurationProvider _configurationProvider;
+        private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<SqlStatementController> _logger;
 
-        public PlainEFController(IDbContextFactory<ChinookContext> contextFactory,
-        IConfigurationProvider configurationProvider, IWebHostEnvironment webHostEnvironment, ILogger<SqlStatementController> logger)
+        public EntityFrameworkController(IDbContextFactory<ChinookContext> contextFactory,
+            IMapper mapper, IWebHostEnvironment webHostEnvironment, ILogger<SqlStatementController> logger)
         {
             _contextFactory = contextFactory;
-            _configurationProvider = configurationProvider;
+            _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
         }
@@ -39,7 +38,7 @@ namespace JDege.EFQ.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/ADO_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/EntityFramework_docs.html");
             ViewBag.explanationActive = "active";
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = null;
@@ -57,7 +56,7 @@ namespace JDege.EFQ.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> IndexAsync(TrackFormModel trackFormModel)
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/ADO_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/EntityFramework_docs.html");
             ViewBag.explanationActive = null;
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = "active";
@@ -73,9 +72,6 @@ namespace JDege.EFQ.Web.Controllers
 
         private async Task<IList<TrackModel>> GetTrackModels(string artistId, string customerId)
         {
-            if (String.IsNullOrWhiteSpace(artistId) && String.IsNullOrWhiteSpace(customerId))
-                throw new ArgumentException("Must supply at least one of ArtistId or CustomerId");
-
             using (var dbContext = _contextFactory.CreateDbContext())
             {
                 var query = dbContext.Tracks.AsQueryable();
@@ -83,21 +79,27 @@ namespace JDege.EFQ.Web.Controllers
                 if (!string.IsNullOrEmpty(artistId))
                 {
                     var a = int.Parse(artistId);
-
                     query = query.Where(t => t.Album.ArtistId == a);
                 }
 
                 if (!string.IsNullOrEmpty(customerId))
                 {
                     var c = int.Parse(customerId);
-
                     query = query.Where(t => t.InvoiceLines.Any(il => il.Invoice.CustomerId == c));
                 }
 
-                var trackModelList = await query
+                // We need to .Include() all the navigation properties that we need to build TrackModels
+                // (Which means we're still pulling mutiple records)
+                var trackList = await query
+                    .Include(t => t.MediaType)
+                    .Include(t => t.Album).ThenInclude(a => a.Artist)
+                    .Include(t => t.InvoiceLines).ThenInclude(il => il.Invoice).ThenInclude(i => i.Customer)
                     .OrderBy(t => t.Name)
-                    .ProjectTo<TrackModel>(_configurationProvider)
                     .ToListAsync();
+
+                // We're using AutoMapper to map our Track entities to our TrackModel models.
+                var trackModelList =
+                    _mapper.Map<IList<TrackModel>>(trackList);
 
                 return trackModelList;
             }

@@ -33,9 +33,6 @@ namespace JDege.EFQ.Web.ApiControllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TrackModel>>> GetAsync(string artistId, string customerId)
         {
-            if (String.IsNullOrWhiteSpace(artistId) && String.IsNullOrWhiteSpace(customerId))
-                throw new ArgumentException("Must supply at least one of ArtistId or CustomerId");
-
             var andQueriesList = new List<EFQ>();
 
             andQueriesList.Add(EFQBuilder.IsTrue());
