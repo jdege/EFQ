@@ -7,21 +7,22 @@
         In this demo, we show how to solve the problem in plain Entity Framework.
 </p>
 <p>
+        These pages are implemented as distinct MVC controllers, using the shared TrackMVC view.
+        The only difference between them is in how the GetTrackModels() method is implemented.
+</p>
+<p>
         The user selects a client, a worker, or both, from the &lt;select&gt; elements,
         and clicks "Search" to submit the form.
 </p>
 <p>
         The POST action receives a clientid and a workerid, either of which can be null.
-        We build a query using EFQuery.
+        We build a query using EFQ.
 </p>
-
-
 <p>
         This is about the same as PredicateBuilder in complexity. It loses functionality in that it's
         not type-safe. It uses strings containing field names to identify fields, rather than using lambda expressions,
         which the compiler can check.
 </p>
-
 <p>
         What it gains, though, is the ability to serialize the query, which is useful in a number of
         scenarios, the most common of which might be passing partial queries back and forth from the client.

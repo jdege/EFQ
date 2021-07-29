@@ -7,22 +7,24 @@
 	In this demo, we show how to solve the problem in plain Entity Framework.
 </p>
 <p>
+	These pages are implemented as distinct MVC controllers, using the shared TrackMVC view.
+	The only difference between them is in how the GetTrackModels() method is implemented.
+</p>
+<p>
 	The user selects a client, a worker, or both, from the &lt;select&gt; elements,
 	and clicks "Search" to submit the form.
 </p>
 <p>
 	The POST action receives a clientid and a workerid, either of which can be null.
-	It builds a query in LINQ by chaining successive Where() clauses:
+	It builds a query in LINQ by chaining successive Where() clauses.
 </p>
-
 <p>
 	Notice how much more concise this is than the ADO. And for the simple case like this
 	where we're building up a query by simply adding more where clauses, it works well enough,
 	but even something as simple as an "or" becomes difficult to manage.
 </p>
-
-
-<p>And also notice that we're still doing a multi-table join, and returning multiple records for each Track.
+<p>
+	And also notice that we're still doing a multi-table join, and returning multiple records for each Track.
 	AutoMapper hides much of that complexity, but we're still putting a lot of data on the wire.
 </p>
 

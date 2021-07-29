@@ -9,18 +9,26 @@
                 Builder</a>.
 </p>
 <p>
+        These pages are implemented as distinct MVC controllers, using the shared TrackMVC view.
+        The only difference between them is in how the GetTrackModels() method is implemented.
+</p>
+<p>
         The user selects a client, a worker, or both, from the &lt;select&gt; elements,
         and clicks "Search" to submit the form.
 </p>
 <p>
         The POST action receives a clientid and a workerid, either of which can be null.
-        We build a query using PredicateBuilder by chaining And() expressions:
+        We build a query using PredicateBuilder by chaining And() expressions.
 </p>
-
 <p>
         This is about equal to the plain EF when it comes to concision and clarity. What it offers that plain
         EF does not is the ability to join subqueries with more complex logic, like "Or" and "Not",
         though we're not using that here.
+</p>
+<p>
+        And also notice that we're now using AutoMapper's IQueryable&lt;T&gt;.ProjectTo() extension method.
+        This generates SQL that executes on the server, causing it to return only the data that is needed
+        to construct the Trackmodel, significantly reducing the amount of data sent over the wire.
 </p>
 
 <!-- formatted code using http://ajblk.github.io/SyntaxHighlightGenerator-v3.0/OnlineGenerator.html

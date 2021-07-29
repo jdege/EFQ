@@ -7,12 +7,17 @@
         In this demo, we show how to solve the problem using SQL statements in ADO.
 </p>
 <p>
-        The form contains a pair of &lt;select&gt; elements, from which the user selects a Client, a Worker, or both.
-        When the user clicks "Search" the submitted form data includes the selected options. controller POST action
-        calls a method, passing the selected clientid and workerid, which builds a SQL query using
-        string concatenation:
+        These pages are implemented as distinct MVC controllers, using the shared TrackMVC view.
+        The only difference between them is in how the GetTrackModels() method is implemented.
 </p>
-
+<p>
+        The user selects a client, a worker, or both, from the &lt;select&gt; elements,
+        and clicks "Search" to submit the form.
+</p>
+<p>
+        The POST action receives a clientid and a workerid, either of which can be null.
+        It builds a SQL query using string concatenation.
+</p>
 <p>
         Notice how we can construct a query piecemeal, in code, joining different tables, and matching
         against different fields, depending upon the data we're given. This is something that is simple
