@@ -1,36 +1,37 @@
-@model IList<JDege.EFQ.Web.Models.TrackModel>
+@model JDege.EFQ.Web.Models.RunQueryModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h3>The selected tracks:</h3>
+<h3>Results for "@Model.Title":</h3>
+<a asp-controller="FunctionExamples">Return to list</a>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model[0].TrackName)
+                @Html.DisplayNameFor(model => model.TrackModels[0].TrackName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].AlbumTitle)
+                @Html.DisplayNameFor(model => model.TrackModels[0].AlbumTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].ArtistName)
+                @Html.DisplayNameFor(model => model.TrackModels[0].ArtistName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].TrackComposer)
+                @Html.DisplayNameFor(model => model.TrackModels[0].TrackComposer)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].MediaType)
+                @Html.DisplayNameFor(model => model.TrackModels[0].MediaType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].Customers)
+                @Html.DisplayNameFor(model => model.TrackModels[0].Customers)
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.TrackModels)
         {
             <tr>
                 <td>
