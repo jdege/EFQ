@@ -32,26 +32,31 @@ namespace EFQ.Web.Entities
                     Name = "Search for a Track",
                     Query = "EFQBuilder.Equal(\"TrackId\", 1)",
                     Description = "To find a given track",
-                    // StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"TrackId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"FieldName\":null,\"RightHandSide\":null,\"ConstantString\":null,\"ConstantInt\":1,\"ConstantDouble\":null,\"ConstantDecimal\":null,\"ConstantDateTime\":null,\"ConstantDateTimeOffset\":null,\"InnerCriteria\":null,\"AggregateList\":[]},\"ConstantString\":null,\"ConstantInt\":null,\"ConstantDouble\":null,\"ConstantDecimal\":null,\"ConstantDateTime\":null,\"ConstantDateTimeOffset\":null,\"InnerCriteria\":null,\"AggregateList\":[]}"
                     StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"TrackId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantInt\":1,\"AggregateList\":[]},\"AggregateList\":[]}"
                 },
                 new StoredQuery
                 {
                     StoredQueryId = 2,
-                    Name = "Search by Album",
+                    Name = "All Tracks for Album 1",
                     Query = "EFQBuilder.Equal(\"AlbumId\", 1)",
                     Description = "To find all tracks for a given album",
-                    // StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"AlbumId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"FieldName\":null,\"RightHandSide\":null,\"ConstantString\":null,\"ConstantInt\":1,\"ConstantDouble\":null,\"ConstantDecimal\":null,\"ConstantDateTime\":null,\"ConstantDateTimeOffset\":null,\"InnerCriteria\":null,\"AggregateList\":[]},\"ConstantString\":null,\"ConstantInt\":null,\"ConstantDouble\":null,\"ConstantDecimal\":null,\"ConstantDateTime\":null,\"ConstantDateTimeOffset\":null,\"InnerCriteria\":null,\"AggregateList\":[]}"
                     StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"AlbumId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantInt\":1,\"AggregateList\":[]},\"AggregateList\":[]}"
                 },
                 new StoredQuery
                 {
                     StoredQueryId = 3,
-                    Name = "Search by Artist",
+                    Name = "All tracks with an Album by Artist 1",
                     Query = "EFQBuilder.Equal(\"Album.ArtistId\", 1)",
                     Description = "To find all tracks for all albums with a given artist",
-                    //StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"Album.ArtistId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"FieldName\":null,\"RightHandSide\":null,\"ConstantString\":null,\"ConstantInt\":1,\"ConstantDouble\":null,\"ConstantDecimal\":null,\"ConstantDateTime\":null,\"ConstantDateTimeOffset\":null,\"InnerCriteria\":null,\"AggregateList\":[]},\"ConstantString\":null,\"ConstantInt\":null,\"ConstantDouble\":null,\"ConstantDecimal\":null,\"ConstantDateTime\":null,\"ConstantDateTimeOffset\":null,\"InnerCriteria\":null,\"AggregateList\":[]}"
                     StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"Album.ArtistId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantInt\":1,\"AggregateList\":[]},\"AggregateList\":[]}"
+                },
+                new StoredQuery
+                {
+                    StoredQueryId = 4,
+                    Name = "All tracks with an Invoice with Customer 1",
+                    Query = "EFQBuilder.Any(\"InvoiceLines\", EFQBuilder.Equal(\"Invoice.CustomerId\", 1))",
+                    Description = "To find all tracks for all albums with a given artist",
+                    StoredQueryJson = "{\"EFQType\":\"Any\",\"FieldName\":\"InvoiceLines\",\"InnerCriteria\":{\"EFQType\":\"Equal\",\"FieldName\":\"Invoice.CustomerId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantInt\":1,\"AggregateList\":[]},\"AggregateList\":[]},\"AggregateList\":[]}"
                 }
             );
         }

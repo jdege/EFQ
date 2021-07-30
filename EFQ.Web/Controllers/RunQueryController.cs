@@ -32,7 +32,7 @@ namespace JDege.EFQ.Web.Controllers
         [Route("[Controller]/{id}")]
         public async Task<IActionResult> IndexAsync(int id)
         {
-            var q = EFQBuilder.Equal("TrackId", 1);
+            var q = EFQBuilder.Any("InvoiceLines", EFQBuilder.Equal("Invoice.CustomerId", 1));
             var s = SJ.JsonSerializer.Serialize(q);
 
             using (var dbContext = _contextFactory.CreateDbContext())
