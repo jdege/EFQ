@@ -14,8 +14,8 @@
     we had been using that EF, out of the box, did not support:</p>
 
 <ul>
-    <li>Storing a query in the database, </li>
-    <li>Constructing a query dynmically on a web page and submitting it to a webservice.</li>
+    <li>Constructing a query dynmically on a web page and submitting it to a webservice, and</li>
+    <li>Storing a query in the database.</li>
 </ul>
 
 <p>Both of these are pretty simple to do in SQL, and we wanted to be able to do something
@@ -25,17 +25,18 @@
 
 <ol>
     <li><a class="nav-link text-dark" asp-controller="MotivationalExercises">Motivational exercises</a> -
-        A series of tutorials explaining the why and how of EFQ. </li>
+        A progressive series of tutorials explaining the why and how of EFQ.
+    </li>
 
-    <li><a class="nav-link text-dark" asp-controller="StoredQuery">~/StoredQuery</a> -
-        An MVC page that displays a list of queries that have been stored in the database, and allows you to run them
-        and see the results.</li>
+    <li><a class="nav-link text-dark" asp-controller="FunctionExamples">Function examples</a> -
+        A page that retrieves and displays a collection of queries from a database table,
+        and allows the user to execute any selected query. The queries in the collection act
+        as tutorial examples of the various functions available.
+    </li>
 
-    <li><a class="nav-link text-dark" href="/Swagger" target="_blank">~/Swagger</a> -
+    <li><a class="nav-link text-dark" href="/Swagger" target="_blank">Swagger UI</a> -
         The Swagger UI for the REST endpoints in this project (opens in a new browser tab) </li>
 </ol>
-
-
 
 <p>There are three .NET projects, in this solution:</p>
 

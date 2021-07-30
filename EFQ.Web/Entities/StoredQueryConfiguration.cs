@@ -1,4 +1,3 @@
-using EFQ.Web.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,13 +16,9 @@ namespace EFQ.Web.Entities
             builder.Property(e => e.Description)
                 .HasMaxLength(int.MaxValue);
 
-            builder.Property(e => e.BaseTableName)
-                .IsRequired()
-                .HasMaxLength(200);
-
             builder.Property(e => e.StoredQueryJson)
                 .IsRequired()
-                .HasMaxLength(200);
+                .HasMaxLength(int.MaxValue);
 
             seedData(builder);
         }
@@ -34,19 +29,18 @@ namespace EFQ.Web.Entities
                 new StoredQuery
                 {
                     StoredQueryId = 1,
-                    Name = "Iron Maiden Albums",
-                    Description = "Albums by Iron Maiden",
-                    BaseTableName = "Album",
-                    StoredQueryJson = "{\"SelectionComparison\":\"Equal\",\"FieldName\":\"ArtistId\",\"RightHandSide\":{\"SelectionComparison\":\"Constant\",\"ConstantValue\":90,\"AggregateList\":[]},\"AggregateList\":[]}"
+                    Name = "Search for Album",
+                    Description = "EFQBuilder.Equal(\"AlbumId\", 1)",
+                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"AlbumId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"FieldName\":null,\"RightHandSide\":null,\"ConstantString\":null,\"ConstantInt\":1,\"ConstantDouble\":null,\"ConstantDecimal\":null,\"ConstantDateTime\":null,\"ConstantDateTimeOffset\":null,\"InnerCriteria\":null,\"AggregateList\":[]},\"ConstantString\":null,\"ConstantInt\":null,\"ConstantDouble\":null,\"ConstantDecimal\":null,\"ConstantDateTime\":null,\"ConstantDateTimeOffset\":null,\"InnerCriteria\":null,\"AggregateList\":[]}"
                 },
                 new StoredQuery
                 {
                     StoredQueryId = 2,
-                    Name = "Led Zeppelin",
-                    Description = "Albums by Led Zeppelin",
-                    BaseTableName = "Album",
-                    StoredQueryJson = "{\"SelectionComparison\":\"Equal\",\"FieldName\":\"ArtistId\",\"RightHandSide\":{\"SelectionComparison\":\"Constant\",\"ConstantValue\":22,\"AggregateList\":[]},\"AggregateList\":[]}"
-                });
+                    Name = "Search for Artist",
+                    Description = "EFQBuilder.Equal(\"Album.ArtistId\", 1)",
+                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"Album.ArtistId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"FieldName\":null,\"RightHandSide\":null,\"ConstantString\":null,\"ConstantInt\":1,\"ConstantDouble\":null,\"ConstantDecimal\":null,\"ConstantDateTime\":null,\"ConstantDateTimeOffset\":null,\"InnerCriteria\":null,\"AggregateList\":[]},\"ConstantString\":null,\"ConstantInt\":null,\"ConstantDouble\":null,\"ConstantDecimal\":null,\"ConstantDateTime\":null,\"ConstantDateTimeOffset\":null,\"InnerCriteria\":null,\"AggregateList\":[]}"
+                }
+            );
         }
     }
 }

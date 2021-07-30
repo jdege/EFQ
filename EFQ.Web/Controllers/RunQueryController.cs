@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -7,7 +9,10 @@ using EFQ.Web.Entities;
 using JDege.EFQ.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+
+// #TODO: Remove Newtonsoft
+using NJ = Newtonsoft.Json;
+using SJ = System.Text.Json;
 
 namespace JDege.EFQ.Web.Controllers
 {
@@ -27,6 +32,9 @@ namespace JDege.EFQ.Web.Controllers
         [Route("[Controller]/{id}")]
         public async Task<IActionResult> IndexAsync(int id)
         {
+            var q = EFQBuilder.Equal("Album.ArtistId", 1);
+            var s = SJ.JsonSerializer.Serialize(q);
+
             using (var dbContext = _contextFactory.CreateDbContext())
             {
                 var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(q => q.StoredQueryId == id);
@@ -35,15 +43,16 @@ namespace JDege.EFQ.Web.Controllers
                     return NotFound();
                 }
 
-                var efq = JsonConvert.DeserializeObject<EFQ>(storedQuery.StoredQueryJson);
-                var predicate = efq.ConstructPredicate<Album>(null);
+                var efq = NJ.JsonConvert.DeserializeObject<EFQ>(storedQuery.StoredQueryJson);
 
-                var albumModels = await dbContext.Albums
+                var predicate = efq.ConstructPredicate<Track>(null); ;
+
+                var trackModels = await dbContext.Tracks
                     .Where(predicate)
-                    .ProjectTo<AlbumModel>(_configurationProvider)
+                    .ProjectTo<TrackModel>(_configurationProvider)
                     .ToListAsync();
 
-                return View(albumModels);
+                return View(trackModels);
             }
         }
     }

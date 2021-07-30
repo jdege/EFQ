@@ -23,6 +23,7 @@ namespace JDege.EFQ.test
                 EFQBuilder.Equal("fieldname", DateTimeOffset.Now),
                 EFQBuilder.Any("fieldname", EFQBuilder.Equal("child.fieldname", "123")),
                 EFQBuilder.Contains("fieldname", "123"),
+                EFQBuilder.Equal("ArtistId", 90)
                 // System.Text.Json doesn't support TimeSpans, yet
                 // EFQBuilder.Contains("fieldname", TimeSpan.FromHours(1))
             };

@@ -1,24 +1,31 @@
-@model IEnumerable<JDege.EFQ.Web.Models.AlbumModel>
+@model IList<JDege.EFQ.Web.Models.TrackModel>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
-
-<h3>The selected albums:</h3>
+<h3>The selected tracks:</h3>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model[0].TrackName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model[0].AlbumTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ArtistName)
+                @Html.DisplayNameFor(model => model[0].ArtistName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].TrackComposer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].MediaType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Customers)
             </th>
         </tr>
     </thead>
@@ -27,13 +34,26 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
+                    @Html.DisplayFor(modelItem => item.TrackName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Title)
+                    @Html.DisplayFor(modelItem => item.AlbumTitle)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ArtistName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrackComposer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MediaType)
+                </td>
+                <td>
+                    @foreach (var customer in item.Customers)
+                    {
+@Html.DisplayFor(modelItem => customer.FirstName)<text>&nbsp;</text>@Html.DisplayFor(modelItem => customer.LastName)
+                    <br>
+                    }
                 </td>
             </tr>
         }
