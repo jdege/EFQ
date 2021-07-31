@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace JDege.EFQ.Web.Controllers
         [Route("[Controller]/{id}")]
         public async Task<IActionResult> IndexAsync(int id)
         {
-            var q = EFQBuilder.Any("InvoiceLines", EFQBuilder.Equal("Invoice.CustomerId", 1));
+            var q = EFQBuilder.Equal("TrackId", "{{context:trackid}}");
             var s = SJ.JsonSerializer.Serialize(q);
 
             using (var dbContext = _contextFactory.CreateDbContext())
@@ -44,8 +45,9 @@ namespace JDege.EFQ.Web.Controllers
                 }
 
                 var efq = NJ.JsonConvert.DeserializeObject<EFQ>(storedQuery.StoredQueryJson);
+                var context = NJ.JsonConvert.DeserializeObject<Dictionary<string, object>>(storedQuery.Context);
 
-                var predicate = efq.ConstructPredicate<Track>(null); ;
+                var predicate = efq.ConstructPredicate<Track>(context); ;
 
                 var trackModels = await dbContext.Tracks
                     .Where(predicate)
