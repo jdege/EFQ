@@ -6,6 +6,7 @@ using JDege.EFQ;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
+using System.Collections.Generic;
 
 namespace JDege.EFQ.dbtest
 {
@@ -216,6 +217,33 @@ namespace JDege.EFQ.dbtest
                 results.Count.ShouldBe(2);
                 results[0].itemId.ShouldBe("abcd");
                 results[1].itemId.ShouldBe("cdef");
+            }
+        }
+
+        [Fact]
+        public async Task testContext()
+        {
+            Seed(items: new[] {
+                new Item{itemId = "abcd"}
+            });
+
+            var sc = JDege.EFQ.EFQBuilder.Equal("itemId", "{{context:foo}}");
+
+            using (var dbContext = new TestDbContext(ContextOptions))
+            {
+                var context = new Dictionary<string, object>
+                {
+                    { "foo", "abcd" },
+                    { "bar", 10 }
+                };
+
+                var predicate = sc.ConstructPredicate<Item>(context);
+
+                var results = await dbContext.Items.Where(predicate)
+                    .OrderBy(i => i.itemId).ToListAsync();
+
+                results.Count.ShouldBe(1);
+                results[0].itemId.ShouldBe("abcd");
             }
         }
     }

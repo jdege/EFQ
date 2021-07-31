@@ -13,7 +13,7 @@ namespace JDege.EFQ
     public static class EFQExtensions
     {
         #region predicate construction functions
-        public static Expression<Func<T, bool>> ConstructPredicate<T>(this EFQ efq, object context = null)
+        public static Expression<Func<T, bool>> ConstructPredicate<T>(this EFQ efq, Dictionary<string, object> context = null)
         {
             // #TODO: Move IsUnary, etc., to extension methods
             if (efq.IsUnary())
@@ -36,7 +36,7 @@ namespace JDege.EFQ
             return efq.ConstructSinglePredicate<T>(context);
         }
 
-        private static Expression<Func<T, bool>> constructAggregatePredicate<T>(this EFQ efq, object context)
+        private static Expression<Func<T, bool>> constructAggregatePredicate<T>(this EFQ efq, Dictionary<string, object> context)
         {
             var predicate = efq.IsAnd() ? PredicateBuilder.True<T>() : PredicateBuilder.False<T>();
 
@@ -63,7 +63,7 @@ namespace JDege.EFQ
             return Expression.Lambda<Func<T, bool>>(body, candidateExpr);
         }
 
-        private static Expression<Func<T, bool>> constructMethodCallPredicate<T>(this EFQ efq, object context)
+        private static Expression<Func<T, bool>> constructMethodCallPredicate<T>(this EFQ efq, Dictionary<string, object> context)
         {
             var type = typeof(T);
 
@@ -96,7 +96,7 @@ namespace JDege.EFQ
             }
         }
 
-        private static Expression<Func<T, bool>> constructStaticCallPredicate<T>(this EFQ efq, object context)
+        private static Expression<Func<T, bool>> constructStaticCallPredicate<T>(this EFQ efq, Dictionary<string, object> context)
         {
             var type = typeof(T);
 
@@ -146,7 +146,7 @@ namespace JDege.EFQ
             throw new InvalidExpressionException(String.Format("Invalid EFQType {0}", efqType));
         }
 
-        public static Expression<Func<T, bool>> ConstructAnyPredicate<T>(this EFQ efq, object context)
+        private static Expression<Func<T, bool>> ConstructAnyPredicate<T>(this EFQ efq, Dictionary<string, object> context)
         {
             var type = typeof(T);
 
@@ -173,7 +173,7 @@ namespace JDege.EFQ
             return lambda;
         }
 
-        public static Expression<Func<T, bool>> ConstructSinglePredicate<T>(this EFQ efq, object context)
+        private static Expression<Func<T, bool>> ConstructSinglePredicate<T>(this EFQ efq, Dictionary<string, object> context)
         {
             var type = typeof(T);
 
@@ -226,7 +226,7 @@ namespace JDege.EFQ
             }
         }
 
-        private static ConstantExpression constructConstantExpression<T>(this EFQ efq, object value, object context)
+        private static ConstantExpression constructConstantExpression<T>(this EFQ efq, object value, Dictionary<string, object> context)
         {
             var sc = value as EFQ;
             if (sc != null)
@@ -266,7 +266,7 @@ namespace JDege.EFQ
             return null;
         }
 
-        private static object executeAddExpression<T>(EFQ sc, object context)
+        private static object executeAddExpression<T>(EFQ sc, Dictionary<string, object> context)
         {
             object result = null;
 
@@ -309,8 +309,31 @@ namespace JDege.EFQ
             return result;
         }
 
-        private static object getConstantValue(object value, object context)
+        private static object getConstantValue(object value, Dictionary<string, object> context)
         {
+#if true
+            var s = value as String;
+            if (s != null)
+            {
+                var re = new Regex(@"^\{\{(.+):(.+)\}\}$");
+                var match = re.Match(s);
+                if (match.Success)
+                {
+                    var source = match.Groups[1].Value;
+
+                    if (String.Equals(source, "CONTEXT", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        var field = match.Groups[2].Value;
+                        if (!context.ContainsKey(field))
+                            throw new InvalidExpressionException($"Element {field} not found in context");
+                        var val = context[field];
+                        value = val;
+                    }
+                }
+            }
+
+            return value;
+#else
             // #TODO: Remove dtKludge
             string dtKludge = null;
             var s = value as String;
@@ -345,7 +368,7 @@ namespace JDege.EFQ
                                 if (dict != null)
                                 {
                                     var val = dict[part];
-                                    context = val;
+                                    // context = val;
                                     value = val;
                                 }
                                 else
@@ -355,7 +378,7 @@ namespace JDege.EFQ
                                     if (prop != null)
                                     {
                                         var val = prop.GetValue(context, null);
-                                        context = val;
+                                        // context = val;
                                         value = val;
                                     }
                                 }
@@ -388,6 +411,7 @@ namespace JDege.EFQ
             }
 
             return value;
+#endif
         }
 
         private static MemberExpression getMember<T>(this EFQ efq, Type type, ParameterExpression parameter)
