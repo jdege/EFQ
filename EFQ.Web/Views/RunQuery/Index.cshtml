@@ -4,7 +4,18 @@
     ViewData["Title"] = "Index";
 }
 
-<h3>Results for "@Model.Title":</h3>
+<h3>@Model.Title</h3>
+<div>
+@Html.Raw(Model.Description)
+</div>
+<br />
+<h3>The query we executed:</h3>
+<div>
+    @Model.Query
+</div>
+<br />
+
+<h3>Results:</h3>
 <a asp-controller="FunctionExamples">Return to list</a>
 
 <table class="table">

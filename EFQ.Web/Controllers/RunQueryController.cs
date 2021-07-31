@@ -55,7 +55,9 @@ namespace JDege.EFQ.Web.Controllers
                 var runQueryModel = new RunQueryModel
                 {
                     TrackModels = trackModels,
-                    Title = storedQuery.Name
+                    Title = storedQuery.Name,
+                    Query = storedQuery.Query,
+                    Description = storedQuery.Description
                 };
 
                 return View(runQueryModel);
