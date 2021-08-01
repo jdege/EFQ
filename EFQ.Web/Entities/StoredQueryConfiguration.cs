@@ -127,6 +127,17 @@ namespace EFQ.Web.Entities
                     Context = null,
                     Description = "To match ranges you can use EFQBuilder.Between()",
                     StoredQueryJson = "{\"EFQType\":\"And\",\"AggregateList\":[{\"EFQType\":\"GreaterThanOrEqual\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantString\":\"M\",\"AggregateList\":[]},\"AggregateList\":[]},{\"EFQType\":\"LessThanOrEqual\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantString\":\"N\",\"AggregateList\":[]},\"AggregateList\":[]}]}"
+                },
+                new StoredQuery
+                {
+                    StoredQueryId = 9,
+                    BaseTable = nameof(Invoice),
+                    Area = StoredQuery.StoredQueryArea.FieldMatch.ToString(),
+                    Name = "Match invoices",
+                    Query = "EFQBuilder.Equal(\"BillingCountry\", \"Germany\");",
+                    Context = null,
+                    Description = "When we're running queries against the Invoice table, we use fields from the Invoice table",
+                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"BillingCountry\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantString\":\"Germany\",\"AggregateList\":[]},\"AggregateList\":[]}"
                 }
             );
         }

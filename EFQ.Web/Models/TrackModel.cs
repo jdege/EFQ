@@ -24,7 +24,6 @@ namespace JDege.EFQ.Web.Models
         }
     }
 
-
     public class TrackModelProfile : Profile
     {
         public TrackModelProfile()

@@ -31,9 +31,9 @@ namespace JDege.EFQ.Web.Controllers
 
         [HttpGet]
         [Route("[Controller]/Track")]
-        public async Task<IActionResult> GetTracksAsync(int id)
+        public async Task<IActionResult> GetTrackAsync(int id)
         {
-            var q = EFQBuilder.Between("Composer", "M", "N");
+            var q = EFQBuilder.Equal("BillingCountry", "Germany");
             var s = SJ.JsonSerializer.Serialize(q);
 
             using (var dbContext = _contextFactory.CreateDbContext())
@@ -63,6 +63,43 @@ namespace JDege.EFQ.Web.Controllers
                 };
 
                 return View("Tracks", runQueryModel);
+            }
+        }
+
+        [HttpGet]
+        [Route("[Controller]/Invoice")]
+        public async Task<IActionResult> GetInvoiceAsync(int id)
+        {
+            var q = EFQBuilder.Equal("BillingCountry", "Germany");
+            var s = SJ.JsonSerializer.Serialize(q);
+
+            using (var dbContext = _contextFactory.CreateDbContext())
+            {
+                var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(q => q.StoredQueryId == id);
+                if (storedQuery == null)
+                {
+                    return NotFound();
+                }
+
+                var efq = NJ.JsonConvert.DeserializeObject<EFQ>(storedQuery.StoredQueryJson);
+                var context = storedQuery.Context == null ? null : NJ.JsonConvert.DeserializeObject<Dictionary<string, object>>(storedQuery.Context);
+
+                var predicate = efq.ConstructPredicate<Invoice>(context); ;
+
+                var invoiceModels = await dbContext.Invoices
+                    .Where(predicate)
+                    .ProjectTo<InvoiceModel>(_configurationProvider)
+                    .ToListAsync();
+
+                var runQueryModel = new RunInvoiceQueryModel
+                {
+                    InvoiceModels = invoiceModels,
+                    Title = storedQuery.Name,
+                    Query = storedQuery.Query,
+                    Description = storedQuery.Description
+                };
+
+                return View("Invoices", runQueryModel);
             }
         }
     }

@@ -52,6 +52,10 @@
                     {
                         <a asp-controller="RunQuery" asp-action="Track" asp-route-id="@item.Id">Execute</a>
                     }
+                    @if (item.BaseTable == "Invoice")
+                    {
+                        <a asp-controller="RunQuery" asp-action="Invoice" asp-route-id="@item.Id">Execute</a>
+                    }
                 </td>
             </tr>
         }
