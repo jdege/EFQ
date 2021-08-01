@@ -138,6 +138,17 @@ namespace EFQ.Web.Entities
                     Context = null,
                     Description = "When we're running queries against the Invoice table, we use fields from the Invoice table",
                     StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"BillingCountry\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantString\":\"Germany\",\"AggregateList\":[]},\"AggregateList\":[]}"
+                },
+                new StoredQuery
+                {
+                    StoredQueryId = 10,
+                    BaseTable = nameof(Invoice),
+                    Area = StoredQuery.StoredQueryArea.FieldMatch.ToString(),
+                    Name = "Mathing dates",
+                    Query = "EFQBuilder.LessThanOrEqual(\"InvoiceDate\", DateTime.Parse(\"2009-01-31\"))",
+                    Context = null,
+                    Description = "When we're matching against date fields we can pass DateTime objects",
+                    StoredQueryJson = "{\"EFQType\":\"LessThanOrEqual\",\"FieldName\":\"InvoiceDate\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantDateTime\":\"2009-01-31T00:00:00\",\"AggregateList\":[]},\"AggregateList\":[]}"
                 }
             );
         }

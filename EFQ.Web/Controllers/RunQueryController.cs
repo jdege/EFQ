@@ -33,7 +33,7 @@ namespace JDege.EFQ.Web.Controllers
         [Route("[Controller]/Track")]
         public async Task<IActionResult> GetTrackAsync(int id)
         {
-            var q = EFQBuilder.Equal("BillingCountry", "Germany");
+            var q = EFQBuilder.LessThanOrEqual("InvoiceDate", DateTime.Parse("2009-01-31"));
             var s = SJ.JsonSerializer.Serialize(q);
 
             using (var dbContext = _contextFactory.CreateDbContext())
