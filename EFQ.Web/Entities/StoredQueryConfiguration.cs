@@ -144,7 +144,7 @@ namespace EFQ.Web.Entities
                     StoredQueryId = 10,
                     BaseTable = nameof(Invoice),
                     Area = StoredQuery.StoredQueryArea.FieldMatch.ToString(),
-                    Name = "Mathing dates",
+                    Name = "Match dates",
                     Query = "EFQBuilder.LessThanOrEqual(\"InvoiceDate\", DateTime.Parse(\"2009-01-31\"))",
                     Context = null,
                     Description = "When we're matching against date fields we can pass DateTime objects",

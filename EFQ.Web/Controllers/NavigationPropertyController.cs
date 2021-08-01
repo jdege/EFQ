@@ -10,13 +10,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JDege.EFQ.Web.Controllers
 {
-    public class FieldMatchController : Controller
+    public class NavigationPropertyController : Controller
     {
         private readonly IDbContextFactory<ChinookContext> _contextFactory;
         // Injecting AutoMapper configuration
         private readonly IConfigurationProvider _configurationProvider;
 
-        public FieldMatchController(IDbContextFactory<ChinookContext> contextFactory, IConfigurationProvider configurationProvider)
+        public NavigationPropertyController(IDbContextFactory<ChinookContext> contextFactory, IConfigurationProvider configurationProvider)
         {
             _contextFactory = contextFactory;
             _configurationProvider = configurationProvider;
@@ -27,7 +27,7 @@ namespace JDege.EFQ.Web.Controllers
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
-                var storedQueryArea = StoredQuery.StoredQueryArea.FieldMatch.ToString();
+                var storedQueryArea = StoredQuery.StoredQueryArea.NavigationProperty.ToString();
                 var storedQueryModels = await dbContext.StoredQueries
                     .Where(sq => sq.Area == storedQueryArea)
                     .ProjectTo<StoredQueryModel>(_configurationProvider)

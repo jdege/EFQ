@@ -48,14 +48,8 @@
                     @Html.Raw(item.Description)
                 </td>
                 <td>
-                    @if (item.BaseTable == "Track")
-                    {
-                        <a asp-controller="RunQuery" asp-action="Track" asp-route-id="@item.Id">Execute</a>
-                    }
-                    @if (item.BaseTable == "Invoice")
-                    {
-                        <a asp-controller="RunQuery" asp-action="Invoice" asp-route-id="@item.Id">Execute</a>
-                    }
+                    <a asp-controller="RunQuery" asp-action=@item.BaseTable asp-route-id=@item.Id
+                    asp-route-rc=@item.Area>Execute</a>
                 </td>
             </tr>
         }

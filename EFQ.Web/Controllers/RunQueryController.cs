@@ -31,7 +31,7 @@ namespace JDege.EFQ.Web.Controllers
 
         [HttpGet]
         [Route("[Controller]/Track")]
-        public async Task<IActionResult> GetTrackAsync(int id)
+        public async Task<IActionResult> GetTrackAsync(int id, string rc)
         {
             var q = EFQBuilder.LessThanOrEqual("InvoiceDate", DateTime.Parse("2009-01-31"));
             var s = SJ.JsonSerializer.Serialize(q);
@@ -59,7 +59,8 @@ namespace JDege.EFQ.Web.Controllers
                     TrackModels = trackModels,
                     Title = storedQuery.Name,
                     Query = storedQuery.Query,
-                    Description = storedQuery.Description
+                    Description = storedQuery.Description,
+                    ReturnController = rc
                 };
 
                 return View("Tracks", runQueryModel);
@@ -68,7 +69,7 @@ namespace JDege.EFQ.Web.Controllers
 
         [HttpGet]
         [Route("[Controller]/Invoice")]
-        public async Task<IActionResult> GetInvoiceAsync(int id)
+        public async Task<IActionResult> GetInvoiceAsync(int id, string rc)
         {
             var q = EFQBuilder.Equal("BillingCountry", "Germany");
             var s = SJ.JsonSerializer.Serialize(q);
@@ -96,7 +97,8 @@ namespace JDege.EFQ.Web.Controllers
                     InvoiceModels = invoiceModels,
                     Title = storedQuery.Name,
                     Query = storedQuery.Query,
-                    Description = storedQuery.Description
+                    Description = storedQuery.Description,
+                    ReturnController = rc
                 };
 
                 return View("Invoices", runQueryModel);
