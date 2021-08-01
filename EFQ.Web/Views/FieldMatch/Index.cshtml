@@ -3,8 +3,10 @@
 @{
 }
 
+<h3>Field matching</h3>
+
 <div>
-    EFQ queries are run against a root Entity Framework entity.
+    EFQ queries are run against a base table in Entity Framework.<br />
     To retrieve records that have matching fields, use the comparison functions,
     passing the name of the field and the value to match against.
 </div>
@@ -14,6 +16,9 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BaseTable)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -31,6 +36,9 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.BaseTable)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
@@ -40,7 +48,10 @@
                     @Html.Raw(item.Description)
                 </td>
                 <td>
-                    <a asp-controller="RunQuery" asp-action="Index" asp-route-id="@item.Id">Execute</a>
+                    @if (item.BaseTable == "Track")
+                    {
+                        <a asp-controller="RunQuery" asp-action="Track" asp-route-id="@item.Id">Execute</a>
+                    }
                 </td>
             </tr>
         }

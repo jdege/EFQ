@@ -30,8 +30,8 @@ namespace JDege.EFQ.Web.Controllers
         }
 
         [HttpGet]
-        [Route("[Controller]/{id}")]
-        public async Task<IActionResult> IndexAsync(int id)
+        [Route("[Controller]/Track")]
+        public async Task<IActionResult> GetTracksAsync(int id)
         {
             var q = EFQBuilder.Between("Composer", "M", "N");
             var s = SJ.JsonSerializer.Serialize(q);
@@ -54,7 +54,7 @@ namespace JDege.EFQ.Web.Controllers
                     .ProjectTo<TrackModel>(_configurationProvider)
                     .ToListAsync();
 
-                var runQueryModel = new RunQueryModel
+                var runQueryModel = new RunTrackQueryModel
                 {
                     TrackModels = trackModels,
                     Title = storedQuery.Name,
@@ -62,7 +62,7 @@ namespace JDege.EFQ.Web.Controllers
                     Description = storedQuery.Description
                 };
 
-                return View(runQueryModel);
+                return View("Tracks", runQueryModel);
             }
         }
     }

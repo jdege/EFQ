@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace JDege.EFQ.Web.Models
 {
-    public class RunQueryModel
+    public class RunTrackQueryModel
     {
         public string Title { get; set; }
         public string Query { get; set; }

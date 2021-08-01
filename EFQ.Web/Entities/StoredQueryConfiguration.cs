@@ -13,6 +13,10 @@ namespace EFQ.Web.Entities
                 .IsRequired()
                 .HasMaxLength(200);
 
+            builder.Property(e => e.BaseTable)
+                .IsRequired()
+                .HasMaxLength(200);
+
             builder.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(200);
@@ -39,6 +43,7 @@ namespace EFQ.Web.Entities
                 {
                     StoredQueryId = 1,
                     Area = StoredQuery.StoredQueryArea.FieldMatch.ToString(),
+                    BaseTable = nameof(Track),
                     Name = "Match on primary key",
                     Query = "EFQBuilder.Equal(\"TrackId\", 1)",
                     Context = null,
@@ -49,6 +54,7 @@ namespace EFQ.Web.Entities
                 {
                     StoredQueryId = 2,
                     Area = StoredQuery.StoredQueryArea.FieldMatch.ToString(),
+                    BaseTable = nameof(Track),
                     Name = "Match on a foreign key",
                     Query = "EFQBuilder.Equal(\"AlbumId\", 1)",
                     Context = null,
@@ -58,6 +64,7 @@ namespace EFQ.Web.Entities
                 new StoredQuery
                 {
                     StoredQueryId = 3,
+                    BaseTable = nameof(Track),
                     Area = StoredQuery.StoredQueryArea.NavigationProperty.ToString(),
                     Name = "All tracks with an Album by Artist 1",
                     Query = "EFQBuilder.Equal(\"Album.ArtistId\", 1)",
@@ -68,6 +75,7 @@ namespace EFQ.Web.Entities
                 new StoredQuery
                 {
                     StoredQueryId = 4,
+                    BaseTable = nameof(Track),
                     Area = StoredQuery.StoredQueryArea.NavigationProperty.ToString(),
                     Name = "All tracks with an Invoice with Customer 1",
                     Context = null,
@@ -79,6 +87,7 @@ namespace EFQ.Web.Entities
                 new StoredQuery
                 {
                     StoredQueryId = 5,
+                    BaseTable = nameof(Track),
                     Area = StoredQuery.StoredQueryArea.ParamaterizedValues.ToString(),
                     Name = "Search with a paramaterized value",
                     Query = "EFQBuilder.Equal(\"TrackId\", \"{{context:trackid}}\")",
@@ -89,6 +98,7 @@ namespace EFQ.Web.Entities
                 new StoredQuery
                 {
                     StoredQueryId = 6,
+                    BaseTable = nameof(Track),
                     Area = StoredQuery.StoredQueryArea.FieldMatch.ToString(),
                     Name = "Match on a string value",
                     Query = "EFQBuilder.Equal(\"Composer\", \"Miles Davis\")",
@@ -99,6 +109,7 @@ namespace EFQ.Web.Entities
                 new StoredQuery
                 {
                     StoredQueryId = 7,
+                    BaseTable = nameof(Track),
                     Area = StoredQuery.StoredQueryArea.FieldMatch.ToString(),
                     Name = "Match a range using And()",
                     Query = "EFQBuilder.And(EFQBuilder.GreaterThanOrEqual(\"Composer\", \"M\"), EFQBuilder.LessThanOrEqual(\"Composer\", \"O\"))",
@@ -109,6 +120,7 @@ namespace EFQ.Web.Entities
                 new StoredQuery
                 {
                     StoredQueryId = 8,
+                    BaseTable = nameof(Track),
                     Area = StoredQuery.StoredQueryArea.FieldMatch.ToString(),
                     Name = "Match a range using Between()",
                     Query = "EFQBuilder.Between(\"Composer\", \"M\", \"N\")",
