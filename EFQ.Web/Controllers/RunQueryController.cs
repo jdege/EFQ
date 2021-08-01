@@ -33,7 +33,7 @@ namespace JDege.EFQ.Web.Controllers
         [Route("[Controller]/{id}")]
         public async Task<IActionResult> IndexAsync(int id)
         {
-            var q = EFQBuilder.Equal("TrackId", "{{context:trackid}}");
+            var q = EFQBuilder.Between("Composer", "M", "N");
             var s = SJ.JsonSerializer.Serialize(q);
 
             using (var dbContext = _contextFactory.CreateDbContext())
@@ -45,7 +45,7 @@ namespace JDege.EFQ.Web.Controllers
                 }
 
                 var efq = NJ.JsonConvert.DeserializeObject<EFQ>(storedQuery.StoredQueryJson);
-                var context = NJ.JsonConvert.DeserializeObject<Dictionary<string, object>>(storedQuery.Context);
+                var context = storedQuery.Context == null ? null : NJ.JsonConvert.DeserializeObject<Dictionary<string, object>>(storedQuery.Context);
 
                 var predicate = efq.ConstructPredicate<Track>(context); ;
 

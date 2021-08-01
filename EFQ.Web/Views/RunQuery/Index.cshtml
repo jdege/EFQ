@@ -6,7 +6,7 @@
 
 <h3>@Model.Title</h3>
 <div>
-@Html.Raw(Model.Description)
+    @Html.Raw(Model.Description)
 </div>
 <br />
 <h3>The query we executed:</h3>
@@ -16,7 +16,7 @@
 <br />
 
 <h3>Results:</h3>
-<a asp-controller="FunctionExamples">Return to list</a>
+<a asp-controller="FieldMatch">Return to list</a>
 
 <table class="table">
     <thead>
@@ -63,8 +63,9 @@
                 <td>
                     @foreach (var customer in item.Customers)
                     {
-@Html.DisplayFor(modelItem => customer.FirstName)<text>&nbsp;</text>@Html.DisplayFor(modelItem => customer.LastName)
-                    <br>
+                        @Html.DisplayFor(modelItem => customer.FirstName)<text>&nbsp;</text>@Html.DisplayFor(modelItem =>
+                customer.LastName)
+                        <br>
                     }
                 </td>
             </tr>
