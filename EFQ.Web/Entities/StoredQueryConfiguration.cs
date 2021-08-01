@@ -69,7 +69,11 @@ namespace EFQ.Web.Entities
                     Name = "All tracks with an Album by Artist 1",
                     Query = "EFQBuilder.Equal(\"Album.ArtistId\", 1)",
                     Context = null,
-                    Description = @"To find all records that equal a specific value of a field on a child table, use .Equal() with the child table name - dot - field name and the value.",
+                    Description = @"
+<p>If there is a one-to-one or many-to-one relationship between the base table and the child table, the Entity Framework navigation property will be a single object of the child table's entity type.
+<p>In the Chinook database, we have this kind of relationship between Track and Album. 
+<p>To match a field in this kind of relationship, use tablename.fieldname. E.g., ""Album.ArtistId"".
+",
                     StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"Album.ArtistId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantInt\":1,\"AggregateList\":[]},\"AggregateList\":[]}"
                 },
                 new StoredQuery
@@ -80,8 +84,11 @@ namespace EFQ.Web.Entities
                     Name = "All tracks with an Invoice with Customer 1",
                     Context = null,
                     Query = "EFQBuilder.Any(\"InvoiceLines\", EFQBuilder.Equal(\"Invoice.CustomerId\", 1))",
-                    Description = @"Track has a many-to-many relationship with Invoice, through the InvoiceLines intersection table.
-                    <br />To find all Track records that have an Invoice record for a given customer, use .Any(), with the name of the intersection table and a query that will execute on the intersection table.",
+                    Description = @"
+<p>If there is a one-to-many or many-to-many relationship between the base table and the child table, the Entity Framework navigation property will be an ICollection of the child table's entity type.
+<p>In the Chinook database, we have this kind of relationship between Track and InvoiceLine. 
+<p>To match a field in this kind of relationship, Use EFQBuilder.Any(), passing as a second parameter another EFQ that targets the child table.
+",
                     StoredQueryJson = "{\"EFQType\":\"Any\",\"FieldName\":\"InvoiceLines\",\"InnerCriteria\":{\"EFQType\":\"Equal\",\"FieldName\":\"Invoice.CustomerId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantInt\":1,\"AggregateList\":[]},\"AggregateList\":[]},\"AggregateList\":[]}"
                 },
                 new StoredQuery

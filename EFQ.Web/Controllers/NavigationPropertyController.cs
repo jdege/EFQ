@@ -25,6 +25,10 @@ namespace JDege.EFQ.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
+            ViewBag.docs = @"
+<p>EFQ queries can match against records that are associated with the base record through Entity Framework navigation properties.
+";
+
             using (var dbContext = _contextFactory.CreateDbContext())
             {
                 var storedQueryArea = StoredQuery.StoredQueryArea.NavigationProperty.ToString();

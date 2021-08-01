@@ -25,6 +25,11 @@ namespace JDege.EFQ.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
+            ViewBag.docs = @"
+<p>EFQ queries are run against a base table in Entity Framework.
+<p>To retrieve records that have matching fields, use the comparison functions, passing the name of the field and the value to match against.
+";
+
             using (var dbContext = _contextFactory.CreateDbContext())
             {
                 var storedQueryArea = StoredQuery.StoredQueryArea.FieldMatch.ToString();
