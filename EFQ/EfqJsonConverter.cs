@@ -105,38 +105,40 @@ namespace JDege.EFQ
                 var propName = reader.GetString();
                 reader.Read();
 
-                switch (propName)
+                // Would use switch(), except it doesn't do case-invariant comparisons
+                if (propName.Equals(nameof(efq.EFQType), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    case nameof(efq.EFQType):
-                        efq.EFQType = Enum.Parse<EFQType>(reader.GetString());
-                        break;
-                    case nameof(efq.FieldName):
-                        efq.FieldName = reader.GetString();
-                        break;
-                    case nameof(efq.RightHandSide):
-                        efq.RightHandSide = ReadEfq(ref reader, typeToConvert, options);
-                        break;
-                    case nameof(efq.ConstantValue):
-                        efq.ConstantValue = ConvertConstantValue(ref reader, typeToConvert, options);
-                        break;
-                    case nameof(efq.InnerCriteria):
-                        efq.InnerCriteria = ReadEfq(ref reader, typeToConvert, options);
-                        break;
-                    case nameof(efq.AggregateList):
-                        {
-                            if (reader.TokenType != JsonTokenType.StartArray)
-                                throw new JsonException("Expected StartArray token");
-                            reader.Read();
+                    efq.EFQType = Enum.Parse<EFQType>(reader.GetString());
+                }
+                else if (propName.Equals(nameof(efq.FieldName), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    efq.FieldName = reader.GetString();
+                }
+                else if (propName.Equals(nameof(efq.RightHandSide), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    efq.RightHandSide = ReadEfq(ref reader, typeToConvert, options);
+                }
+                else if (propName.Equals(nameof(efq.ConstantValue), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    efq.ConstantValue = ConvertConstantValue(ref reader, typeToConvert, options);
+                }
+                else if (propName.Equals(nameof(efq.InnerCriteria), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    efq.InnerCriteria = ReadEfq(ref reader, typeToConvert, options);
+                }
+                else if (propName.Equals(nameof(efq.AggregateList), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    if (reader.TokenType != JsonTokenType.StartArray)
+                        throw new JsonException("Expected StartArray token");
+                    reader.Read();
 
-                            var aggregateList = new List<EFQ>();
-                            while (reader.TokenType != JsonTokenType.EndArray)
-                            {
-                                aggregateList.Add(ReadEfq(ref reader, typeToConvert, options));
-                                reader.Read();
-                            }
-                            efq.AggregateList = aggregateList.ToArray();
-                            break;
-                        }
+                    var aggregateList = new List<EFQ>();
+                    while (reader.TokenType != JsonTokenType.EndArray)
+                    {
+                        aggregateList.Add(ReadEfq(ref reader, typeToConvert, options));
+                        reader.Read();
+                    }
+                    efq.AggregateList = aggregateList.ToArray();
                 }
             }
 
