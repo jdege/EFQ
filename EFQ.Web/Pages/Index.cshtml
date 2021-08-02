@@ -24,22 +24,29 @@
 <p>The menu at the top of this site provides links to a number of different pages:</p>
 
 <ol>
-    <li><a class="nav-link text-dark" asp-controller="MotivationalExercises">Motivational exercises</a> -
+    <li><a class="nav-link text-dark" asp-controller="MotivationalExercises" asp-action="Index">Motivational
+            exercises</a><br />
         A progressive series of tutorials explaining the why and how of EFQ.
     </li>
 
-    <li><a class="nav-link text-dark" asp-controller="FieldMatch">Field matching</a> -
+    <li><a class="nav-link text-dark" asp-controller="FieldMatch" asp-action="Index">Field matching</a>
         A page that retrieves and displays a collection of queries against a base database table,
         and allows the user to execute any selected query. The queries in the collection act
         as tutorial examples of the various functions available.
     </li>
 
-    <li><a class="nav-link text-dark" asp-controller="NavigationProperty">Navigation properties</a> -
+    <li><a class="nav-link text-dark" asp-controller="NavigationProperty" asp-action="Index">Navigation
+            properties</a>
         Queries that match against tables that are connected to the base table - connecting
         through Entity Framework navigation properties.
     </li>
 
-    <li><a class="nav-link text-dark" href="/Swagger" target="_blank">Swagger UI</a> -
+    <li><a class="nav-link text-dark" asp-controller="ParameterizedValues" asp-action="Index">Parameterized
+            values</a>
+        Storing queries in the database serves little purpose if you can't set parameters when they're run.
+    </li>
+
+    <li><a class=" nav-link text-dark" href="/Swagger" target="_blank">Swagger UI</a>
         The Swagger UI for the REST endpoints in this project (opens in a new browser tab) </li>
 </ol>
 

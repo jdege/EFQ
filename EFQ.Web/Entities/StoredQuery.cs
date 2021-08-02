@@ -18,7 +18,7 @@ namespace EFQ.Web.Entities
         {
             FieldMatch,
             NavigationProperty,
-            ParamaterizedValues
+            ParameterizedValues
         }
     }
 }

@@ -59,6 +59,7 @@ namespace JDege.EFQ.Web.Controllers
                     TrackModels = trackModels,
                     Title = storedQuery.Name,
                     Query = storedQuery.Query,
+                    Context = storedQuery.Context,
                     Description = storedQuery.Description,
                     ReturnController = rc
                 };
@@ -97,6 +98,7 @@ namespace JDege.EFQ.Web.Controllers
                     InvoiceModels = invoiceModels,
                     Title = storedQuery.Name,
                     Query = storedQuery.Query,
+                    Context = storedQuery.Context,
                     Description = storedQuery.Description,
                     ReturnController = rc
                 };

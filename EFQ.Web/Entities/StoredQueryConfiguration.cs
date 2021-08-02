@@ -95,8 +95,8 @@ namespace EFQ.Web.Entities
                 {
                     StoredQueryId = 5,
                     BaseTable = nameof(Track),
-                    Area = StoredQuery.StoredQueryArea.ParamaterizedValues.ToString(),
-                    Name = "Search with a paramaterized value",
+                    Area = StoredQuery.StoredQueryArea.ParameterizedValues.ToString(),
+                    Name = "Search with a parameterized value",
                     Query = "EFQBuilder.Equal(\"TrackId\", \"{{context:trackid}}\")",
                     Context = "{\"trackid\" : 2}",
                     Description = "To run a stored query using parameters, set the matching value to \"{{context:&lt;fieldname&gt;}}\", and pass a dictionary containing \"&lt;fieldname&gt;\".",

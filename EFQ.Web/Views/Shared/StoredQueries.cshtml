@@ -1,6 +1,8 @@
+@using System.Linq
 @model IEnumerable<JDege.EFQ.Web.Models.StoredQueryModel>
 
 @{
+    bool displayContext = Model.Any(m => m.Context != null);
 }
 
 <h3>Field matching</h3>
@@ -23,6 +25,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Query)
             </th>
+            @if (displayContext)
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Context)
+                </th>
+            }
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
@@ -42,6 +50,12 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Query)
                 </td>
+                @if (displayContext)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Context)
+                    </td>
+                }
                 <td>
                     @Html.Raw(item.Description)
                 </td>

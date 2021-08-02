@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    bool displayContext = Model.Context != null;
 }
 
 <h3>@Model.Title</h3>
@@ -13,6 +14,13 @@
 <div>
     @Model.Query
 </div>
+@if (displayContext)
+{
+    <h3>The context we used:</h3>
+    <div>
+        @Model.Context
+    </div>
+}
 <br />
 
 <h3>Results:</h3>
