@@ -21,21 +21,7 @@ namespace JDege.EFQ
 
         public EFQ RightHandSide { get; set; }
 
-        public string ConstantString { get; set; }
-
-        public int? ConstantInt { get; set; }
-
-        public double? ConstantDouble { get; set; }
-
-        public decimal? ConstantDecimal { get; set; }
-
-        public DateTime? ConstantDateTime { get; set; }
-
-        public DateTimeOffset? ConstantDateTimeOffset { get; set; }
-
-        // System.Text.Json doesn't support TimeSpans, yet
-        // https://github.com/dotnet/runtime/issues/29932
-        // public TimeSpan? ConstantTimeSpan { get; set; }
+        public object ConstantValue { get; set; }
 
         public EFQ InnerCriteria { get; set; }
 
