@@ -1,20 +1,14 @@
 using System.Collections.Generic;
-
-using SJ = System.Text.Json;
-using SJS = System.Text.Json.Serialization;
-using NJ = Newtonsoft.Json;
-using NJC = Newtonsoft.Json.Converters;
-using System;
+using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace JDege.EFQ
 {
+    [JsonConverter(typeof(EfqJsonConverter))]
     public class EFQ
     {
         #region Member variables
 
-        // #TODO: Work with both json serializers!
-        [NJ.JsonConverter(typeof(NJC.StringEnumConverter))]
-        [SJS.JsonConverter(typeof(SJS.JsonStringEnumConverter))]
         public EFQType EFQType { get; set; }
 
         public string FieldName { get; set; }
@@ -58,6 +52,5 @@ namespace JDege.EFQ
         Constant,
         Add
     };
-
 }
 
