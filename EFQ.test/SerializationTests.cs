@@ -28,13 +28,34 @@ namespace JDege.EFQ.test
             };
 
         [Fact]
-        public void SystemTextJsonDeserializeItself()
+        public void EfqDeserialize()
         {
             foreach (var efq in _testEfqs)
             {
                 var s = JsonSerializer.Serialize(efq);
                 var d = JsonSerializer.Deserialize<EFQ>(s);
                 d.ShouldBeEquivalentTo(efq);
+            }
+        }
+
+        private IEnumerable<EFQ.Constant> _testEfqConstants = new[] {
+            new EFQ.Constant("aString"),
+            new EFQ.Constant(1),
+            new EFQ.Constant(1.2),
+            new EFQ.Constant(2.3M),
+            new EFQ.Constant(DateTime.Now),
+            new EFQ.Constant(DateTimeOffset.Now),
+            new EFQ.Constant(TimeSpan.FromHours(1))
+            };
+
+        [Fact]
+        public void ConstantValueDeserialize()
+        {
+            foreach (var efqConstant in _testEfqConstants)
+            {
+                var s = JsonSerializer.Serialize(efqConstant);
+                var d = JsonSerializer.Deserialize<EFQ.Constant>(s);
+                d.ShouldBeEquivalentTo(efqConstant);
             }
         }
     }

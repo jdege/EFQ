@@ -27,6 +27,17 @@ namespace JDege.EFQ
             set { this._aggregateList = value; }
         }
 
+        [JsonConverter(typeof(EfqConstantJsonConverter))]
+        public class Constant
+        {
+            public Constant(object value)
+            {
+                Value = value;
+            }
+
+            public object Value { get; private set; }
+        }
+
         #endregion
     }
 

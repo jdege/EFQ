@@ -145,12 +145,11 @@ namespace JDege.EFQ
             return null;
         }
 
-        private readonly Regex convertConstantValueRE = new Regex("^(INT|DBL|DEC|DT|DTO|TSP|STR):(.*)");
-
         private object ConvertConstantValue(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var s = reader.GetString();
 
+            var convertConstantValueRE = new Regex("^(INT|DBL|DEC|DT|DTO|TSP|STR):(.*)");
             var match = convertConstantValueRE.Match(s);
             if (!match.Success)
                 throw new JsonException($"{s} is not a valid constant value expression");
