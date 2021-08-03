@@ -27,6 +27,18 @@ namespace JDege.EFQ.Web.Controllers
         {
             ViewBag.docs = @"
 <p>Storing queries in the database serves little purpose if you can't set parameters when they're run.
+</p>
+<p>In this example, we're passing a dictionary of context values as a URLencoded query parameter.
+</p>
+<p>System.Text.Json won't deserialize JSON into object properties, so we need to include type information in the values
+as we serialize them. We're doing this by the EFQ.Constant class instead. This will include type information when it serializes, and
+will use that to reconstruct the correct type when deserializing.
+</p>
+<p>EFQ.js includes a EFQConstant object containing convenience functions to create ConstantValue types in the browser.
+</p>
+<p>E.g.:<br />
+<code>var context = { ""trackid"": EFQConstant.int(2) };</code>
+</p>
 ";
 
             using (var dbContext = _contextFactory.CreateDbContext())

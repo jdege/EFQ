@@ -60,8 +60,11 @@
                     @Html.Raw(item.Description)
                 </td>
                 <td>
-                    <a asp-controller="RunQuery" asp-action=@item.BaseTable asp-route-id=@item.Id
-                    asp-route-rc=@item.Area>Execute</a>
+                    @{
+                        var context = (item.Context == null) ? null : Uri.EscapeDataString(item.Context);
+                    }
+                    <a asp-controller="RunQuery" asp-action=@item.BaseTable asp-route-id=@item.Id asp-route-rc=@item.Area
+                    asp-route-ctx="@context">Execute</a>
                 </td>
             </tr>
         }

@@ -128,3 +128,48 @@
 
 })();
 
+var EFQConstant = (function ()
+{
+	'use strict';
+
+	var EFQConstant = {};
+
+	EFQConstant.int = function (v)
+	{
+		return `INT:${v.toString()}`;
+	};
+
+	EFQConstant.double = function (v)
+	{
+		return `DBL:${v.toString()}`;
+	};
+
+	EFQConstant.decimal = function (v)
+	{
+		return `DEC:${v.toString()}`;
+	};
+
+	EFQConstant.dateTime = function (v)
+	{
+		return `DT:${v.toString()}`;
+	};
+
+	EFQConstant.dateTimeOffset = function (v)
+	{
+		return `DTO:${v.toString()}`;
+	};
+
+	EFQConstant.timeSpan = function (v)
+	{
+		return `TSP:${v.toString()}`;
+	};
+
+	EFQConstant.string = function (v)
+	{
+		return `STR:${v}`;
+	};
+
+	return EFQConstant;
+
+})();
+

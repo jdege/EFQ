@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 // #TODO: Remove Newtonsoft
 using System.Text.Json;
+using System.Net;
 
 namespace JDege.EFQ.Web.Controllers
 {
@@ -30,7 +31,7 @@ namespace JDege.EFQ.Web.Controllers
 
         [HttpGet]
         [Route("[Controller]/Track/{id}")]
-        public async Task<IActionResult> GetTrackAsync([FromRoute] int id, [FromQuery] string rc)
+        public async Task<IActionResult> GetTrackAsync([FromRoute] int id, [FromQuery] string rc, [FromQuery] string ctx)
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
@@ -43,7 +44,12 @@ namespace JDege.EFQ.Web.Controllers
                 var efq = JsonSerializer.Deserialize<EFQ>(storedQuery.StoredQueryJson);
 
                 // TODO: Need to deserialize Context!!!
-                var context = storedQuery.Context == null ? null : JsonSerializer.Deserialize<Dictionary<string, EFQ.Constant>>(storedQuery.Context);
+                Dictionary<string, EFQ.Constant> context = null;
+                if (ctx != null)
+                {
+                    var c = WebUtility.UrlDecode(ctx);
+                    context = JsonSerializer.Deserialize<Dictionary<string, EFQ.Constant>>(c);
+                }
 
                 var predicate = efq.ConstructPredicate<Track>(context); ;
 
@@ -68,7 +74,7 @@ namespace JDege.EFQ.Web.Controllers
 
         [HttpGet]
         [Route("[Controller]/Invoice/{id}")]
-        public async Task<IActionResult> GetInvoiceAsync([FromRoute] int id, [FromRoute] string rc)
+        public async Task<IActionResult> GetInvoiceAsync([FromRoute] int id, [FromRoute] string rc, [FromQuery] string ctx)
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
