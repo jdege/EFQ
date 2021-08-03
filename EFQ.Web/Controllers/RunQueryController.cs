@@ -43,7 +43,7 @@ namespace JDege.EFQ.Web.Controllers
                 var efq = JsonSerializer.Deserialize<EFQ>(storedQuery.StoredQueryJson);
 
                 // TODO: Need to deserialize Context!!!
-                var context = storedQuery.Context == null ? null : JsonSerializer.Deserialize<Dictionary<string, object>>(storedQuery.Context);
+                var context = storedQuery.Context == null ? null : JsonSerializer.Deserialize<Dictionary<string, EFQ.Constant>>(storedQuery.Context);
 
                 var predicate = efq.ConstructPredicate<Track>(context); ;
 
@@ -79,7 +79,7 @@ namespace JDege.EFQ.Web.Controllers
                 }
 
                 var efq = JsonSerializer.Deserialize<EFQ>(storedQuery.StoredQueryJson);
-                var context = storedQuery.Context == null ? null : JsonSerializer.Deserialize<Dictionary<string, object>>(storedQuery.Context);
+                var context = storedQuery.Context == null ? null : JsonSerializer.Deserialize<Dictionary<string, EFQ.Constant>>(storedQuery.Context);
 
                 var predicate = efq.ConstructPredicate<Invoice>(context); ;
 

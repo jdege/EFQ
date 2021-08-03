@@ -149,7 +149,7 @@ namespace JDege.EFQ
         {
             var s = reader.GetString();
 
-            var convertConstantValueRE = new Regex("^(INT|DBL|DEC|DT|DTO|TSP|STR):(.*)");
+            var convertConstantValueRE = new Regex("^(INT|DBL|DEC|DT|DTO|TSP|STR):(.*)", RegexOptions.IgnoreCase);
             var match = convertConstantValueRE.Match(s);
             if (!match.Success)
                 throw new JsonException($"{s} is not a valid constant value expression");
@@ -157,7 +157,7 @@ namespace JDege.EFQ
             var destType = match.Groups[1].Value;
             var expr = match.Groups[2].Value;
 
-            switch (destType)
+            switch (destType.ToUpperInvariant())
             {
                 case "INT":
                     return Int32.Parse(expr);

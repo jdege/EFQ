@@ -30,8 +30,8 @@ namespace JDege.EFQ.dbtest
 
             var sc = JDege.EFQ.EFQBuilder.Equal("itemId", "{{Context:anid}}");
 
-            var context = new Dictionary<string, object> {
-                {"anid", "Item 2"}
+            var context = new Dictionary<string, EFQ.Constant> {
+                {"anid", new EFQ.Constant("Item 2")}
             };
 
             using (var dbContext = new TestDbContext(ContextOptions))

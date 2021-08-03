@@ -231,10 +231,10 @@ namespace JDege.EFQ.dbtest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var context = new Dictionary<string, object>
+                var context = new Dictionary<string, EFQ.Constant>
                 {
-                    { "foo", "abcd" },
-                    { "bar", 10 }
+                    { "foo", new EFQ.Constant("abcd") },
+                    { "bar", new EFQ.Constant(10) }
                 };
 
                 var predicate = sc.ConstructPredicate<Item>(context);
