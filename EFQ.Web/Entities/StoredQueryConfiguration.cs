@@ -48,7 +48,7 @@ namespace EFQ.Web.Entities
                     Query = "EFQBuilder.Equal(\"TrackId\", 1)",
                     Context = null,
                     Description = "EFQBuilder.Equal returns records that have fields that are equal to the matching value.<br/>If the fieldname is the primary key, only one record will be returned",
-                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"TrackId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantInt\":1,\"AggregateList\":[]},\"AggregateList\":[]}"
+                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"TrackId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"INT:1\"}}"
                 },
                 new StoredQuery
                 {
@@ -59,7 +59,7 @@ namespace EFQ.Web.Entities
                     Query = "EFQBuilder.Equal(\"AlbumId\", 1)",
                     Context = null,
                     Description = "EFQBuilder.Equal returns records that have fields that are equal to the matching value.<br/>If fieldname specifies a non-unique field, multiple records will be returned",
-                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"AlbumId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantInt\":1,\"AggregateList\":[]},\"AggregateList\":[]}"
+                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"AlbumId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"INT:1\"}}"
                 },
                 new StoredQuery
                 {
@@ -74,7 +74,7 @@ namespace EFQ.Web.Entities
 <p>In the Chinook database, we have this kind of relationship between Track and Album. 
 <p>To match a field in this kind of relationship, use tablename.fieldname. E.g., ""Album.ArtistId"".
 ",
-                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"Album.ArtistId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantInt\":1,\"AggregateList\":[]},\"AggregateList\":[]}"
+                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"Album.ArtistId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"INT:1\"}}"
                 },
                 new StoredQuery
                 {
@@ -89,7 +89,7 @@ namespace EFQ.Web.Entities
 <p>In the Chinook database, we have this kind of relationship between Track and InvoiceLine. 
 <p>To match a field in this kind of relationship, Use EFQBuilder.Any(), passing as a second parameter another EFQ that targets the child table.
 ",
-                    StoredQueryJson = "{\"EFQType\":\"Any\",\"FieldName\":\"InvoiceLines\",\"InnerCriteria\":{\"EFQType\":\"Equal\",\"FieldName\":\"Invoice.CustomerId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantInt\":1,\"AggregateList\":[]},\"AggregateList\":[]},\"AggregateList\":[]}"
+                    StoredQueryJson = "{\"EFQType\":\"Any\",\"FieldName\":\"InvoiceLines\",\"InnerCriteria\":{\"EFQType\":\"Equal\",\"FieldName\":\"Invoice.CustomerId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"INT:1\"}}}"
                 },
                 new StoredQuery
                 {
@@ -100,7 +100,7 @@ namespace EFQ.Web.Entities
                     Query = "EFQBuilder.Equal(\"TrackId\", \"{{context:trackid}}\")",
                     Context = "{\"trackid\" : 2}",
                     Description = "To run a stored query using parameters, set the matching value to \"{{context:&lt;fieldname&gt;}}\", and pass a dictionary containing \"&lt;fieldname&gt;\".",
-                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"TrackId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantString\":\"{{context:trackid}}\",\"AggregateList\":[]},\"AggregateList\":[]}"
+                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"TrackId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{context:trackid}}\"}}"
                 },
                 new StoredQuery
                 {
@@ -111,7 +111,7 @@ namespace EFQ.Web.Entities
                     Query = "EFQBuilder.Equal(\"Composer\", \"Miles Davis\")",
                     Context = null,
                     Description = "Match on a string value pass a string value",
-                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantString\":\"Miles Davis\",\"AggregateList\":[]},\"AggregateList\":[]}"
+                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:Miles Davis\"}}"
                 },
                 new StoredQuery
                 {
@@ -122,7 +122,7 @@ namespace EFQ.Web.Entities
                     Query = "EFQBuilder.And(EFQBuilder.GreaterThanOrEqual(\"Composer\", \"M\"), EFQBuilder.LessThanOrEqual(\"Composer\", \"O\"))",
                     Context = null,
                     Description = "To match ranges you can use EFQBuilder.And()",
-                    StoredQueryJson = "{\"EFQType\":\"And\",\"AggregateList\":[{\"EFQType\":\"GreaterThanOrEqual\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantString\":\"M\",\"AggregateList\":[]},\"AggregateList\":[]},{\"EFQType\":\"LessThanOrEqual\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantString\":\"O\",\"AggregateList\":[]},\"AggregateList\":[]}]}"
+                    StoredQueryJson = "{\"EFQType\":\"And\",\"AggregateList\":[{\"EFQType\":\"GreaterThanOrEqual\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:M\"}},{\"EFQType\":\"LessThanOrEqual\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:O\"}}]}"
                 },
                 new StoredQuery
                 {
@@ -133,7 +133,7 @@ namespace EFQ.Web.Entities
                     Query = "EFQBuilder.Between(\"Composer\", \"M\", \"N\")",
                     Context = null,
                     Description = "To match ranges you can use EFQBuilder.Between()",
-                    StoredQueryJson = "{\"EFQType\":\"And\",\"AggregateList\":[{\"EFQType\":\"GreaterThanOrEqual\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantString\":\"M\",\"AggregateList\":[]},\"AggregateList\":[]},{\"EFQType\":\"LessThanOrEqual\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantString\":\"N\",\"AggregateList\":[]},\"AggregateList\":[]}]}"
+                    StoredQueryJson = "{\"EFQType\":\"And\",\"AggregateList\":[{\"EFQType\":\"GreaterThanOrEqual\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:M\"}},{\"EFQType\":\"LessThanOrEqual\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:N\"}}]}"
                 },
                 new StoredQuery
                 {
@@ -141,10 +141,10 @@ namespace EFQ.Web.Entities
                     BaseTable = nameof(Invoice),
                     Area = StoredQuery.StoredQueryArea.FieldMatch.ToString(),
                     Name = "Match invoices",
-                    Query = "EFQBuilder.Equal(\"BillingCountry\", \"Germany\");",
+                    Query = "EFQBuilder.Equal(\"BillingCountry\", \"Germany\")",
                     Context = null,
                     Description = "When we're running queries against the Invoice table, we use fields from the Invoice table",
-                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"BillingCountry\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantString\":\"Germany\",\"AggregateList\":[]},\"AggregateList\":[]}"
+                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"BillingCountry\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:Germany\"}}"
                 },
                 new StoredQuery
                 {
@@ -155,7 +155,7 @@ namespace EFQ.Web.Entities
                     Query = "EFQBuilder.LessThanOrEqual(\"InvoiceDate\", DateTime.Parse(\"2009-01-31\"))",
                     Context = null,
                     Description = "When we're matching against date fields we can pass DateTime objects",
-                    StoredQueryJson = "{\"EFQType\":\"LessThanOrEqual\",\"FieldName\":\"InvoiceDate\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantDateTime\":\"2009-01-31T00:00:00\",\"AggregateList\":[]},\"AggregateList\":[]}"
+                    StoredQueryJson = "{\"EFQType\":\"LessThanOrEqual\",\"FieldName\":\"InvoiceDate\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"DT:2009-01-31T00:00:00.0000000\"}}"
                 }
             );
         }

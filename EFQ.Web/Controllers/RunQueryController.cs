@@ -12,8 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 // #TODO: Remove Newtonsoft
-using NJ = Newtonsoft.Json;
-using SJ = System.Text.Json;
+using System.Text.Json;
 
 namespace JDege.EFQ.Web.Controllers
 {
@@ -30,12 +29,9 @@ namespace JDege.EFQ.Web.Controllers
         }
 
         [HttpGet]
-        [Route("[Controller]/Track")]
-        public async Task<IActionResult> GetTrackAsync(int id, string rc)
+        [Route("[Controller]/Track/{id}")]
+        public async Task<IActionResult> GetTrackAsync([FromRoute] int id, [FromQuery] string rc)
         {
-            var q = EFQBuilder.LessThanOrEqual("InvoiceDate", DateTime.Parse("2009-01-31"));
-            var s = SJ.JsonSerializer.Serialize(q);
-
             using (var dbContext = _contextFactory.CreateDbContext())
             {
                 var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(q => q.StoredQueryId == id);
@@ -44,8 +40,10 @@ namespace JDege.EFQ.Web.Controllers
                     return NotFound();
                 }
 
-                var efq = NJ.JsonConvert.DeserializeObject<EFQ>(storedQuery.StoredQueryJson);
-                var context = storedQuery.Context == null ? null : NJ.JsonConvert.DeserializeObject<Dictionary<string, object>>(storedQuery.Context);
+                var efq = JsonSerializer.Deserialize<EFQ>(storedQuery.StoredQueryJson);
+
+                // TODO: Need to deserialize Context!!!
+                var context = storedQuery.Context == null ? null : JsonSerializer.Deserialize<Dictionary<string, object>>(storedQuery.Context);
 
                 var predicate = efq.ConstructPredicate<Track>(context); ;
 
@@ -69,12 +67,9 @@ namespace JDege.EFQ.Web.Controllers
         }
 
         [HttpGet]
-        [Route("[Controller]/Invoice")]
-        public async Task<IActionResult> GetInvoiceAsync(int id, string rc)
+        [Route("[Controller]/Invoice/{id}")]
+        public async Task<IActionResult> GetInvoiceAsync([FromRoute] int id, [FromRoute] string rc)
         {
-            var q = EFQBuilder.Equal("BillingCountry", "Germany");
-            var s = SJ.JsonSerializer.Serialize(q);
-
             using (var dbContext = _contextFactory.CreateDbContext())
             {
                 var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(q => q.StoredQueryId == id);
@@ -83,8 +78,8 @@ namespace JDege.EFQ.Web.Controllers
                     return NotFound();
                 }
 
-                var efq = NJ.JsonConvert.DeserializeObject<EFQ>(storedQuery.StoredQueryJson);
-                var context = storedQuery.Context == null ? null : NJ.JsonConvert.DeserializeObject<Dictionary<string, object>>(storedQuery.Context);
+                var efq = JsonSerializer.Deserialize<EFQ>(storedQuery.StoredQueryJson);
+                var context = storedQuery.Context == null ? null : JsonSerializer.Deserialize<Dictionary<string, object>>(storedQuery.Context);
 
                 var predicate = efq.ConstructPredicate<Invoice>(context); ;
 

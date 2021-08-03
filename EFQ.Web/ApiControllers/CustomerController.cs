@@ -9,7 +9,6 @@ using JDege.EFQ.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace JDege.EFQ.Web.ApiControllers
 {
