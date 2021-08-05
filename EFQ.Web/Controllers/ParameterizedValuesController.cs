@@ -22,6 +22,7 @@ namespace JDege.EFQ.Web.Controllers
             _configurationProvider = configurationProvider;
         }
 
+        // TODO: Add a Postman collection
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {

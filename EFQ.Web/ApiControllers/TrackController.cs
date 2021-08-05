@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -86,7 +87,40 @@ namespace JDege.EFQ.Web.ApiControllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception encounterer");
+                _logger.LogError(ex, "Exception encountered");
+                throw;
+            }
+        }
+
+
+        [HttpPost]
+        [Route("StoredQuery/{id}")]
+        public async Task<ActionResult<IEnumerable<TrackModel>>> StoredQueryAsync(int id)
+        {
+            try
+            {
+                using (var dbContext = _contextFactory.CreateDbContext())
+                {
+                    var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(s => s.StoredQueryId == id);
+
+                    if (storedQuery == null)
+                        return NotFound();
+
+                    var query = JsonSerializer.Deserialize<EFQ>(storedQuery.StoredQueryJson);
+
+                    var predicate = query.ConstructPredicate<Track>();
+
+                    var trackModelList = await dbContext.Tracks.Where(predicate)
+                        .OrderBy(t => t.Name)
+                        .ProjectTo<TrackModel>(_configurationProvider)
+                        .ToListAsync();
+
+                    return trackModelList;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception encountered");
                 throw;
             }
         }
