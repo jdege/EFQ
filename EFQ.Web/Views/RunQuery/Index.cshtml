@@ -1,0 +1,147 @@
+@model JDege.EFQ.Web.Models.RunTrackQueryModel
+@using System.Text.Json
+
+@{
+    ViewData["Title"] = "Index";
+    bool displayForm = Model.Parameters != null;
+}
+
+<partial name="_DemoMenu" />
+
+<h1>Playing around</h1>
+
+<a asp-controller=@Model.ReturnController asp-action="Index">Return to list</a>
+
+@if (displayForm)
+{
+    <div class="container">
+    @using (Html.BeginForm())
+        {
+            <div>
+                This is where we'll put the form.
+            </div>
+
+            <div class="row">
+                <input id="Submit" type="button" value="Search" class="btn btn-primary" />
+            </div>
+        }
+    </div>
+}
+
+<div id="results" class="tab-pane fade show @ViewBag.resultsActive">
+    <h3>Results</h3>
+    <div class="container" id="TracksContainer">
+        <table id="TracksTable" class="col-sm-12">
+        </table>
+    </div>
+    <div class="container" id="InvoicesContainer">
+        <table id="InvoicesTable" class="col-sm-12">
+        </table>
+    </div>
+</div>
+
+@section Css {
+}
+
+@section Scripts {
+
+<script src="~/efq/EFQ.js"></script>
+
+<script type="text/javascript">
+    debugger;
+    var model = @Html.Raw(@JsonSerializer.Serialize(@Model));
+    var displayForm = model.Parameters != null;
+    var $submitButton = $("#Submit");
+
+    var $tracksTable = $("#TracksTable").DataTable({
+        data: [],
+        columns: [
+            { title: "TrackName", data: "trackName" },
+            { title: "AlbumTitle", data: "albumTitle" },
+            { title: "ArtistName", data: "artistName" },
+            { title: "TrackComposer", data: "trackComposer" },
+            { title: "MediaType", data: "mediaType" },
+            {
+                title: "Customers",
+                data: "customers",
+                render: function (data, type, row)
+                {
+                    var rVal = '';
+
+                    $.each(data, function (index, value)
+                    {
+                        rVal += value.firstName;
+                        rVal += ' '
+                        rVal += value.lastName;
+                        rVal += '<br>'
+                    });
+
+                    return rVal;
+                }
+            }
+        ]
+    });
+
+    $("#TracksContainer").hide();
+
+    var $invoicesTable = $("#InvoicesTable").DataTable({
+        data: [],
+        columns: [
+            { title: "CustomerId", data: "customerId" },
+            { title: "InvoiceDate", data: "invoiceDate" },
+            { title: "BillingAddress", data: "billingAddress" },
+            { title: "BillingCity", data: "billingCity" },
+            { title: "BillingState", data: "billingState" },
+            { title: "BillingCountry", data: "billingCountry" },
+            { title: "BillingPostalCode", data: "billingPostalCode" },
+        ]
+    });
+
+    $("#InvoicesContainer").hide();
+
+    $("#Submit").click(function ()
+    {
+    });
+
+    $(document).ready(function ()
+    {
+        if (!displayForm)
+        {
+            if (model.Model === "TrackModel")
+            {
+                TrackQueryService.storedQuery(model.StoredQueryId, function (result)
+                {
+                    if (result.success)
+                    {
+                        var data = result.data;
+                        $tracksTable.clear();
+                        $tracksTable.rows.add(data);
+                        $tracksTable.draw();
+                        $("#TracksContainer").show();
+                    } else
+                    {
+                        alert(result.error);
+                    }
+                });
+            }
+            if (model.Model === "InvoiceModel")
+            {
+                InvoiceQueryService.storedQuery(model.StoredQueryId, function (result)
+                {
+                    if (result.success)
+                    {
+                        var data = result.data;
+                        $invoicesTable.clear();
+                        $invoicesTable.rows.add(data);
+                        $invoicesTable.draw();
+                        $("#InvoicesContainer").show();
+                    } else
+                    {
+                        alert(result.error);
+                    }
+                });
+            }
+        }
+    });
+</script>
+}

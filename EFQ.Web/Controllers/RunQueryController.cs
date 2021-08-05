@@ -40,35 +40,17 @@ namespace JDege.EFQ.Web.Controllers
                 {
                     return NotFound();
                 }
-
-                var efq = JsonSerializer.Deserialize<EFQ>(storedQuery.StoredQueryJson);
-
-                // TODO: Need to deserialize Context!!!
-                Dictionary<string, EFQ.Constant> context = null;
-                if (ctx != null)
-                {
-                    var c = WebUtility.UrlDecode(ctx);
-                    context = JsonSerializer.Deserialize<Dictionary<string, EFQ.Constant>>(c);
-                }
-
-                var predicate = efq.ConstructPredicate<Track>(context); ;
-
-                var trackModels = await dbContext.Tracks
-                    .Where(predicate)
-                    .ProjectTo<TrackModel>(_configurationProvider)
-                    .ToListAsync();
-
                 var runQueryModel = new RunTrackQueryModel
                 {
-                    TrackModels = trackModels,
+                    StoredQueryId = storedQuery.StoredQueryId,
                     Title = storedQuery.Name,
-                    Query = storedQuery.Query,
-                    Context = storedQuery.Context,
+                    Model = "TrackModel",
                     Description = storedQuery.Description,
+                    Parameters = null,
                     ReturnController = rc
                 };
 
-                return View("Tracks", runQueryModel);
+                return View("Index", runQueryModel);
             }
         }
 
@@ -83,29 +65,19 @@ namespace JDege.EFQ.Web.Controllers
                 {
                     return NotFound();
                 }
-
-                var efq = JsonSerializer.Deserialize<EFQ>(storedQuery.StoredQueryJson);
-                var context = storedQuery.Context == null ? null : JsonSerializer.Deserialize<Dictionary<string, EFQ.Constant>>(storedQuery.Context);
-
-                var predicate = efq.ConstructPredicate<Invoice>(context); ;
-
-                var invoiceModels = await dbContext.Invoices
-                    .Where(predicate)
-                    .ProjectTo<InvoiceModel>(_configurationProvider)
-                    .ToListAsync();
-
-                var runQueryModel = new RunInvoiceQueryModel
+                var runQueryModel = new RunTrackQueryModel
                 {
-                    InvoiceModels = invoiceModels,
+                    StoredQueryId = storedQuery.StoredQueryId,
                     Title = storedQuery.Name,
-                    Query = storedQuery.Query,
-                    Context = storedQuery.Context,
+                    Model = "InvoiceModel",
                     Description = storedQuery.Description,
+                    Parameters = null,
                     ReturnController = rc
                 };
 
-                return View("Invoices", runQueryModel);
+                return View("Index", runQueryModel);
             }
         }
     }
 }
+
