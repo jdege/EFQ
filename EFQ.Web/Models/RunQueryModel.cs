@@ -1,4 +1,5 @@
-using System;
+using AutoMapper;
+using EFQ.Web.Entities;
 using System.Collections.Generic;
 
 namespace JDege.EFQ.Web.Models
@@ -22,4 +23,21 @@ namespace JDege.EFQ.Web.Models
             public string DropdownUrl { get; set; }
         }
     }
+
+    public class RunQueryModelProfile : Profile
+    {
+        public RunQueryModelProfile()
+        {
+            CreateMap<StoredQuery, RunQueryModel>()
+                .ForMember(dest => dest.StoredQueryId, opt => opt.MapFrom(src => src.StoredQueryId))
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Model, opt => opt.MapFrom((src, dest, destMember, context) => context.Items["Model"]))
+                .ForMember(dest => dest.Query, opt => opt.MapFrom(src => src.Query))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.Parameters, opt => opt.Ignore())
+                .ForMember(dest => dest.ReturnController, opt => opt.MapFrom((src, dest, destMember, context) => context.Items["ReturnController"]))
+                ;
+        }
+    }
+
 }

@@ -20,13 +20,12 @@ namespace JDege.EFQ.Web.Controllers
     public class RunQueryController : Controller
     {
         private readonly IDbContextFactory<ChinookContext> _contextFactory;
-        // Injecting AutoMapper configuration
-        private readonly IConfigurationProvider _configurationProvider;
+        private readonly IMapper _mapper;
 
-        public RunQueryController(IDbContextFactory<ChinookContext> contextFactory, IConfigurationProvider configurationProvider)
+        public RunQueryController(IDbContextFactory<ChinookContext> contextFactory, IMapper mapper)
         {
             _contextFactory = contextFactory;
-            _configurationProvider = configurationProvider;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -40,18 +39,12 @@ namespace JDege.EFQ.Web.Controllers
                 {
                     return NotFound();
                 }
-                // TODO: rename RunTrackQueryModel
-                // TODO: Use automapper to populate RunTrackQueryModel
-                var runQueryModel = new RunQueryModel
+
+                var runQueryModel = _mapper.Map<RunQueryModel>(storedQuery, opt =>
                 {
-                    StoredQueryId = storedQuery.StoredQueryId,
-                    Title = storedQuery.Name,
-                    Model = "TrackModel",
-                    Query = storedQuery.Query,
-                    Description = storedQuery.Description,
-                    Parameters = null,
-                    ReturnController = rc
-                };
+                    opt.Items["Model"] = "TrackModel";
+                    opt.Items["ReturnController"] = rc;
+                });
 
                 return View("Index", runQueryModel);
             }
