@@ -19,6 +19,7 @@ namespace JDege.EFQ.Web.Models
         public class Parameter
         {
             public string Name { get; set; }
+            public string Key { get; set; }
             public string Type { get; set; }
             public string DropdownUrl { get; set; }
         }
@@ -34,7 +35,7 @@ namespace JDege.EFQ.Web.Models
                 .ForMember(dest => dest.Model, opt => opt.MapFrom((src, dest, destMember, context) => context.Items["Model"]))
                 .ForMember(dest => dest.Query, opt => opt.MapFrom(src => src.Query))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-                .ForMember(dest => dest.Parameters, opt => opt.Ignore())
+                .ForMember(dest => dest.Parameters, opt => opt.MapFrom((src, dest, destMember, context) => context.Items["Parameters"]))
                 .ForMember(dest => dest.ReturnController, opt => opt.MapFrom((src, dest, destMember, context) => context.Items["ReturnController"]))
                 ;
         }

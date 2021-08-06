@@ -44,6 +44,7 @@ namespace JDege.EFQ.Web.Controllers
                 {
                     opt.Items["Model"] = "TrackModel";
                     opt.Items["ReturnController"] = rc;
+                    opt.Items["Parameters"] = storedQuery.ParametersJson == null ? null : JsonSerializer.Deserialize<IList<RunQueryModel.Parameter>>(storedQuery.ParametersJson);
                 });
 
                 return View("Index", runQueryModel);
@@ -66,6 +67,7 @@ namespace JDege.EFQ.Web.Controllers
                 {
                     opt.Items["Model"] = "TrackModel";
                     opt.Items["ReturnController"] = rc;
+                    opt.Items["Parameters"] = storedQuery.ParametersJson == null ? null : JsonSerializer.Deserialize<IList<RunQueryModel.Parameter>>(storedQuery.ParametersJson);
                 });
 
                 return View("Index", runQueryModel);

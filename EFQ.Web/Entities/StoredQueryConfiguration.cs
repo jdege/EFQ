@@ -97,10 +97,10 @@ namespace EFQ.Web.Entities
                     BaseTable = nameof(Track),
                     Area = StoredQuery.StoredQueryArea.ParameterizedValues.ToString(),
                     Name = "Search with a parameterized value",
-                    Query = "EFQBuilder.Equal(\"TrackId\", \"{{context:trackid}}\")",
+                    Query = "EFQBuilder.Equal(\"Album.ArtistId\", \"{{context:artistid}}\")",
                     Description = "To run a stored query using parameters, set the matching value to \"{{context:&lt;fieldname&gt;}}\", and pass a dictionary containing \"&lt;fieldname&gt;\".",
-                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"TrackId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{context:trackid}}\"}}",
-                    ParametersJson = null
+                    StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"Album.ArtistId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{context:artistid}}\"}}",
+                    ParametersJson = "[{\"Name\":\"Artist\",\"Key\":\"artistid\",\"Type\":null,\"DropdownUrl\":\"/api/Artist/GetDropdown\"}]"
                 },
                 new StoredQuery
                 {
