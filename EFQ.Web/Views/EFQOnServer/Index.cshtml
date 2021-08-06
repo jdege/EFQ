@@ -83,6 +83,10 @@
     var $submitButton = $("#Submit");
 
     var $tracksTable = $("#TracksTable").DataTable({
+        paging: false,
+        ordering: false,
+        info: false,
+        searching: false,
         data: [],
         columns: [
             { title: "TrackName", data: "trackName" },

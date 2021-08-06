@@ -9,6 +9,7 @@ namespace JDege.EFQ.Web.Models
         public int StoredQueryId { get; set; }
         public string Title { get; set; }
         public string Model { get; set; }
+        public string Query { get; set; }
         public string Description { get; set; }
         public string ReturnController { get; set; }
 

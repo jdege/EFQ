@@ -6,9 +6,16 @@
     bool displayForm = Model.Parameters != null;
 }
 
-<partial name="_DemoMenu" />
+<h3>@Model.Title</h3>
 
-<h1>Playing around</h1>
+<div class="container">
+    @Html.Raw(Model.Description)
+</div>
+
+<h4>The query we're running:</h4>
+<div class="container">
+    @Html.Raw(Model.Query)
+</div>
 
 <a asp-controller=@Model.ReturnController asp-action="Index">Return to list</a>
 
@@ -54,6 +61,10 @@
     var $submitButton = $("#Submit");
 
     var $tracksTable = $("#TracksTable").DataTable({
+        paging: false,
+        ordering: false,
+        info: false,
+        searching: false,
         data: [],
         columns: [
             { title: "TrackName", data: "trackName" },
@@ -85,6 +96,10 @@
     $("#TracksContainer").hide();
 
     var $invoicesTable = $("#InvoicesTable").DataTable({
+        paging: false,
+        ordering: false,
+        info: false,
+        searching: false,
         data: [],
         columns: [
             { title: "CustomerName", data: "customerName" },
