@@ -135,3 +135,28 @@ TrackQueryService = {
             });
     }
 };
+
+InvoiceQueryService = {
+    storedQuery: function (id, callback)
+    {
+        debugger;
+        var url = "/api/Invoice/StoredQuery/" + id;
+        var data = null; // JSON.stringify("testing");
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: data
+        };
+
+        $.ajax(url, settings)
+            .done(function (result, status, jqXHR)
+            {
+                callback({ success: true, data: result });
+            })
+            .fail(function (jqXHR, textStatus, errorThrown)
+            {
+                callback({ success: false, error: errorThrown });
+            });
+    }
+};

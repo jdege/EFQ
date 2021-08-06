@@ -6,6 +6,7 @@ namespace JDege.EFQ.Web.Models
 {
     public class InvoiceModel
     {
+        public string CustomerName { get; set; }
         public DateTimeOffset InvoiceDate { get; set; }
         public string BillingAddress { get; set; }
         public string BillingCity { get; set; }
@@ -20,6 +21,7 @@ namespace JDege.EFQ.Web.Models
         public InvoiceModelProfile()
         {
             CreateMap<Invoice, InvoiceModel>()
+                .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => $"{src.Customer.FirstName} {src.Customer.LastName}"))
                 .ForMember(dest => dest.InvoiceDate, opt => opt.MapFrom(src => new DateTimeOffset(src.InvoiceDate)))
                 ;
         }
