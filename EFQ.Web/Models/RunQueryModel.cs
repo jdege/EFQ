@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace JDege.EFQ.Web.Models
 {
     // TODO: Move js classes into .cshtml files
-    public class RunTrackQueryModel
+    public class RunQueryModel
     {
         public int StoredQueryId { get; set; }
         public string Title { get; set; }

@@ -42,7 +42,7 @@ namespace JDege.EFQ.Web.Controllers
                 }
                 // TODO: rename RunTrackQueryModel
                 // TODO: Use automapper to populate RunTrackQueryModel
-                var runQueryModel = new RunTrackQueryModel
+                var runQueryModel = new RunQueryModel
                 {
                     StoredQueryId = storedQuery.StoredQueryId,
                     Title = storedQuery.Name,
@@ -68,7 +68,7 @@ namespace JDege.EFQ.Web.Controllers
                 {
                     return NotFound();
                 }
-                var runQueryModel = new RunTrackQueryModel
+                var runQueryModel = new RunQueryModel
                 {
                     StoredQueryId = storedQuery.StoredQueryId,
                     Title = storedQuery.Name,
