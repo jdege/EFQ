@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    bool displayForm = Model.Parameters != null;
+    bool displayForm = (Model.Parameters != null && (Model.Parameters.Count() > 0));
 }
 
 <h3>@Model.Title</h3>
@@ -22,13 +22,11 @@
 @if (displayForm)
 {
     <div class="container">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm(FormMethod.Post, new { id = "criteriaForm" }))
         {
-            <div>
-                This is where we'll put the form.
-            </div>
+            <h4>Search Criteria</h4>
 
-            <div class="row">
+            <div class="row submitButton">
                 <input id="Submit" type="button" value="Search" class="btn btn-primary" />
             </div>
         }
@@ -58,7 +56,34 @@
     debugger;
     var model = @Html.Raw(@JsonSerializer.Serialize(@Model));
     var displayForm = model.Parameters != null;
+
     var $submitButton = $("#Submit");
+    var $criteriaForm;
+
+    if (displayForm)
+    {
+        $criteriaForm = $("#criteriaForm");
+
+        model.Parameters.forEach(element =>
+        {
+            var name = element.Name;
+            var key = element.Key;
+            var type = element.Type;
+            var dropdownUrl = element.DropdownUrl;
+
+            var $row = $("<div>", { "class": "row" });
+
+            var $label = $("<div>").text(name + ":");
+            $row.append($label);
+
+            var $select = $("<select>")
+                .data("key", key)
+                .data("dropdownUrl", dropdownUrl);
+            $row.append($select);
+
+            $criteriaForm.find(".submitButton").before($row);
+        });
+    }
 
     var $tracksTable = $("#TracksTable").DataTable({
         paging: false,
@@ -120,7 +145,20 @@
 
     $(document).ready(function ()
     {
-        if (!displayForm)
+        if (displayForm)
+        {
+            var $selects = $criteriaForm.find("select");
+
+            $selects.each(function (index, element)
+            {
+                var $element = $(element);
+                var key = $element.data("key");
+                var dropdownUrl = $element.data("dropdownUrl");
+            });
+
+            var foo = $selects;
+        }
+        else
         {
             if (model.Model === "TrackModel")
             {
