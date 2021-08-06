@@ -58,5 +58,19 @@ namespace JDege.EFQ.test
                 d.ShouldBeEquivalentTo(efqConstant);
             }
         }
+
+        [Fact]
+        public void ConstantValueDictionaryDeserialize()
+        {
+            var dict = new Dictionary<string, EFQ.Constant>
+            {
+                {"first", new EFQ.Constant("string")},
+                {"second", new EFQ.Constant(10)},
+            };
+
+            var s = JsonSerializer.Serialize(dict);
+            var d = JsonSerializer.Deserialize<Dictionary<string, EFQ.Constant>>(s);
+            d.ShouldBeEquivalentTo(d);
+        }
     }
 }

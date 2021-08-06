@@ -132,11 +132,11 @@ TrackQueryService = {
                 callback({ success: false, error: errorThrown });
             });
     },
-    storedQuery: function (id, callback)
+    storedQuery: function (id, context, callback)
     {
         debugger;
         var url = "/api/Track/StoredQuery/" + id;
-        var data = null; // JSON.stringify("testing");
+        var data = context ? JSON.stringify(context) : "{}";
         var settings = {
             type: "POST",
             dataType: "json",
@@ -157,11 +157,11 @@ TrackQueryService = {
 };
 
 InvoiceQueryService = {
-    storedQuery: function (id, callback)
+    storedQuery: function (id, context, callback)
     {
         debugger;
         var url = "/api/Invoice/StoredQuery/" + id;
-        var data = null; // JSON.stringify("testing");
+        var data = context ? JSON.stringify(context) : "{}";
         var settings = {
             type: "POST",
             dataType: "json",

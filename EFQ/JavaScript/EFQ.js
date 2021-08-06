@@ -136,37 +136,37 @@ var EFQConstant = (function ()
 
 	EFQConstant.int = function (v)
 	{
-		return `INT:${v.toString()}`;
+		return { "Constant": `INT:${v.toString()}` };
 	};
 
 	EFQConstant.double = function (v)
 	{
-		return `DBL:${v.toString()}`;
+		return { "Constant": `DBL:${v.toString()}` };
 	};
 
 	EFQConstant.decimal = function (v)
 	{
-		return `DEC:${v.toString()}`;
+		return { "Constant": `DEC:${v.toString()}` };
 	};
 
 	EFQConstant.dateTime = function (v)
 	{
-		return `DT:${v.toString()}`;
+		return { "Constant": `DT:${v.toString()}` };
 	};
 
 	EFQConstant.dateTimeOffset = function (v)
 	{
-		return `DTO:${v.toString()}`;
+		return { "Constant": `DTO:${v.toString()}` };
 	};
 
 	EFQConstant.timeSpan = function (v)
 	{
-		return `TSP:${v.toString()}`;
+		return { "Constant": `TSP:${v.toString()}` };
 	};
 
 	EFQConstant.string = function (v)
 	{
-		return `STR:${v}`;
+		return { "Constant": `STR:${v}` };
 	};
 
 	return EFQConstant;

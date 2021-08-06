@@ -154,7 +154,7 @@
                 context[key] = EFQConstant.int(val);
             });
 
-        populateTables(model);
+        populateTables(model, context);
     });
 
     var fillSelect = function ($select, result)
@@ -194,15 +194,15 @@
         }
         else
         {
-            populateTables(model);
+            populateTables(model, null);
         }
     });
 
-    var populateTables = function (model)
+    var populateTables = function (model, context)
     {
         if (model.Model === "TrackModel")
         {
-            TrackQueryService.storedQuery(model.StoredQueryId, function (result)
+            TrackQueryService.storedQuery(model.StoredQueryId, context, function (result)
             {
                 if (result.success)
                 {
@@ -219,7 +219,7 @@
         }
         if (model.Model === "InvoiceModel")
         {
-            InvoiceQueryService.storedQuery(model.StoredQueryId, function (result)
+            InvoiceQueryService.storedQuery(model.StoredQueryId, context, function (result)
             {
                 if (result.success)
                 {
