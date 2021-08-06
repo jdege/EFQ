@@ -95,7 +95,7 @@ namespace JDege.EFQ.Web.ApiControllers
 
         [HttpPost]
         [Route("StoredQuery/{id}")]
-        public async Task<ActionResult<IEnumerable<TrackModel>>> StoredQueryAsync([FromRoute] int id)
+        public async Task<ActionResult<IEnumerable<TrackModel>>> StoredQueryAsync([FromRoute] int id, [FromBody] Dictionary<string, EFQ.Constant> context)
         {
             try
             {
@@ -108,7 +108,7 @@ namespace JDege.EFQ.Web.ApiControllers
 
                     var query = JsonSerializer.Deserialize<EFQ>(storedQuery.StoredQueryJson);
 
-                    var predicate = query.ConstructPredicate<Track>();
+                    var predicate = query.ConstructPredicate<Track>(context);
 
                     var trackModelList = await dbContext.Tracks.Where(predicate)
                         .OrderBy(t => t.Name)

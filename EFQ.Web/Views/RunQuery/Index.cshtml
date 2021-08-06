@@ -55,7 +55,7 @@
 <script type="text/javascript">
     debugger;
     var model = @Html.Raw(@JsonSerializer.Serialize(@Model));
-    var displayForm = model.Parameters != null;
+    var displayForm = model.Parameters != null && model.Parameters.length > 0;
 
     var $submitButton = $("#Submit");
     var $criteriaForm;
@@ -141,7 +141,36 @@
 
     $("#Submit").click(function ()
     {
+        var context = {};
+        $criteriaForm
+            .find("select")
+            .each(function (index, element)
+            {
+                var $element = $(element);
+                var $selected = $element.find(':selected');
+                var val = $selected.val();
+                var key = $element.data("key");
+
+                context[key] = EFQConstant.int(val);
+            });
+
+        populateTables(model);
     });
+
+    var fillSelect = function ($select, result)
+    {
+        if (result.success)
+        {
+            $select.empty().append("<option value=''></option>");
+            $.each(result.data, function (index, item)
+            {
+                $select.append($("<option />").val(item.value || index).text(item.text).data('query', item.query));
+            });
+        } else
+        {
+            alert(result.error);
+        }
+    };
 
     $(document).ready(function ()
     {
@@ -154,47 +183,57 @@
                 var $element = $(element);
                 var key = $element.data("key");
                 var dropdownUrl = $element.data("dropdownUrl");
+
+                DropdownService.getDropdown(dropdownUrl, { includeQueries: true }, function (result)
+                {
+                    fillSelect($element, result);
+                });
             });
 
             var foo = $selects;
         }
         else
         {
-            if (model.Model === "TrackModel")
-            {
-                TrackQueryService.storedQuery(model.StoredQueryId, function (result)
-                {
-                    if (result.success)
-                    {
-                        var data = result.data;
-                        $tracksTable.clear();
-                        $tracksTable.rows.add(data);
-                        $tracksTable.draw();
-                        $("#TracksContainer").show();
-                    } else
-                    {
-                        alert(result.error);
-                    }
-                });
-            }
-            if (model.Model === "InvoiceModel")
-            {
-                InvoiceQueryService.storedQuery(model.StoredQueryId, function (result)
-                {
-                    if (result.success)
-                    {
-                        var data = result.data;
-                        $invoicesTable.clear();
-                        $invoicesTable.rows.add(data);
-                        $invoicesTable.draw();
-                        $("#InvoicesContainer").show();
-                    } else
-                    {
-                        alert(result.error);
-                    }
-                });
-            }
+            populateTables(model);
         }
     });
+
+    var populateTables = function (model)
+    {
+        if (model.Model === "TrackModel")
+        {
+            TrackQueryService.storedQuery(model.StoredQueryId, function (result)
+            {
+                if (result.success)
+                {
+                    var data = result.data;
+                    $tracksTable.clear();
+                    $tracksTable.rows.add(data);
+                    $tracksTable.draw();
+                    $("#TracksContainer").show();
+                } else
+                {
+                    alert(result.error);
+                }
+            });
+        }
+        if (model.Model === "InvoiceModel")
+        {
+            InvoiceQueryService.storedQuery(model.StoredQueryId, function (result)
+            {
+                if (result.success)
+                {
+                    var data = result.data;
+                    $invoicesTable.clear();
+                    $invoicesTable.rows.add(data);
+                    $invoicesTable.draw();
+                    $("#InvoicesContainer").show();
+                } else
+                {
+                    alert(result.error);
+                }
+            });
+        }
+    }
 </script>
 }

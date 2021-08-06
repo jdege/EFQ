@@ -1,6 +1,26 @@
 ﻿
 DropdownService = {
 
+    getDropdown: function (url, options, callback)
+    {
+        var settings = {
+            type: "GET",
+            dataType: "json",
+            data: { includeQueries: options.includeQueries },
+            contentType: "application/json"
+        };
+
+        $.ajax(url, settings)
+            .done(function (result, status, jqXHR)
+            {
+                callback({ success: true, data: result });
+            })
+            .fail(function (jqXHR, textStatus, errorThrown)
+            {
+                callback({ success: false, error: errorThrown });
+            });
+    },
+
     getArtists: function (options, callback)
     {
         var url = "/api/Artist/GetDropdown";

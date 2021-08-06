@@ -33,7 +33,8 @@ namespace JDege.EFQ.Web.ApiControllers
 
         [HttpPost]
         [Route("StoredQuery/{id}")]
-        public async Task<ActionResult<IEnumerable<InvoiceModel>>> StoredQueryAsync(int id)
+        public async Task<ActionResult<IEnumerable<InvoiceModel>>> StoredQueryAsync(int id,
+            [FromBody] Dictionary<string, EFQ.Constant> context)
         {
             try
             {
@@ -46,7 +47,7 @@ namespace JDege.EFQ.Web.ApiControllers
 
                     var query = JsonSerializer.Deserialize<EFQ>(storedQuery.StoredQueryJson);
 
-                    var predicate = query.ConstructPredicate<Invoice>();
+                    var predicate = query.ConstructPredicate<Invoice>(context);
 
                     var invoiceModelList = await dbContext.Invoices.Where(predicate)
                         .OrderBy(t => t.InvoiceDate)
