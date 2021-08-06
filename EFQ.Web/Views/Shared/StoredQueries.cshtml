@@ -2,7 +2,6 @@
 @model IEnumerable<JDege.EFQ.Web.Models.StoredQueryModel>
 
 @{
-    bool displayContext = Model.Any(m => m.Context != null);
 }
 
 <h3>Field matching</h3>
@@ -25,12 +24,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Query)
             </th>
-            @if (displayContext)
-            {
-                <th>
-                    @Html.DisplayNameFor(model => model.Context)
-                </th>
-            }
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
@@ -50,21 +43,12 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Query)
                 </td>
-                @if (displayContext)
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Context)
-                    </td>
-                }
                 <td>
                     @Html.Raw(item.Description)
                 </td>
                 <td>
-                    @{
-                        var context = (item.Context == null) ? null : Uri.EscapeDataString(item.Context);
-                    }
-                    <a asp-controller="RunQuery" asp-action=@item.BaseTable asp-route-id=@item.Id asp-route-rc=@item.Area
-                    asp-route-ctx="@context">Execute</a>
+                    <a asp-controller="RunQuery" asp-action=@item.BaseTable asp-route-id=@item.Id
+                    asp-route-rc=@item.Area>Execute</a>
                 </td>
             </tr>
         }

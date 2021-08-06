@@ -61,16 +61,12 @@ namespace JDege.EFQ.Web.Controllers
                 {
                     return NotFound();
                 }
-                var runQueryModel = new RunQueryModel
+
+                var runQueryModel = _mapper.Map<RunQueryModel>(storedQuery, opt =>
                 {
-                    StoredQueryId = storedQuery.StoredQueryId,
-                    Title = storedQuery.Name,
-                    Model = "InvoiceModel",
-                    Query = storedQuery.Query,
-                    Description = storedQuery.Description,
-                    Parameters = null,
-                    ReturnController = rc
-                };
+                    opt.Items["Model"] = "TrackModel";
+                    opt.Items["ReturnController"] = rc;
+                });
 
                 return View("Index", runQueryModel);
             }
