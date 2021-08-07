@@ -49,21 +49,22 @@ namespace JDege.EFQ.Web
             var invoices = dbContext.Invoices.ToList();
 
             var now = DateTime.Now;
-            var nowYearMinusFour = now.Year - 4;
+
+            var oldStartDate = invoices.OrderBy(i => i.InvoiceDate).Select(i => i.InvoiceDate).First();
+            var oldEndDate = invoices.OrderByDescending(i => i.InvoiceDate).Select(i => i.InvoiceDate).First();
+
+            var interval = oldEndDate - oldStartDate;
+            var newStart = now - interval;
 
             foreach (var invoice in invoices)
             {
                 var invoiceDate = invoice.InvoiceDate;
-                var yearMod5 = invoiceDate.Year % 5;
-                var newYear = nowYearMinusFour + yearMod5;
-                var newDate = new DateTime(newYear, invoiceDate.Month, invoiceDate.Day);
+                var newDate = newStart + (invoiceDate - oldStartDate);
 
                 if (newDate > now)
-                {
                     newDate = newDate.AddYears(-5);
-                }
 
-                invoice.InvoiceDate = newDate;
+                invoice.InvoiceDate = newDate.Date;
             }
 
             dbContext.SaveChanges();
