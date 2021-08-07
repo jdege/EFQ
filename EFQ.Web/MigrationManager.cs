@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using EFQ.Web.DbContexts;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,8 @@ namespace JDege.EFQ.Web
                     try
                     {
                         appContext.Database.Migrate();
+
+                        AdjustDates(appContext);
                     }
                     catch (SqlException ex)
                     {
@@ -37,6 +40,33 @@ namespace JDege.EFQ.Web
             }
 
             return host;
+        }
+
+        // We want to adjust the invoice dates so that they range from now to five years ago,
+        // instead of from 2009 to 2013.
+        private static void AdjustDates(ChinookContext dbContext)
+        {
+            var invoices = dbContext.Invoices.ToList();
+
+            var now = DateTime.Now;
+            var nowYearMinusFour = now.Year - 4;
+
+            foreach (var invoice in invoices)
+            {
+                var invoiceDate = invoice.InvoiceDate;
+                var yearMod5 = invoiceDate.Year % 5;
+                var newYear = nowYearMinusFour + yearMod5;
+                var newDate = new DateTime(newYear, invoiceDate.Month, invoiceDate.Day);
+
+                if (newDate > now)
+                {
+                    newDate = newDate.AddYears(-5);
+                }
+
+                invoice.InvoiceDate = newDate;
+            }
+
+            dbContext.SaveChanges();
         }
     }
 }
