@@ -80,7 +80,7 @@ namespace JDege.EFQ.dbtest
             var expectedItemId = "Item 2";
             Seed(items: new[]
             {
-                new Item{itemId = "Item 1", when= DateTime.Parse("2020-07-14")},
+                new Item{itemId = "Item 1", when = DateTime.Parse("2020-07-14")},
                 new Item{itemId = expectedItemId, when = searchWhen},
                 new Item{itemId = "Item 3", when = DateTime.Parse("2020-03-11")},
             });
@@ -89,6 +89,69 @@ namespace JDege.EFQ.dbtest
 
             var context = new Dictionary<string, EFQ.Constant> {
                 {"searchWhen", new EFQ.Constant(searchWhen)}
+            };
+
+            using (var dbContext = new TestDbContext(ContextOptions))
+            {
+                var predicate = sc.ConstructPredicate<Item>(context);
+                var results = await dbContext.Items.Where(predicate).ToListAsync();
+                results.Count.ShouldBe(1);
+                results[0].itemId.ShouldBe(expectedItemId);
+            }
+        }
+
+        [Fact]
+        public async Task testDateRangeParameterAsync()
+        {
+            var mockNow = DateTime.Parse("2020-01-01");
+            var fromWhen = mockNow.AddDays(-6);
+            var toWhen = mockNow.AddDays(-4);
+            var expectedItemId = "Item 2";
+            Seed(items: new[]
+            {
+                new Item{itemId = "Item 1", when = mockNow .AddDays(-7)},
+                new Item{itemId = expectedItemId, when = mockNow .AddDays(-5)},
+                new Item{itemId = "Item 3", when = mockNow .AddDays(-3)},
+            });
+
+            var sc = JDege.EFQ.EFQBuilder.Between("when", "{{Context:fromWhen}}", "{{Context:toWhen}}");
+
+            var context = new Dictionary<string, EFQ.Constant> {
+                {"fromWhen", new EFQ.Constant(fromWhen)},
+                {"toWhen", new EFQ.Constant(toWhen)}
+            };
+
+            using (var dbContext = new TestDbContext(ContextOptions))
+            {
+                var predicate = sc.ConstructPredicate<Item>(context);
+                var results = await dbContext.Items.Where(predicate).ToListAsync();
+                results.Count.ShouldBe(1);
+                results[0].itemId.ShouldBe(expectedItemId);
+            }
+        }
+
+        [Fact]
+        public async Task testDateAddRangeParameterAsync()
+        {
+            var mockNow = DateTime.Parse("2020-01-01");
+            var fromWhen = mockNow.AddDays(-6);
+            var addInterval = TimeSpan.FromDays(2);
+            var expectedItemId = "Item 2";
+            Seed(items: new[]
+            {
+                new Item{itemId = "Item 1", when = mockNow .AddDays(-7)},
+                new Item{itemId = expectedItemId, when = mockNow .AddDays(-5)},
+                new Item{itemId = "Item 3", when = mockNow .AddDays(-3)},
+            });
+
+            var sc = EFQBuilder.Between("when",
+                "{{Context:fromWhen}}",
+                EFQBuilder.Add("{{Context:fromWhen}}", "{{Context:addInterval}}")
+                );
+
+            var context = new Dictionary<string, EFQ.Constant> {
+                {"fromWhen", new EFQ.Constant(fromWhen)},
+                {"addInterval", new EFQ.Constant(addInterval)}
             };
 
             using (var dbContext = new TestDbContext(ContextOptions))

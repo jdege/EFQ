@@ -262,15 +262,16 @@ namespace JDege.EFQ
 
                 var value = getConstantValue(arg.ConstantValue, context);
 
-                // System.Text.Json doesn't support TimeSpans, yet
-                // Until we figure out how to make Json.NET deserialize into TimeSpan objects ...
-                var s = value as string;
-                if (s != null)
-                {
-                    TimeSpan span;
-                    if (TimeSpan.TryParse(s, out span))
-                        value = span;
-                }
+                // TODO: Make sure timespans parse correctly
+                // // System.Text.Json doesn't support TimeSpans, yet
+                // // Until we figure out how to make Json.NET deserialize into TimeSpan objects ...
+                // var s = value as string;
+                // if (s != null)
+                // {
+                //     TimeSpan span;
+                //     if (TimeSpan.TryParse(s, out span))
+                //         value = span;
+                // }
 
                 var leftType = result.GetType();
                 var rightType = value.GetType();
