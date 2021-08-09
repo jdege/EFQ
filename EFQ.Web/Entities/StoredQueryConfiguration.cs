@@ -156,7 +156,30 @@ namespace EFQ.Web.Entities
                     Description = "When we're matching against date fields we can pass DateTime objects",
                     StoredQueryJson = "{\"EFQType\":\"LessThanOrEqual\",\"FieldName\":\"InvoiceDate\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"DT:2009-01-31T00:00:00.0000000\"}}",
                     ParametersJson = null
+                },
+                new StoredQuery
+                {
+                    StoredQueryId = 11,
+                    BaseTable = nameof(Invoice),
+                    Area = StoredQuery.StoredQueryArea.FieldMatch.ToString(),
+                    Name = "Match last 30 days",
+                    Query = "EFQBuilder.GreaterThanOrEqual(\"InvoiceDate\", EFQBuilder.Add(\"{{NOW:DATE}}\", new EFQ.Constant(TimeSpan.FromDays(-30))))",
+                    Description = "To match against the last 30 days, we can use {{NOW:DATE}} to include the current datetime, and EFQ.Add() to subtract 30 days",
+                    StoredQueryJson = "{\"EFQType\":\"GreaterThanOrEqual\",\"FieldName\":\"InvoiceDate\",\"RightHandSide\":{\"EFQType\":\"Add\",\"AggregateList\":[{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{NOW:DATE}}\"},{\"EFQType\":\"Constant\",\"ConstantValue\":\"TSP:-30.00:00:00\"}]}}",
+                    ParametersJson = null
                 }
+                //TODO: Add parameterized date example
+                // new StoredQuery
+                // {
+                //     StoredQueryId = 11,
+                //     BaseTable = nameof(Track),
+                //     Area = StoredQuery.StoredQueryArea.ParameterizedValues.ToString(),
+                //     Name = "Search with a parameterized value",
+                //     Query = "EFQBuilder.Equal(\"Album.ArtistId\", \"{{context:artistid}}\")",
+                //     Description = "To run a stored query using parameters, set the matching value to \"{{context:&lt;fieldname&gt;}}\", and pass a dictionary containing \"&lt;fieldname&gt;\".",
+                //     StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"Album.ArtistId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{context:artistid}}\"}}",
+                //     ParametersJson = "[{\"Name\":\"Artist\",\"Key\":\"artistid\",\"Type\":null,\"DropdownUrl\":\"/api/Artist/GetDropdown\"}]"
+                // }
             );
         }
     }

@@ -53,6 +53,9 @@ namespace JDege.EFQ
             // TOD: handle date/time types
             switch (constantValue)
             {
+                case EFQ.Constant cv:
+                    WriteConstantValue(writer, cv.Value, options, name);
+                    return;
                 case int cv:
                     formattedConstant = $"INT:{cv}";
                     break;

@@ -32,6 +32,18 @@ namespace JDege.EFQ.Web.Controllers
         [Route("[Controller]/Track/{id}")]
         public async Task<IActionResult> GetTrackAsync([FromRoute] int id, [FromQuery] string rc, [FromQuery] string ctx)
         {
+            var q = EFQBuilder.GreaterThanOrEqual(
+                "InvoiceDate",
+                EFQBuilder.Add(
+                    "{{NOW:DATE}}",
+                    new EFQ.Constant(TimeSpan.FromDays(-30)
+                )
+            ));
+
+            var s = JsonSerializer.Serialize(q);
+            var d = JsonSerializer.Deserialize<EFQ>(s);
+
+
             using (var dbContext = _contextFactory.CreateDbContext())
             {
                 var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(q => q.StoredQueryId == id);
@@ -55,6 +67,17 @@ namespace JDege.EFQ.Web.Controllers
         [Route("[Controller]/Invoice/{id}")]
         public async Task<IActionResult> GetInvoiceAsync([FromRoute] int id, [FromRoute] string rc, [FromQuery] string ctx)
         {
+            EFQ q = EFQBuilder.GreaterThanOrEqual(
+                "InvoiceDate",
+                EFQBuilder.Add(
+                    "{{NOW:DATE}}",
+                    new EFQ.Constant(TimeSpan.FromDays(-30)
+                )
+            ));
+
+            var s = JsonSerializer.Serialize(q);
+            var d = JsonSerializer.Deserialize<EFQ>(s);
+
             using (var dbContext = _contextFactory.CreateDbContext())
             {
                 var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(q => q.StoredQueryId == id);
@@ -65,7 +88,7 @@ namespace JDege.EFQ.Web.Controllers
 
                 var runQueryModel = _mapper.Map<RunQueryModel>(storedQuery, opt =>
                 {
-                    opt.Items["Model"] = "TrackModel";
+                    opt.Items["Model"] = "InvoiceModel";
                     opt.Items["ReturnController"] = rc;
                     opt.Items["Parameters"] = storedQuery.ParametersJson == null ? null : JsonSerializer.Deserialize<IList<RunQueryModel.Parameter>>(storedQuery.ParametersJson);
                 });
