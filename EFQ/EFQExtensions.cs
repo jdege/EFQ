@@ -228,13 +228,13 @@ namespace JDege.EFQ
 
         private static ConstantExpression constructConstantExpression<T>(this EFQ efq, object value, Dictionary<string, EFQ.Constant> context)
         {
-            var sc = value as EFQ;
-            if (sc != null)
+            var valueEfq = value as EFQ;
+            if (valueEfq != null)
             {
-                if (sc.IsAdd())
-                    value = executeAddExpression<T>(sc, context);
-                else if (sc.IsConstant())
-                    value = sc.ConstantValue;
+                if (valueEfq.IsAdd())
+                    value = executeAddExpression<T>(valueEfq, context);
+                else if (valueEfq.IsConstant())
+                    value = valueEfq.ConstantValue;
             }
 
             value = getConstantValue(value, context);
@@ -291,7 +291,6 @@ namespace JDege.EFQ
 
         private static object getConstantValue(object value, Dictionary<string, EFQ.Constant> context)
         {
-#if true
             var s = value as String;
             if (s != null)
             {
@@ -309,89 +308,22 @@ namespace JDege.EFQ
                         var val = context[field];
                         value = val.Value;
                     }
-                }
-            }
-
-            return value;
-#else
-            // #TODO: Remove dtKludge
-            string dtKludge = null;
-            var s = value as String;
-            if (s != null)
-            {
-                var re = new Regex("^{(.*)}(:.*)?$", RegexOptions.IgnoreCase);
-                var match = re.Match(s);
-                if (match.Success)
-                {
-                    var matchString = match.Groups[1].Value;
-                    dtKludge = match.Groups[2].Value;
-                    if (!String.IsNullOrEmpty(matchString))
+                    else if (String.Equals(source, "NOW", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        if (matchString == "NOW")
+                        var field = match.Groups[2].Value;
+                        switch (field.ToUpperInvariant())
                         {
-                            value = DateTime.Now;
-                        }
-                        else if (matchString == "NOW:DATE")
-                        {
-                            value = DateTime.Now.Date;
-                        }
-                        else if (matchString == "NOW:TIME")
-                        {
-                            value = DateTime.Now.TimeOfDay;
-                        }
-                        else
-                        {
-                            var parts = matchString.Split(new[] { '.' });
-                            foreach (var part in parts)
-                            {
-                                var dict = context as Dictionary<string, EFQ.Constant>;
-                                if (dict != null)
-                                {
-                                    var val = dict[part];
-                                    // context = val;
-                                    value = val;
-                                }
-                                else
-                                {
-                                    var type = context.GetType();
-                                    var prop = type.GetProperty(part);
-                                    if (prop != null)
-                                    {
-                                        var val = prop.GetValue(context, null);
-                                        // context = val;
-                                        value = val;
-                                    }
-                                }
-                            }
+                            // TODO: Implement other date options
+                            case "DATE":
+                                var val = DateTime.Now.Date;
+                                value = val;
+                                break;
                         }
                     }
                 }
             }
 
-            if (value is DateTime)
-            {
-                var dt = (DateTime)value;
-
-                if (dtKludge == ":date")
-                {
-                    value = dt.Date;
-                }
-                else if (dtKludge == ":time")
-                {
-                    value = dt.ToString("HH:mm:ss.fff");
-                }
-                else if (dtKludge == ":null")
-                {
-                    var f = dt.ToString("HH:mm:ss.fff");
-                    if (f == "00:00:00.000")
-                        value = null;
-                    else
-                        value = f;
-                }
-            }
-
             return value;
-#endif
         }
 
         private static MemberExpression getMember<T>(this EFQ efq, Type type, ParameterExpression parameter)
