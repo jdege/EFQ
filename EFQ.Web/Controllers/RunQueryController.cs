@@ -30,18 +30,18 @@ namespace JDege.EFQ.Web.Controllers
 
         [HttpGet]
         [Route("[Controller]/Track/{id}")]
-        public async Task<IActionResult> GetTrackAsync([FromRoute] int id, [FromQuery] string rc, [FromQuery] string ctx)
+        public async Task<IActionResult> GetTrackAsync([FromRoute] int id, [FromQuery] string rc)
         {
-            var q = EFQBuilder.GreaterThanOrEqual(
-                "InvoiceDate",
-                EFQBuilder.Add(
-                    "{{NOW:DATE}}",
-                    new EFQ.Constant(TimeSpan.FromDays(-30)
-                )
-            ));
+            // var q = EFQBuilder.GreaterThanOrEqual(
+            //     "InvoiceDate",
+            //     EFQBuilder.Add(
+            //         "{{NOW:DATE}}",
+            //         new EFQ.Constant(TimeSpan.FromDays(-30)
+            //     )
+            // ));
 
-            var s = JsonSerializer.Serialize(q);
-            var d = JsonSerializer.Deserialize<EFQ>(s);
+            // var s = JsonSerializer.Serialize(q);
+            // var d = JsonSerializer.Deserialize<EFQ>(s);
 
 
             using (var dbContext = _contextFactory.CreateDbContext())
@@ -65,15 +65,13 @@ namespace JDege.EFQ.Web.Controllers
 
         [HttpGet]
         [Route("[Controller]/Invoice/{id}")]
-        public async Task<IActionResult> GetInvoiceAsync([FromRoute] int id, [FromRoute] string rc, [FromQuery] string ctx)
+        public async Task<IActionResult> GetInvoiceAsync([FromRoute] int id, [FromRoute] string rc)
         {
-            EFQ q = EFQBuilder.GreaterThanOrEqual(
+            EFQ q = EFQBuilder.Between(
                 "InvoiceDate",
-                EFQBuilder.Add(
-                    "{{NOW:DATE}}",
-                    new EFQ.Constant(TimeSpan.FromDays(-30)
-                )
-            ));
+                    new EFQ.Constant("{{Context:fromdt}}"),
+                    new EFQ.Constant("{{Context:todt}}")
+            );
 
             var s = JsonSerializer.Serialize(q);
             var d = JsonSerializer.Deserialize<EFQ>(s);
