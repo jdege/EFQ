@@ -168,7 +168,6 @@ namespace EFQ.Web.Entities
                     StoredQueryJson = "{\"EFQType\":\"GreaterThanOrEqual\",\"FieldName\":\"InvoiceDate\",\"RightHandSide\":{\"EFQType\":\"Add\",\"AggregateList\":[{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{NOW:DATE}}\"},{\"EFQType\":\"Constant\",\"ConstantValue\":\"TSP:-30.00:00:00\"}]}}",
                     ParametersJson = null
                 },
-                //TODO: Add parameterized date example
                 new StoredQuery
                 {
                     StoredQueryId = 12,
@@ -179,6 +178,17 @@ namespace EFQ.Web.Entities
                     Description = "To run a stored query using parameters, set the matching value to \"{{context:&lt;fieldname&gt;}}\", and pass a dictionary containing \"&lt;fieldname&gt;\".",
                     StoredQueryJson = "{\"EFQType\":\"And\",\"AggregateList\":[{\"EFQType\":\"GreaterThanOrEqual\",\"FieldName\":\"InvoiceDate\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{Context:fromdt}}\"}},{\"EFQType\":\"LessThanOrEqual\",\"FieldName\":\"InvoiceDate\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{Context:todt}}\"}}]}",
                     ParametersJson = "[{\"Name\":\"From Date\", \"Key\":\"fromdt\", \"Type\":\"DATE\",\"DropdownUrl\":null}, {\"Name\":\"To Date\", \"Key\":\"todt\", \"Type\":\"DATE\", \"DropdownUrl\":null}]"
+                },
+                new StoredQuery
+                {
+                    StoredQueryId = 13,
+                    BaseTable = nameof(Track),
+                    Area = StoredQuery.StoredQueryArea.ParameterizedValues.ToString(),
+                    Name = "Search with a parameterized value",
+                    Query = "EFQBuilder.Or(EFQBuilder.Contains(\"Composer\", \"{{Context:match}}\"), EFQBuilder.Contains(\"Album.Title\", \"{{Context:match}}\"), EFQBuilder.Contains(\"Album.Artist.Name\", \"{{Context:match}}\"))",
+                    Description = "To run a stored query using parameters, set the matching value to \"{{context:&lt;fieldname&gt;}}\", and pass a dictionary containing \"&lt;fieldname&gt;\".",
+                    StoredQueryJson = "{\"EFQType\":\"Or\",\"AggregateList\":[{\"EFQType\":\"Contains\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{Context:match}}\"}},{\"EFQType\":\"Contains\",\"FieldName\":\"Album.Title\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{Context:match}}\"}},{\"EFQType\":\"Contains\",\"FieldName\":\"Album.Artist.Name\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{Context:match}}\"}}]}",
+                    ParametersJson = "[{\"Name\":\"Matching Value\", \"Key\":\"match\", \"Type\":\"STRING\",\"DropdownUrl\":null}]"
                 }
             );
         }

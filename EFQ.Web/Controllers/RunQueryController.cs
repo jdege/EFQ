@@ -32,22 +32,31 @@ namespace JDege.EFQ.Web.Controllers
         [Route("[Controller]/Track/{id}")]
         public async Task<IActionResult> GetTrackAsync([FromRoute] int id, [FromQuery] string rc)
         {
-            // var q = EFQBuilder.GreaterThanOrEqual(
-            //     "InvoiceDate",
-            //     EFQBuilder.Add(
-            //         "{{NOW:DATE}}",
-            //         new EFQ.Constant(TimeSpan.FromDays(-30)
-            //     )
-            // ));
+            // var q = EFQBuilder.Or(
+            //     EFQBuilder.Contains("Composer", "{{Context:match}}"),
+            //     EFQBuilder.Contains("Album.Title", "{{Context:match}}"),
+            //     EFQBuilder.Contains("Album.Artist.Name", "{{Context:match}}")
+            // );
 
             // var s = JsonSerializer.Serialize(q);
             // var d = JsonSerializer.Deserialize<EFQ>(s);
 
-            // TODO: Paramaterized values Return to list not working
+            // var ctx = new Dictionary<string, EFQ.Constant>
+            // {
+            //     { "match", new EFQ.Constant("brazil")}
+            // };
+
+            // TODO: Parameterized values Return to list not working
             // TODO: Parameterized artistid not working
+
+            // TODO: do a parameterized "contains" against all fields.
 
             using (var dbContext = _contextFactory.CreateDbContext())
             {
+                // var predicate = q.ConstructPredicate<Track>(ctx);
+
+                // var found = dbContext.Tracks.Where(predicate).ProjectTo<TrackModel>(_mapper.ConfigurationProvider).ToList();
+
                 var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(q => q.StoredQueryId == id);
                 if (storedQuery == null)
                 {
@@ -67,17 +76,8 @@ namespace JDege.EFQ.Web.Controllers
 
         [HttpGet]
         [Route("[Controller]/Invoice/{id}")]
-        public async Task<IActionResult> GetInvoiceAsync([FromRoute] int id, [FromRoute] string rc)
+        public async Task<IActionResult> GetInvoiceAsync([FromRoute] int id, [FromQuery] string rc)
         {
-            EFQ q = EFQBuilder.Between(
-                "InvoiceDate",
-                    new EFQ.Constant("{{Context:fromdt}}"),
-                    new EFQ.Constant("{{Context:todt}}")
-            );
-
-            var s = JsonSerializer.Serialize(q);
-            var d = JsonSerializer.Deserialize<EFQ>(s);
-
             using (var dbContext = _contextFactory.CreateDbContext())
             {
                 var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(q => q.StoredQueryId == id);

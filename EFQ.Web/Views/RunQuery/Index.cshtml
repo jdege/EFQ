@@ -85,7 +85,13 @@
             }
             else if (type === "DATE")
             {
-                var $input = $("<input>", { name: key, type: "date" });
+                var $input = $("<input>", { name: key, type: "date" }).data("type", "DATE");
+
+                $row.append($input);
+            }
+            else if (type === "STRING")
+            {
+                var $input = $("<input>", { name: key }).data("type", "STRING");
 
                 $row.append($input);
             }
@@ -170,13 +176,19 @@
             {
                 var $element = $(element);
                 var name = $element.attr("name");
+                var type = $element.data("type");
                 // TODO: Remove startsWith() kludge after adding datatypes
-                if (name && !name.startsWith("__"))
+                if (type === "DATE")
                 {
                     val = $element.val();
                     var key = name;
-                    // TODO: Manage other types besides DATE
                     context[key] = EFQConstant.dateTime(val);
+                }
+                else if (type === "STRING")
+                {
+                    val = $element.val();
+                    var key = name;
+                    context[key] = EFQConstant.string(val);
                 }
             });
 
