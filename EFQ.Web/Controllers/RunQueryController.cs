@@ -43,6 +43,8 @@ namespace JDege.EFQ.Web.Controllers
             // var s = JsonSerializer.Serialize(q);
             // var d = JsonSerializer.Deserialize<EFQ>(s);
 
+            // TODO: Paramaterized values Return to list not working
+            // TODO: Parameterized artistid not working
 
             using (var dbContext = _contextFactory.CreateDbContext())
             {

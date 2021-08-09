@@ -76,10 +76,19 @@
             var $label = $("<div>").text(name + ":");
             $row.append($label);
 
-            var $select = $("<select>")
-                .data("key", key)
-                .data("dropdownUrl", dropdownUrl);
-            $row.append($select);
+            if (dropdownUrl)
+            {
+                var $select = $("<select>")
+                    .data("key", key)
+                    .data("dropdownUrl", dropdownUrl);
+                $row.append($select);
+            }
+            else if (type === "DATE")
+            {
+                var $input = $("<input>", { name: key, type: "date" });
+
+                $row.append($input);
+            }
 
             $criteriaForm.find(".submitButton").before($row);
         });
@@ -142,6 +151,7 @@
     $("#Submit").click(function ()
     {
         var context = {};
+
         $criteriaForm
             .find("select")
             .each(function (index, element)
@@ -152,6 +162,22 @@
                 var key = $element.data("key");
 
                 context[key] = EFQConstant.int(val);
+            });
+
+        $criteriaForm
+            .find("input")
+            .each(function (index, element)
+            {
+                var $element = $(element);
+                var name = $element.attr("name");
+                // TODO: Remove startsWith() kludge after adding datatypes
+                if (name && !name.startsWith("__"))
+                {
+                    val = $element.val();
+                    var key = name;
+                    // TODO: Manage other types besides DATE
+                    context[key] = EFQConstant.dateTime(val);
+                }
             });
 
         populateTables(model, context);
