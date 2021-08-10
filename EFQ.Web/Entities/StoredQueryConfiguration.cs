@@ -98,7 +98,7 @@ namespace EFQ.Web.Entities
                     Area = StoredQuery.StoredQueryArea.ParameterizedValues.ToString(),
                     Name = "Search with a parameterized value",
                     Query = "EFQBuilder.Equal(\"Album.ArtistId\", \"{{context:artistid}}\")",
-                    Description = "To run a stored query using parameters, set the matching value to \"{{context:&lt;fieldname&gt;}}\", and pass a dictionary containing \"&lt;fieldname&gt;\".",
+                    Description = "This query is searching for all Tracks that have an album with an ArtistId that matches what the user selects.",
                     StoredQueryJson = "{\"EFQType\":\"Equal\",\"FieldName\":\"Album.ArtistId\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{context:artistid}}\"}}",
                     ParametersJson = "[{\"Name\":\"Artist\",\"Key\":\"artistid\",\"Type\":null,\"DropdownUrl\":\"/api/Artist/GetDropdown\"}]"
                 },
@@ -175,7 +175,7 @@ namespace EFQ.Web.Entities
                     Area = StoredQuery.StoredQueryArea.ParameterizedValues.ToString(),
                     Name = "Search with a parameterized value",
                     Query = "EFQBuilder.Between(\"InvoiceDate\", new EFQ.Constant(\"{{Context:fromdt}}\"), new EFQ.Constant(\"{{Context:todt}}\"))",
-                    Description = "To run a stored query using parameters, set the matching value to \"{{context:&lt;fieldname&gt;}}\", and pass a dictionary containing \"&lt;fieldname&gt;\".",
+                    Description = "This query is searching for all Invoices that have an InvoiceDate between the fromdt and todt values that are entered by the user.",
                     StoredQueryJson = "{\"EFQType\":\"And\",\"AggregateList\":[{\"EFQType\":\"GreaterThanOrEqual\",\"FieldName\":\"InvoiceDate\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{Context:fromdt}}\"}},{\"EFQType\":\"LessThanOrEqual\",\"FieldName\":\"InvoiceDate\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{Context:todt}}\"}}]}",
                     ParametersJson = "[{\"Name\":\"From Date\", \"Key\":\"fromdt\", \"Type\":\"DATE\",\"DropdownUrl\":null}, {\"Name\":\"To Date\", \"Key\":\"todt\", \"Type\":\"DATE\", \"DropdownUrl\":null}]"
                 },
@@ -186,7 +186,7 @@ namespace EFQ.Web.Entities
                     Area = StoredQuery.StoredQueryArea.ParameterizedValues.ToString(),
                     Name = "Search with a parameterized value",
                     Query = "EFQBuilder.Or(EFQBuilder.Contains(\"Composer\", \"{{Context:match}}\"), EFQBuilder.Contains(\"Album.Title\", \"{{Context:match}}\"), EFQBuilder.Contains(\"Album.Artist.Name\", \"{{Context:match}}\"))",
-                    Description = "To run a stored query using parameters, set the matching value to \"{{context:&lt;fieldname&gt;}}\", and pass a dictionary containing \"&lt;fieldname&gt;\".",
+                    Description = "This query searches for all Tracks that have a Composer, an Album.Title, or an Artist.Name that contain the search string provided by the user.",
                     StoredQueryJson = "{\"EFQType\":\"Or\",\"AggregateList\":[{\"EFQType\":\"Contains\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{Context:match}}\"}},{\"EFQType\":\"Contains\",\"FieldName\":\"Album.Title\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{Context:match}}\"}},{\"EFQType\":\"Contains\",\"FieldName\":\"Album.Artist.Name\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{Context:match}}\"}}]}",
                     ParametersJson = "[{\"Name\":\"Matching Value\", \"Key\":\"match\", \"Type\":\"STRING\",\"DropdownUrl\":null}]"
                 }

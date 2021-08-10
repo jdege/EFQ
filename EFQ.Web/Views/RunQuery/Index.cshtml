@@ -26,7 +26,7 @@
         {
             <h4>Search Criteria</h4>
 
-            <div class="row submitButton">
+            <div class="row submitButton col-sm-6">
                 <input id="Submit" type="button" value="Search" class="btn btn-primary" />
             </div>
         }
@@ -73,30 +73,42 @@
 
             var $row = $("<div>", { "class": "row" });
 
-            var $label = $("<div>").text(name + ":");
+            var $label = $("<div>", { "class": "col-sm-3" }).text(name + ":");
             $row.append($label);
 
             if (dropdownUrl)
             {
-                var $select = $("<select>")
+                var $select = $("<select>", { "class": "col-sm-3" })
                     .data("key", key)
                     .data("dropdownUrl", dropdownUrl);
                 $row.append($select);
+                $criteriaForm.find(".submitButton").before($row);
             }
             else if (type === "DATE")
             {
-                var $input = $("<input>", { name: key, type: "date" }).data("type", "DATE");
+                var $input = $("<input>", { name: key, type: "date", class: "col-sm-3" }).data("type", "DATE");
 
                 $row.append($input);
+                $criteriaForm.find(".submitButton").before($row);
             }
             else if (type === "STRING")
             {
-                var $input = $("<input>", { name: key }).data("type", "STRING");
+                var $input = $("<input>", { name: key, class: "col-sm-3" }).data("type", "STRING");
 
                 $row.append($input);
+                $criteriaForm.find(".submitButton").before($row);
             }
 
-            $criteriaForm.find(".submitButton").before($row);
+        });
+
+        // TODO: Use lambda expressions in JavaScript
+        $criteriaForm.keypress((e) =>
+        {
+            if (e.which === 13)
+            {
+                e.preventDefault();
+                $submitButton.click();
+            }
         });
     }
 
@@ -154,8 +166,10 @@
 
     $("#InvoicesContainer").hide();
 
-    $("#Submit").click(function ()
+    $("#Submit").click(function (event)
     {
+        event.preventDefault();
+
         var context = {};
 
         $criteriaForm
@@ -195,6 +209,7 @@
         populateTables(model, context);
     });
 
+    // TODO: Enter key on ParamaterizedValues page is resulting in HTTP 405...
     var fillSelect = function ($select, result)
     {
         if (result.success)
