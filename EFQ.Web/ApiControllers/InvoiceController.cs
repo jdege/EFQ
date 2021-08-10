@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -34,13 +35,13 @@ namespace JDege.EFQ.Web.ApiControllers
         [HttpPost]
         [Route("StoredQuery/{id}")]
         public async Task<ActionResult<IEnumerable<InvoiceModel>>> StoredQueryAsync(int id,
-            [FromBody] Dictionary<string, EFQ.Constant> context)
+            [FromBody] Dictionary<string, EFQ.Constant> context, CancellationToken cancellationToken)
         {
             try
             {
                 using (var dbContext = _contextFactory.CreateDbContext())
                 {
-                    var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(s => s.StoredQueryId == id);
+                    var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(s => s.StoredQueryId == id, cancellationToken);
 
                     if (storedQuery == null)
                         return NotFound();
@@ -52,7 +53,7 @@ namespace JDege.EFQ.Web.ApiControllers
                     var invoiceModelList = await dbContext.Invoices.Where(predicate)
                         .OrderBy(t => t.InvoiceDate)
                         .ProjectTo<InvoiceModel>(_configurationProvider)
-                        .ToListAsync();
+                        .ToListAsync(cancellationToken);
 
                     return invoiceModelList;
                 }

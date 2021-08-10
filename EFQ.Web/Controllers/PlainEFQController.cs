@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -38,11 +39,10 @@ namespace JDege.EFQ.Web.Controllers
             _logger = logger;
         }
 
-        // #TODO: Use CancellationTokens
         [HttpGet]
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> IndexAsync(CancellationToken cancellationToken)
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/PlainEFQ_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/PlainEFQ_docs.html", cancellationToken);
             ViewBag.explanationActive = "active";
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = null;
@@ -50,31 +50,31 @@ namespace JDege.EFQ.Web.Controllers
             var trackFormModel = new TrackFormModel
             {
                 Title = PageTitle,
-                Artists = await GetArtistSelectionListAsync(),
-                Customers = await GetCustomerSelectionListAsync()
+                Artists = await GetArtistSelectionListAsync(cancellationToken),
+                Customers = await GetCustomerSelectionListAsync(cancellationToken)
             };
 
             return View("TrackMVC", trackFormModel);
         }
 
         [HttpPost]
-        public async Task<ActionResult> IndexAsync(TrackFormModel trackFormModel)
+        public async Task<ActionResult> IndexAsync(TrackFormModel trackFormModel, CancellationToken cancellationToken)
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/PlainEFQ_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/PlainEFQ_docs.html", cancellationToken);
             ViewBag.explanationActive = null;
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = "active";
 
             trackFormModel.Title = PageTitle;
-            trackFormModel.Artists = await GetArtistSelectionListAsync();
-            trackFormModel.Customers = await GetCustomerSelectionListAsync();
+            trackFormModel.Artists = await GetArtistSelectionListAsync(cancellationToken);
+            trackFormModel.Customers = await GetCustomerSelectionListAsync(cancellationToken);
 
-            trackFormModel.TrackModels = await GetTrackModels(trackFormModel.ArtistId, trackFormModel.CustomerId);
+            trackFormModel.TrackModels = await GetTrackModels(trackFormModel.ArtistId, trackFormModel.CustomerId, cancellationToken);
 
             return View("TrackMVC", trackFormModel);
         }
 
-        private async Task<IList<TrackModel>> GetTrackModels(string artistId, string customerId)
+        private async Task<IList<TrackModel>> GetTrackModels(string artistId, string customerId, CancellationToken cancellationToken)
         {
             var andQueriesList = new List<EFQ>();
 
@@ -102,13 +102,13 @@ namespace JDege.EFQ.Web.Controllers
                 var trackModelList = await dbContext.Tracks.Where(predicate)
                     .OrderBy(t => t.Name)
                     .ProjectTo<TrackModel>(_configurationProvider)
-                    .ToListAsync();
+                    .ToListAsync(cancellationToken);
 
                 return trackModelList;
             }
         }
 
-        private async Task<IEnumerable<SelectListItem>> GetArtistSelectionListAsync()
+        private async Task<IEnumerable<SelectListItem>> GetArtistSelectionListAsync(CancellationToken cancellationToken)
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
@@ -123,7 +123,7 @@ namespace JDege.EFQ.Web.Controllers
                             Text = $"{a.Name} [{a.ArtistId}]"
                         }
                     )
-                    .ToListAsync()
+                    .ToListAsync(cancellationToken)
                     ;
 
                 rowList.AddRange(rows);
@@ -132,7 +132,7 @@ namespace JDege.EFQ.Web.Controllers
             }
         }
 
-        private async Task<IEnumerable<SelectListItem>> GetCustomerSelectionListAsync()
+        private async Task<IEnumerable<SelectListItem>> GetCustomerSelectionListAsync(CancellationToken cancellationToken)
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
@@ -147,7 +147,7 @@ namespace JDege.EFQ.Web.Controllers
                             Value = c.CustomerId.ToString(),
                             Text = $"{c.FirstName} {c.LastName} [{c.CustomerId}]"
                         })
-                    .ToListAsync()
+                    .ToListAsync(cancellationToken)
                     ;
 
                 rowList.AddRange(rows);
@@ -156,10 +156,10 @@ namespace JDege.EFQ.Web.Controllers
             }
         }
 
-        public async Task<string> GetContentsAsync(IWebHostEnvironment _webHostEnvironment, string path)
+        public async Task<string> GetContentsAsync(IWebHostEnvironment _webHostEnvironment, string path, CancellationToken cancellationToken)
         {
             var filepath = Path.Combine(_webHostEnvironment.WebRootPath, path);
-            var contents = await System.IO.File.ReadAllTextAsync(filepath);
+            var contents = await System.IO.File.ReadAllTextAsync(filepath, cancellationToken);
             return contents;
         }
     }

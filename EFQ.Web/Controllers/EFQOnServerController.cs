@@ -1,4 +1,5 @@
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
@@ -21,19 +22,19 @@ namespace JDege.EFQ.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> IndexAsync(CancellationToken cancellationToken)
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/EFQServer_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/EFQServer_docs.html", cancellationToken);
             ViewBag.explanationActive = "active";
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = null;
             return View();
         }
 
-        public async Task<string> GetContentsAsync(IWebHostEnvironment _webHostEnvironment, string path)
+        public async Task<string> GetContentsAsync(IWebHostEnvironment _webHostEnvironment, string path, CancellationToken cancellationToken)
         {
             var filepath = Path.Combine(_webHostEnvironment.WebRootPath, path);
-            var contents = await System.IO.File.ReadAllTextAsync(filepath);
+            var contents = await System.IO.File.ReadAllTextAsync(filepath, cancellationToken);
             return contents;
         }
     }

@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 using System.Text.Json;
 using System.Net;
+using System.Threading;
 
 namespace JDege.EFQ.Web.Controllers
 {
@@ -29,8 +30,9 @@ namespace JDege.EFQ.Web.Controllers
 
         [HttpGet]
         [Route("[Controller]/Track/{id}")]
-        public async Task<IActionResult> GetTrackAsync([FromRoute] int id, [FromQuery] string rc)
+        public async Task<IActionResult> GetTrackAsync([FromRoute] int id, [FromQuery] string rc, CancellationToken cancellationToken)
         {
+            // TODO: Remove debugging comments
             // var q = EFQBuilder.Or(
             //     EFQBuilder.Contains("Composer", "{{Context:match}}"),
             //     EFQBuilder.Contains("Album.Title", "{{Context:match}}"),
@@ -56,7 +58,7 @@ namespace JDege.EFQ.Web.Controllers
 
                 // var found = dbContext.Tracks.Where(predicate).ProjectTo<TrackModel>(_mapper.ConfigurationProvider).ToList();
 
-                var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(q => q.StoredQueryId == id);
+                var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(q => q.StoredQueryId == id, cancellationToken);
                 if (storedQuery == null)
                 {
                     return NotFound();
@@ -75,11 +77,11 @@ namespace JDege.EFQ.Web.Controllers
 
         [HttpGet]
         [Route("[Controller]/Invoice/{id}")]
-        public async Task<IActionResult> GetInvoiceAsync([FromRoute] int id, [FromQuery] string rc)
+        public async Task<IActionResult> GetInvoiceAsync([FromRoute] int id, [FromQuery] string rc, CancellationToken cancellationToken)
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
-                var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(q => q.StoredQueryId == id);
+                var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(q => q.StoredQueryId == id, cancellationToken);
                 if (storedQuery == null)
                 {
                     return NotFound();

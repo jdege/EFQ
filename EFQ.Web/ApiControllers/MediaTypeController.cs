@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -31,14 +32,14 @@ namespace JDege.EFQ.Web.ApiControllers
 
         [HttpGet]
         [Route("GetDropdown")]
-        public async Task<IEnumerable<DropdownModel>> GetDropdownAsync(bool includeQueries)
+        public async Task<IEnumerable<DropdownModel>> GetDropdownAsync(bool includeQueries, CancellationToken cancellationToken)
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
                 var dropdownModels = await dbContext.MediaTypes
                     .OrderBy(c => c.Name)
                     .ProjectTo<DropdownModel>(_configurationProvider)
-                    .ToListAsync();
+                    .ToListAsync(cancellationToken);
 
                 if (includeQueries)
                 {

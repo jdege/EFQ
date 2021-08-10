@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -32,7 +33,7 @@ namespace JDege.EFQ.Web.ApiControllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TrackModel>>> GetAsync(string artistId, string customerId)
+        public async Task<ActionResult<IEnumerable<TrackModel>>> GetAsync(string artistId, string customerId, CancellationToken cancellationToken)
         {
             var andQueriesList = new List<EFQ>();
 
@@ -61,7 +62,7 @@ namespace JDege.EFQ.Web.ApiControllers
                 var trackModelList = await dbContext.Tracks.Where(predicate)
                     .OrderBy(t => t.Name)
                     .ProjectTo<TrackModel>(_configurationProvider)
-                    .ToListAsync();
+                    .ToListAsync(cancellationToken);
 
                 return trackModelList;
             }
@@ -69,7 +70,7 @@ namespace JDege.EFQ.Web.ApiControllers
 
         [HttpPost]
         [Route("Query")]
-        public async Task<ActionResult<IEnumerable<TrackModel>>> QueryAsync(EFQ query)
+        public async Task<ActionResult<IEnumerable<TrackModel>>> QueryAsync(EFQ query, CancellationToken cancellationToken)
         {
             try
             {
@@ -80,7 +81,7 @@ namespace JDege.EFQ.Web.ApiControllers
                     var trackModelList = await dbContext.Tracks.Where(predicate)
                         .OrderBy(t => t.Name)
                         .ProjectTo<TrackModel>(_configurationProvider)
-                        .ToListAsync();
+                        .ToListAsync(cancellationToken);
 
                     return trackModelList;
                 }
@@ -96,13 +97,13 @@ namespace JDege.EFQ.Web.ApiControllers
         [HttpPost]
         [Route("StoredQuery/{id}")]
         public async Task<ActionResult<IEnumerable<TrackModel>>> StoredQueryAsync([FromRoute] int id,
-            [FromBody] Dictionary<string, EFQ.Constant> context)
+            [FromBody] Dictionary<string, EFQ.Constant> context, CancellationToken cancellationToken)
         {
             try
             {
                 using (var dbContext = _contextFactory.CreateDbContext())
                 {
-                    var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(s => s.StoredQueryId == id);
+                    var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(s => s.StoredQueryId == id, cancellationToken);
 
                     if (storedQuery == null)
                         return NotFound();
@@ -114,7 +115,7 @@ namespace JDege.EFQ.Web.ApiControllers
                     var trackModelList = await dbContext.Tracks.Where(predicate)
                         .OrderBy(t => t.Name)
                         .ProjectTo<TrackModel>(_configurationProvider)
-                        .ToListAsync();
+                        .ToListAsync(cancellationToken);
 
                     return trackModelList;
                 }

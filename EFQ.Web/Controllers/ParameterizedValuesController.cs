@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -24,7 +25,7 @@ namespace JDege.EFQ.Web.Controllers
 
         // TODO: Add a Postman collection
         [HttpGet]
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> IndexAsync(CancellationToken cancellationToken)
         {
             ViewBag.docs = @"
 <p>Storing queries in the database serves little purpose if you can't set parameters when they're run.
@@ -48,7 +49,7 @@ will use that to reconstruct the correct type when deserializing.
                 var storedQueryModels = await dbContext.StoredQueries
                     .Where(sq => sq.Area == storedQueryArea)
                     .ProjectTo<StoredQueryModel>(_configurationProvider)
-                    .ToListAsync();
+                    .ToListAsync(cancellationToken);
 
                 return View("StoredQueries", storedQueryModels);
             }

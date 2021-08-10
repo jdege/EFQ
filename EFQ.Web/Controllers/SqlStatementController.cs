@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using EFQ.Web.DbContexts;
@@ -36,9 +37,9 @@ namespace JDege.EFQ.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> IndexAsync(CancellationToken cancellationToken)
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/SqlStatement_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/SqlStatement_docs.html", cancellationToken);
             ViewBag.explanationActive = "active";
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = null;
@@ -46,31 +47,31 @@ namespace JDege.EFQ.Web.Controllers
             var trackFormModel = new TrackFormModel
             {
                 Title = PageTitle,
-                Artists = await GetArtistSelectionListAsync(),
-                Customers = await GetCustomerSelectionListAsync()
+                Artists = await GetArtistSelectionListAsync(cancellationToken),
+                Customers = await GetCustomerSelectionListAsync(cancellationToken)
             };
 
             return View("TrackMVC", trackFormModel);
         }
 
         [HttpPost]
-        public async Task<ActionResult> IndexAsync(TrackFormModel trackFormModel)
+        public async Task<ActionResult> IndexAsync(TrackFormModel trackFormModel, CancellationToken cancellationToken)
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/SqlStatement_docs.html");
+            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/SqlStatement_docs.html", cancellationToken);
             ViewBag.explanationActive = null;
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = "active";
 
             trackFormModel.Title = PageTitle;
-            trackFormModel.Artists = await GetArtistSelectionListAsync();
-            trackFormModel.Customers = await GetCustomerSelectionListAsync();
+            trackFormModel.Artists = await GetArtistSelectionListAsync(cancellationToken);
+            trackFormModel.Customers = await GetCustomerSelectionListAsync(cancellationToken);
 
-            trackFormModel.TrackModels = await GetTrackModels(trackFormModel.ArtistId, trackFormModel.CustomerId);
+            trackFormModel.TrackModels = await GetTrackModels(trackFormModel.ArtistId, trackFormModel.CustomerId, cancellationToken);
 
             return View("TrackMVC", trackFormModel);
         }
 
-        private async Task<IList<TrackModel>> GetTrackModels(string artistId, string customerId)
+        private async Task<IList<TrackModel>> GetTrackModels(string artistId, string customerId, CancellationToken cancellationToken)
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
@@ -141,11 +142,11 @@ EXISTS (
                     try
                     {
                         con.Open();
-                        var rdr = await cmd.ExecuteReaderAsync();
+                        var rdr = await cmd.ExecuteReaderAsync(cancellationToken);
 
                         // Because there is a one-to-many relationship between Track and Invoice, our join
                         // returns multiple rows for each Track record.
-                        while (await rdr.ReadAsync())
+                        while (await rdr.ReadAsync(cancellationToken))
                         {
                             var trackName = rdr.getValue<string>("TrackName");
                             var albumTitle = rdr.getValue<string>("AlbumTitle");
@@ -199,7 +200,7 @@ EXISTS (
             }
         }
 
-        private async Task<IEnumerable<SelectListItem>> GetArtistSelectionListAsync()
+        private async Task<IEnumerable<SelectListItem>> GetArtistSelectionListAsync(CancellationToken cancellationToken)
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
@@ -216,8 +217,8 @@ EXISTS (
                     try
                     {
                         con.Open();
-                        var rdr = await cmd.ExecuteReaderAsync();
-                        while (await rdr.ReadAsync())
+                        var rdr = await cmd.ExecuteReaderAsync(cancellationToken);
+                        while (await rdr.ReadAsync(cancellationToken))
                         {
                             var artistId = rdr.getValue<string>("ArtistId");
                             var name = rdr.getValue<string>("Name");
@@ -242,7 +243,7 @@ EXISTS (
             }
         }
 
-        private async Task<IEnumerable<SelectListItem>> GetCustomerSelectionListAsync()
+        private async Task<IEnumerable<SelectListItem>> GetCustomerSelectionListAsync(CancellationToken cancellationToken)
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
@@ -259,8 +260,8 @@ EXISTS (
                     try
                     {
                         con.Open();
-                        var rdr = await cmd.ExecuteReaderAsync();
-                        while (await rdr.ReadAsync())
+                        var rdr = await cmd.ExecuteReaderAsync(cancellationToken);
+                        while (await rdr.ReadAsync(cancellationToken))
                         {
                             var customerId = rdr.getValue<string>("CustomerId").Trim();
                             var firstName = rdr.getValue<string>("FirstName").Trim();
@@ -288,10 +289,10 @@ EXISTS (
         }
 
         // #TODO: Move GetContentsAsync() someplace reasonable
-        public async Task<string> GetContentsAsync(IWebHostEnvironment _webHostEnvironment, string path)
+        public async Task<string> GetContentsAsync(IWebHostEnvironment _webHostEnvironment, string path, CancellationToken cancellationToken)
         {
             var filepath = Path.Combine(_webHostEnvironment.WebRootPath, path);
-            var contents = await System.IO.File.ReadAllTextAsync(filepath);
+            var contents = await System.IO.File.ReadAllTextAsync(filepath, cancellationToken);
             return contents;
         }
     }

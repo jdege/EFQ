@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -23,7 +24,7 @@ namespace JDege.EFQ.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> IndexAsync(CancellationToken cancellationToken)
         {
             ViewBag.docs = @"
 <p>EFQ queries are run against a base table in Entity Framework.
@@ -36,7 +37,7 @@ namespace JDege.EFQ.Web.Controllers
                 var storedQueryModels = await dbContext.StoredQueries
                     .Where(sq => sq.Area == storedQueryArea)
                     .ProjectTo<StoredQueryModel>(_configurationProvider)
-                    .ToListAsync();
+                    .ToListAsync(cancellationToken);
 
                 return View("StoredQueries", storedQueryModels);
             }

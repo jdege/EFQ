@@ -2,6 +2,7 @@ using System;
 
 namespace JDege.EFQ.Web
 {
+    // TODO: Remove this
     public class WeatherForecast
     {
         public DateTime Date { get; set; }
@@ -13,3 +14,7 @@ namespace JDege.EFQ.Web
         public string Summary { get; set; }
     }
 }
+
+// TODO: Make sure we have tests for all cases
+
+// TODO: add explanations to the Swagger page
