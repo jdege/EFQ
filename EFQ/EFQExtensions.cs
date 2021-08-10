@@ -15,7 +15,6 @@ namespace JDege.EFQ
         #region predicate construction functions
         public static Expression<Func<T, bool>> ConstructPredicate<T>(this EFQ efq, Dictionary<string, EFQ.Constant> context = null)
         {
-            // #TODO: Move IsUnary, etc., to extension methods
             if (efq.IsUnary())
                 return efq.EFQType == EFQType.IsTrue
                     ? PredicateBuilder.True<T>()
@@ -91,8 +90,7 @@ namespace JDege.EFQ
             catch (Exception)
             {
                 throw new InvalidOperationException(
-                    String.Format("Cannot convert value \"{0}\" of type \"{1}\" to field \"{2}\" of type \"{3}\"",
-                        efq.RightHandSide, value.Type, efq.FieldName, member.Type));
+                    $"Cannot convert value \"{efq.RightHandSide}\" of type \"{value.Type}\" to field \"{efq.FieldName}\" of type \"{member.Type}\"");
             }
         }
 
@@ -122,8 +120,7 @@ namespace JDege.EFQ
             catch (Exception)
             {
                 throw new InvalidOperationException(
-                    String.Format("Cannot convert value \"{0}\" of type \"{1}\" to field \"{2}\" of type \"{3}\"",
-                        efq.RightHandSide, value.Type, efq.FieldName, member.Type));
+                    $"Cannot convert value \"{efq.RightHandSide}\" of type \"{value.Type}\" to field \"{efq.FieldName}\" of type \"{member.Type}\"");
             }
         }
 
@@ -142,8 +139,7 @@ namespace JDege.EFQ
                 return methodExpression;
             }
 
-            // #TODO: use string interpolation
-            throw new InvalidExpressionException(String.Format("Invalid EFQType {0}", efqType));
+            throw new InvalidExpressionException($"Invalid EFQType {efqType}");
         }
 
         private static Expression<Func<T, bool>> ConstructAnyPredicate<T>(this EFQ efq, Dictionary<string, EFQ.Constant> context)
@@ -221,8 +217,7 @@ namespace JDege.EFQ
             catch (Exception)
             {
                 throw new InvalidOperationException(
-                    String.Format("Cannot convert value \"{0}\" of type \"{1}\" to field \"{2}\" of type \"{3}\"",
-                        efq.RightHandSide, value.Type, efq.FieldName, member.Type));
+                    $"Cannot convert value \"{efq.RightHandSide}\" of type \"{value.Type}\" to field \"{efq.FieldName}\" of type \"{member.Type}\"");
             }
         }
 
@@ -252,7 +247,7 @@ namespace JDege.EFQ
             foreach (var arg in sc.AggregateList)
             {
                 if (!arg.IsConstant())
-                    throw new ArgumentException(String.Format("{0} must be constant", sc));
+                    throw new ArgumentException($"{sc} must be constant");
 
                 if (result == null)
                 {
@@ -281,7 +276,7 @@ namespace JDege.EFQ
 
                 if (methodInfo == null)
                     throw new ArgumentException(
-                        String.Format("Cannot find operation \"Add\" for type \"{0}\"", leftType));
+                        $"Cannot find operation \"Add\" for type \"{leftType}\"");
 
                 result = methodInfo.Invoke(result, new[] { value });
             }
