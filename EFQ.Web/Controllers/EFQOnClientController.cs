@@ -39,15 +39,6 @@ namespace JDege.EFQ.Web.Controllers
             return View();
         }
 
-        // #TODO: hunt out every reference to the name EFQuery
-
-        // #TODO: Rename "Dynamic Queries" and "Stored Queries"
-
-        // #TODO: Add explanatory html section to stored queries table
-        // #TODO: Add json data context section to stored queries table
-        // #TODO: Make EFQ support data context objects
-
-        // #TODO: Create partial view(?) for dynamic queries subobject.
         public async Task<string> GetContentsAsync(IWebHostEnvironment _webHostEnvironment, string path, CancellationToken cancellationToken)
         {
             var filepath = Path.Combine(_webHostEnvironment.WebRootPath, path);
@@ -56,3 +47,5 @@ namespace JDege.EFQ.Web.Controllers
         }
     }
 }
+
+// TODO: Move Database tab to top menu
