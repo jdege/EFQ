@@ -42,7 +42,7 @@ namespace JDege.EFQ.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync(CancellationToken cancellationToken)
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/PlainEFQ_docs.html", cancellationToken);
+            ViewBag.docs = await this.GetContentsAsync(_webHostEnvironment, "documentation/PlainEFQ_docs.html", cancellationToken);
             ViewBag.explanationActive = "active";
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = null;
@@ -60,7 +60,7 @@ namespace JDege.EFQ.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> IndexAsync(TrackFormModel trackFormModel, CancellationToken cancellationToken)
         {
-            ViewBag.docs = await GetContentsAsync(_webHostEnvironment, "documentation/PlainEFQ_docs.html", cancellationToken);
+            ViewBag.docs = await this.GetContentsAsync(_webHostEnvironment, "documentation/PlainEFQ_docs.html", cancellationToken);
             ViewBag.explanationActive = null;
             ViewBag.criteriaActive = null;
             ViewBag.resultsActive = "active";
@@ -154,13 +154,6 @@ namespace JDege.EFQ.Web.Controllers
 
                 return rowList;
             }
-        }
-
-        public async Task<string> GetContentsAsync(IWebHostEnvironment _webHostEnvironment, string path, CancellationToken cancellationToken)
-        {
-            var filepath = Path.Combine(_webHostEnvironment.WebRootPath, path);
-            var contents = await System.IO.File.ReadAllTextAsync(filepath, cancellationToken);
-            return contents;
         }
     }
 }
