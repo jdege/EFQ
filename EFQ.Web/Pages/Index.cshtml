@@ -24,8 +24,13 @@
 <p>The menu at the top of this site provides links to a number of different pages:</p>
 
 <ol>
+    <li><a class="nav-link text-dark" asp-controller="DatabaseConfiguration" asp-action="Index">Database
+            configuration</a>
+        An explanation of the database that these demos run against.
+    </li>
+
     <li><a class="nav-link text-dark" asp-controller="MotivationalExercises" asp-action="Index">Motivational
-            exercises</a><br />
+            exercises</a>
         A progressive series of tutorials explaining the why and how of EFQ.
     </li>
 
@@ -50,12 +55,15 @@
         The Swagger UI for the REST endpoints in this project (opens in a new browser tab) </li>
 </ol>
 
-<p>There are three .NET projects, in this solution:</p>
+<p>There are four .NET projects, in this solution:</p>
 
 <ol>
     <li><b>EFQ</b> - the EFQ library itself</li>
+    <li><b>EFQ.test</b> - an XUnit test suite, running unit tests that do not have any external dependencies.</li>
     <li><b>EFQ.dbtest</b> - an XUnit test suite, running tests against a local SQLite database.</li>
     <li><b>EFQ.Web</b> - a aspnet core website, with demonstration pages running against a SqlServer database.</li>
 </ol>
 
 <p>This, of course, is the EFQ.Web home page.</p>
+
+<!-- TODO: This is where I should explain the PostMan collection, when I have written it. -->
