@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using SJ = System.Text.Json;
 using SJS = System.Text.Json.Serialization;
 
-namespace JDege.EFQ
+namespace JDege.EFQ.JsonConverters
 {
     public class EfqJsonConverter : SJS.JsonConverter<EFQ>
     {

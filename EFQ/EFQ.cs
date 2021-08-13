@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SJ = System.Text.Json.Serialization;
 using NJ = Newtonsoft.Json;
 
+using JDege.EFQ.JsonConverters;
 // TODO: Add Newtonsoft JSON converters
 
 namespace JDege.EFQ

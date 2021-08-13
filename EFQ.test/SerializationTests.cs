@@ -14,19 +14,20 @@ namespace JDege.EFQ.test
         private IEnumerable<EFQ> _testEfqs = new[] {
                 EFQBuilder.IsTrue(),
                 EFQBuilder.IsFalse(),
-                EFQBuilder.Equal("fieldname", "astring"),
-                EFQBuilder.Equal("fieldname", 1),
-                EFQBuilder.Equal("fieldname", 1.1),
-                EFQBuilder.Equal("fieldname", 1D),
-                EFQBuilder.Equal("fieldname", DateTime.Now),
-                EFQBuilder.Equal("fieldname", DateTimeOffset.Now),
-                EFQBuilder.Not(EFQBuilder.Equal("fieldname", "astring")),
-                EFQBuilder.Any("fieldname", EFQBuilder.Equal("child.fieldname", "astring")),
-                EFQBuilder.Contains("fieldname", "123"),
+                EFQBuilder.Equal("aFieldName", "astring"),
+                EFQBuilder.Equal("aFieldName", 1),
+                EFQBuilder.Equal("aFieldName", 1.1),
+                EFQBuilder.Equal("aFieldName", 1D),
+                EFQBuilder.Equal("aFieldName", DateTime.Now),
+                EFQBuilder.Equal("aFieldName", DateTimeOffset.Now),
+                EFQBuilder.Not(EFQBuilder.Equal("aFieldName", "astring")),
+                EFQBuilder.Any("aFieldName", EFQBuilder.Equal("child.aChildFieldName", "astring")),
+                EFQBuilder.Contains("aFieldName", "123"),
                 EFQBuilder.Equal("ArtistId", 90),
-                EFQBuilder.Equal("fieldname", DateTime.Parse("2021-01-21T13:14:15.678")),
-                EFQBuilder.Equal("fieldname", DateTimeOffset.Parse("2021-01-21T13:14:15.678")),
-                EFQBuilder.Equal("fieldname", new TimeSpan(days: 0, hours: 13, minutes: 14, seconds: 15, milliseconds: 678))
+                EFQBuilder.Equal("aFieldName", DateTime.Parse("2021-01-21T13:14:15.678")),
+                EFQBuilder.Equal("aFieldName", DateTimeOffset.Parse("2021-01-21T13:14:15.678")),
+                EFQBuilder.Equal("aFieldName", new TimeSpan(days: 0, hours: 13, minutes: 14, seconds: 15, milliseconds: 678)),
+                EFQBuilder.And(EFQBuilder.Equal("aFieldName", 1), EFQBuilder.Equal("anotherFieldName", 2))
             };
 
         [Fact]
@@ -34,22 +35,19 @@ namespace JDege.EFQ.test
         {
             foreach (var efq in _testEfqs)
             {
-                var s = SJ.JsonSerializer.Serialize(efq);
-                var d = SJ.JsonSerializer.Deserialize<EFQ>(s);
-                d.ShouldBeEquivalentTo(efq);
+                var sj = SJ.JsonSerializer.Serialize(efq);
+                var nj = NJ.JsonConvert.SerializeObject(efq);
+                nj.ShouldBe(sj);
+
+                var sd = SJ.JsonSerializer.Deserialize<EFQ>(sj);
+                sd.ShouldBeEquivalentTo(efq);
+
+                // var nd = NJ.JsonConvert.DeserializeObject<EFQ>(nj);
+                // nd.ShouldBeEquivalentTo(efq);
+
+                // nd.ShouldBeEquivalentTo(sd);
             }
         }
-
-        // [Fact]
-        // public void EfqNewtonsoftDeserialize()
-        // {
-        //     foreach (var efq in _testEfqs)
-        //     {
-        //         var s = NJ.JsonConvert.SerializeObject(efq);
-        //         var d = NJ.JsonConvert.DeserializeObject<EFQ>(d);
-        //         d.ShouldBeEquivalentTo(efq);
-        //     }
-        // }
 
         private IEnumerable<EFQ.Constant> _testEfqConstants = new[] {
             new EFQ.Constant("aString"),
