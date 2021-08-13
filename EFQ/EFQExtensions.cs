@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
+
 using PeteMontgomery.PredicateBuilder;
 
 namespace JDege.EFQ
@@ -490,6 +491,4 @@ namespace JDege.EFQ
             };
         #endregion
     }
-
 }
-

@@ -183,4 +183,3 @@ namespace JDege.EFQ.JsonConverters
         }
     }
 }
-

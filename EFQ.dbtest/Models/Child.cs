@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace JDege.EFQ.dbtest.Models
 {
     public partial class Child

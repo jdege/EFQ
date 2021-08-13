@@ -1,6 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using JDege.EFQ.dbtest.Models;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
+using JDege.EFQ.dbtest.Models;
 
 namespace JDege.EFQ.dbtest
 {
@@ -52,4 +53,3 @@ namespace JDege.EFQ.dbtest
         }
     }
 }
-

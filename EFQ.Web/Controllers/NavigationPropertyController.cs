@@ -3,11 +3,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 using JDege.EFQ.Web.DbContexts;
 using JDege.EFQ.Web.Entities;
 using JDege.EFQ.Web.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace JDege.EFQ.Web.Controllers
 {

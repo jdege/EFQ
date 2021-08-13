@@ -1,19 +1,13 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
+using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using JDege.EFQ.Web.DbContexts;
-using JDege.EFQ.Web.Entities;
-using JDege.EFQ.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-using System.Text.Json;
-using System.Net;
-using System.Threading;
+using JDege.EFQ.Web.DbContexts;
+using JDege.EFQ.Web.Models;
 
 namespace JDege.EFQ.Web.Controllers
 {
@@ -32,7 +26,6 @@ namespace JDege.EFQ.Web.Controllers
         [Route("[Controller]/Track/{id}")]
         public async Task<IActionResult> GetTrackAsync([FromRoute] int id, [FromQuery] string rc, CancellationToken cancellationToken)
         {
-            // TODO: Remove debugging comments
             using (var dbContext = _contextFactory.CreateDbContext())
             {
                 var storedQuery = await dbContext.StoredQueries.SingleOrDefaultAsync(q => q.StoredQueryId == id, cancellationToken);
@@ -76,4 +69,3 @@ namespace JDege.EFQ.Web.Controllers
         }
     }
 }
-

@@ -1,10 +1,11 @@
 using System;
 using System.Linq;
-using JDege.EFQ.Web.DbContexts;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
+using JDege.EFQ.Web.DbContexts;
 
 namespace JDege.EFQ.Web
 {

@@ -1,14 +1,11 @@
-using System.Reflection;
-using JDege.EFQ;
-using JDege.EFQ.Web.DbContexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
+
+using JDege.EFQ.Web.DbContexts;
 
 namespace JDege.EFQ.Web
 {
@@ -21,7 +18,6 @@ namespace JDege.EFQ.Web
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextFactory<ChinookContext>(opts =>
@@ -35,11 +31,11 @@ namespace JDege.EFQ.Web
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
+                // TODO: Customize Swagger pages.
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EFQ.Web", Version = "v1" });
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseDeveloperExceptionPage();
@@ -48,7 +44,7 @@ namespace JDege.EFQ.Web
 
             app.UseStaticFiles();
 
-            //this is a simple demo app
+            //this is a simple demo app, so we're not messing about with Https
             //app.UseHttpsRedirection();
 
             app.UseRouting();

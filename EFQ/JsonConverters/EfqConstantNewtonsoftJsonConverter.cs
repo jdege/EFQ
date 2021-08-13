@@ -1,6 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json.Linq;
+
 using NJ = Newtonsoft.Json;
 
 namespace JDege.EFQ.JsonConverters

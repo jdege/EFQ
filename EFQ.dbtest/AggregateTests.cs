@@ -1,11 +1,10 @@
 using System.Linq;
 using System.Threading.Tasks;
-using JDege.EFQ.dbtest;
-using JDege.EFQ.dbtest.Models;
-using JDege.EFQ;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
+
+using JDege.EFQ.dbtest.Models;
 
 namespace JDege.EFQ.dbtest
 {

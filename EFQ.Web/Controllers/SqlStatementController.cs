@@ -1,20 +1,20 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using JDege.EFQ.Web.DbContexts;
-using JDege.EFQ.Web.Extensions;
-using JDege.EFQ.Web.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+
+using JDege.EFQ.Web.DbContexts;
+using JDege.EFQ.Web.Extensions;
+using JDege.EFQ.Web.Models;
 
 namespace JDege.EFQ.Web.Controllers
 {
@@ -148,13 +148,13 @@ EXISTS (
                         // returns multiple rows for each Track record.
                         while (await rdr.ReadAsync(cancellationToken))
                         {
-                            var trackName = rdr.getValue<string>("TrackName");
-                            var albumTitle = rdr.getValue<string>("AlbumTitle");
-                            var artistName = rdr.getValue<string>("ArtistName");
-                            var trackComposer = rdr.getValue<string>("TrackComposer");
-                            var mediaType = rdr.getValue<string>("MediaType");
-                            var customerFirstName = rdr.getValue<string>("CustomerFirstName");
-                            var customerLastName = rdr.getValue<string>("CustomerLastName");
+                            var trackName = rdr.GetValue<string>("TrackName");
+                            var albumTitle = rdr.GetValue<string>("AlbumTitle");
+                            var artistName = rdr.GetValue<string>("ArtistName");
+                            var trackComposer = rdr.GetValue<string>("TrackComposer");
+                            var mediaType = rdr.GetValue<string>("MediaType");
+                            var customerFirstName = rdr.GetValue<string>("CustomerFirstName");
+                            var customerLastName = rdr.GetValue<string>("CustomerLastName");
 
                             // If this is the first time we've seen this Track, we add a new model to the list
                             // And whether it is the first time or not, we need to add the customer data
@@ -220,8 +220,8 @@ EXISTS (
                         var rdr = await cmd.ExecuteReaderAsync(cancellationToken);
                         while (await rdr.ReadAsync(cancellationToken))
                         {
-                            var artistId = rdr.getValue<string>("ArtistId");
-                            var name = rdr.getValue<string>("Name");
+                            var artistId = rdr.GetValue<string>("ArtistId");
+                            var name = rdr.GetValue<string>("Name");
                             var selectListItem = new SelectListItem
                             {
                                 Value = artistId,
@@ -263,9 +263,9 @@ EXISTS (
                         var rdr = await cmd.ExecuteReaderAsync(cancellationToken);
                         while (await rdr.ReadAsync(cancellationToken))
                         {
-                            var customerId = rdr.getValue<string>("CustomerId").Trim();
-                            var firstName = rdr.getValue<string>("FirstName").Trim();
-                            var lastName = rdr.getValue<string>("LastName").Trim();
+                            var customerId = rdr.GetValue<string>("CustomerId").Trim();
+                            var firstName = rdr.GetValue<string>("FirstName").Trim();
+                            var lastName = rdr.GetValue<string>("LastName").Trim();
 
                             var selectListItem = new SelectListItem
                             {

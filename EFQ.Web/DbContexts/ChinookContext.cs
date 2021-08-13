@@ -1,19 +1,14 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+
 using JDege.EFQ.Web.Entities;
 
+// TODO: See if we can enable nullable reference types
 #nullable disable
 
 namespace JDege.EFQ.Web.DbContexts
 {
     public partial class ChinookContext : DbContext
     {
-        // We don't ever want to use this...
-        // public ChinookContext()
-        // {
-        // }
-
         public ChinookContext(DbContextOptions<ChinookContext> options)
             : base(options)
         {
@@ -32,21 +27,10 @@ namespace JDege.EFQ.Web.DbContexts
         public virtual DbSet<Track> Tracks { get; set; }
         public virtual DbSet<StoredQuery> StoredQueries { get; set; }
 
-        //         Configure in Startup.cs
-        //         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //         {
-        //             if (!optionsBuilder.IsConfigured)
-        //             {
-        // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        //                 optionsBuilder.UseSqlServer("Server=localhost;Database=Chinook;User Id=SA;Password=Password1");
-        //             }
-        //         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
-            // Move configuration into XxxConfiguration classes
             modelBuilder.ApplyConfiguration(new AlbumConfiguration());
 
             modelBuilder.ApplyConfiguration(new ArtistConfiguration());

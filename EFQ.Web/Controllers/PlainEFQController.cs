@@ -1,23 +1,18 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using JDege.EFQ.Web.DbContexts;
-using JDege.EFQ.Web.Entities;
-using JDege.EFQ.Web.Extensions;
-using JDege.EFQ.Web.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using PeteMontgomery.PredicateBuilder;
+
+using JDege.EFQ.Web.DbContexts;
+using JDege.EFQ.Web.Entities;
+using JDege.EFQ.Web.Models;
 
 namespace JDege.EFQ.Web.Controllers
 {

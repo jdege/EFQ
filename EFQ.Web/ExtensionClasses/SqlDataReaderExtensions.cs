@@ -9,7 +9,7 @@ namespace JDege.EFQ.Web.Extensions
     /// </summary>
     public static class SqlDataReaderExtension
     {
-        private static bool isNullableType(Type type)
+        private static bool IsNullableType(Type type)
         {
             return (type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(Nullable<>)));
         }
@@ -21,7 +21,7 @@ namespace JDege.EFQ.Web.Extensions
         /// <param name="rdr">The SqlDataReader object that queried the database</param>
         /// <param name="columnName">The column of data to retrieve a value from</param>
         /// <returns>T, type applied; default value of type if database value is null</returns>
-        public static T getValue<T>(this SqlDataReader rdr, string columnName)
+        public static T GetValue<T>(this SqlDataReader rdr, string columnName)
         {
             var value = rdr[columnName];
 
@@ -30,7 +30,7 @@ namespace JDege.EFQ.Web.Extensions
 
             var type = typeof(T);
 
-            if (!isNullableType(type))
+            if (!IsNullableType(type))
                 return (T)Convert.ChangeType(value, type);
 
             var theNullableConverter = new NullableConverter(type);
@@ -38,4 +38,3 @@ namespace JDege.EFQ.Web.Extensions
         }
     }
 }
-

@@ -5,11 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using JDege.EFQ.Web.DbContexts;
-using JDege.EFQ.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+
+using JDege.EFQ.Web.DbContexts;
+using JDege.EFQ.Web.Models;
 
 namespace JDege.EFQ.Web.ApiControllers
 {

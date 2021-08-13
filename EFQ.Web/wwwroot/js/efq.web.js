@@ -1,5 +1,4 @@
-﻿
-DropdownService = {
+﻿DropdownService = {
 
     getDropdown: function (url, options, callback)
     {

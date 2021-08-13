@@ -1,4 +1,3 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 
 namespace JDege.EFQ.dbtest.Models
@@ -9,11 +8,6 @@ namespace JDege.EFQ.dbtest.Models
             : base(options)
         {
         }
-
-        // protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        // {
-        //     throw new UnintentionalCodeFirstException();
-        // }
 
         public virtual DbSet<Child> Children { get; set; }
         public virtual DbSet<Item> Items { get; set; }
