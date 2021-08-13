@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using Shouldly;
 using Xunit;
+
+using SJ = System.Text.Json;
+using NJ = Newtonsoft.Json;
 
 namespace JDege.EFQ.test
 {
@@ -32,11 +34,22 @@ namespace JDege.EFQ.test
         {
             foreach (var efq in _testEfqs)
             {
-                var s = JsonSerializer.Serialize(efq);
-                var d = JsonSerializer.Deserialize<EFQ>(s);
+                var s = SJ.JsonSerializer.Serialize(efq);
+                var d = SJ.JsonSerializer.Deserialize<EFQ>(s);
                 d.ShouldBeEquivalentTo(efq);
             }
         }
+
+        // [Fact]
+        // public void EfqNewtonsoftDeserialize()
+        // {
+        //     foreach (var efq in _testEfqs)
+        //     {
+        //         var s = NJ.JsonConvert.SerializeObject(efq);
+        //         var d = NJ.JsonConvert.DeserializeObject<EFQ>(d);
+        //         d.ShouldBeEquivalentTo(efq);
+        //     }
+        // }
 
         private IEnumerable<EFQ.Constant> _testEfqConstants = new[] {
             new EFQ.Constant("aString"),
@@ -53,8 +66,8 @@ namespace JDege.EFQ.test
         {
             foreach (var efqConstant in _testEfqConstants)
             {
-                var s = JsonSerializer.Serialize(efqConstant);
-                var d = JsonSerializer.Deserialize<EFQ.Constant>(s);
+                var s = SJ.JsonSerializer.Serialize(efqConstant);
+                var d = SJ.JsonSerializer.Deserialize<EFQ.Constant>(s);
                 d.ShouldBeEquivalentTo(efqConstant);
             }
         }
@@ -68,8 +81,8 @@ namespace JDege.EFQ.test
                 {"second", new EFQ.Constant(10)},
             };
 
-            var s = JsonSerializer.Serialize(dict);
-            var d = JsonSerializer.Deserialize<Dictionary<string, EFQ.Constant>>(s);
+            var s = SJ.JsonSerializer.Serialize(dict);
+            var d = SJ.JsonSerializer.Deserialize<Dictionary<string, EFQ.Constant>>(s);
             d.ShouldBeEquivalentTo(d);
         }
     }

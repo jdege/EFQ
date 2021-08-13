@@ -1,20 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+
+using SJ = System.Text.Json;
+using SJS = System.Text.Json.Serialization;
 
 namespace JDege.EFQ
 {
-    public class EfqJsonConverter : JsonConverter<EFQ>
+    public class EfqJsonConverter : SJS.JsonConverter<EFQ>
     {
-        public override void Write(Utf8JsonWriter writer, EFQ efq, JsonSerializerOptions options)
+        public override void Write(SJ.Utf8JsonWriter writer, EFQ efq, SJ.JsonSerializerOptions options)
         {
             WriteEfq(writer, efq, options);
         }
 
-        private void WriteEfq(Utf8JsonWriter writer, EFQ efq, JsonSerializerOptions options, string name = null)
+        private void WriteEfq(SJ.Utf8JsonWriter writer, EFQ efq, SJ.JsonSerializerOptions options, string name = null)
         {
             if (name == null)
                 writer.WriteStartObject();
@@ -47,7 +48,7 @@ namespace JDege.EFQ
             writer.WriteEndObject();
         }
 
-        private void WriteConstantValue(Utf8JsonWriter writer, object constantValue, JsonSerializerOptions options, string name)
+        private void WriteConstantValue(SJ.Utf8JsonWriter writer, object constantValue, SJ.JsonSerializerOptions options, string name)
         {
             string formattedConstant;
             // TOD: handle date/time types
@@ -80,30 +81,30 @@ namespace JDege.EFQ
             }
             writer.WriteString(name, formattedConstant);
         }
-        public override EFQ Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override EFQ Read(ref SJ.Utf8JsonReader reader, Type typeToConvert, SJ.JsonSerializerOptions options)
         {
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new JsonException("Expected StartObject token");
+            if (reader.TokenType != SJ.JsonTokenType.StartObject)
+                throw new SJ.JsonException("Expected StartObject token");
 
             var efq = ReadEfq(ref reader, typeToConvert, options);
 
             if (efq == null)
-                throw new JsonException("Expected EndObject token");
+                throw new SJ.JsonException("Expected EndObject token");
 
             return efq;
         }
 
-        private EFQ ReadEfq(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        private EFQ ReadEfq(ref SJ.Utf8JsonReader reader, Type typeToConvert, SJ.JsonSerializerOptions options)
         {
             var efq = new EFQ();
 
             while (reader.Read())
             {
-                if (reader.TokenType == JsonTokenType.EndObject)
+                if (reader.TokenType == SJ.JsonTokenType.EndObject)
                     return efq;
 
-                if (reader.TokenType != JsonTokenType.PropertyName)
-                    throw new JsonException("Expected PropertyName token");
+                if (reader.TokenType != SJ.JsonTokenType.PropertyName)
+                    throw new SJ.JsonException("Expected PropertyName token");
 
                 var propName = reader.GetString();
                 reader.Read();
@@ -131,12 +132,12 @@ namespace JDege.EFQ
                 }
                 else if (propName.Equals(nameof(efq.AggregateList), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    if (reader.TokenType != JsonTokenType.StartArray)
-                        throw new JsonException("Expected StartArray token");
+                    if (reader.TokenType != SJ.JsonTokenType.StartArray)
+                        throw new SJ.JsonException("Expected StartArray token");
                     reader.Read();
 
                     var aggregateList = new List<EFQ>();
-                    while (reader.TokenType != JsonTokenType.EndArray)
+                    while (reader.TokenType != SJ.JsonTokenType.EndArray)
                     {
                         aggregateList.Add(ReadEfq(ref reader, typeToConvert, options));
                         reader.Read();
@@ -148,14 +149,14 @@ namespace JDege.EFQ
             return null;
         }
 
-        private object ConvertConstantValue(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        private object ConvertConstantValue(ref SJ.Utf8JsonReader reader, Type typeToConvert, SJ.JsonSerializerOptions options)
         {
             var s = reader.GetString();
 
             var convertConstantValueRE = new Regex("^(INT|DBL|DEC|DT|DTO|TSP|STR):(.*)", RegexOptions.IgnoreCase);
             var match = convertConstantValueRE.Match(s);
             if (!match.Success)
-                throw new JsonException($"{s} is not a valid constant value expression");
+                throw new SJ.JsonException($"{s} is not a valid constant value expression");
 
             var destType = match.Groups[1].Value;
             var expr = match.Groups[2].Value;
@@ -177,7 +178,7 @@ namespace JDege.EFQ
                 case "STR":
                     return expr;
                 default:
-                    throw new JsonException($"{destType} is not a valid constant value type");
+                    throw new SJ.JsonException($"{destType} is not a valid constant value type");
             }
         }
     }

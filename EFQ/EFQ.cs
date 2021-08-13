@@ -1,10 +1,14 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json.Serialization;
+
+using SJ = System.Text.Json.Serialization;
+using NJ = Newtonsoft.Json;
+
+// TODO: Add Newtonsoft JSON converters
 
 namespace JDege.EFQ
 {
-    [JsonConverter(typeof(EfqJsonConverter))]
+    [SJ.JsonConverter(typeof(EfqJsonConverter))]
+    [NJ.JsonConverter(typeof(EfqNewtonsoftJsonConverter))]
     public class EFQ
     {
         #region Member variables
@@ -27,7 +31,8 @@ namespace JDege.EFQ
             set { this._aggregateList = value; }
         }
 
-        [JsonConverter(typeof(EfqConstantJsonConverter))]
+        [SJ.JsonConverter(typeof(EfqConstantJsonConverter))]
+        [NJ.JsonConverter(typeof(EfqConstantNewtonsoftJsonConverter))]
         public class Constant
         {
             public Constant(object value)

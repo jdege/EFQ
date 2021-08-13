@@ -48,7 +48,6 @@ namespace JDege.EFQ.Web.Controllers
     }
 }
 
-// TODO: Add Newtonsoft JSON converters
 
 // TODO: Test in Windows
 

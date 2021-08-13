@@ -1,13 +1,14 @@
 using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+
+using SJ = System.Text.Json;
+using SJS = System.Text.Json.Serialization;
 
 namespace JDege.EFQ
 {
-    public class EfqConstantJsonConverter : JsonConverter<EFQ.Constant>
+    public class EfqConstantJsonConverter : SJS.JsonConverter<EFQ.Constant>
     {
-        public override void Write(Utf8JsonWriter writer, EFQ.Constant efqConstant, JsonSerializerOptions options)
+        public override void Write(SJ.Utf8JsonWriter writer, EFQ.Constant efqConstant, SJ.JsonSerializerOptions options)
         {
             writer.WriteStartObject();
 
@@ -41,20 +42,20 @@ namespace JDege.EFQ
             writer.WriteEndObject();
         }
 
-        public override EFQ.Constant Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override EFQ.Constant Read(ref SJ.Utf8JsonReader reader, Type typeToConvert, SJ.JsonSerializerOptions options)
         {
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new JsonException("Expected StartObject token");
+            if (reader.TokenType != SJ.JsonTokenType.StartObject)
+                throw new SJ.JsonException("Expected StartObject token");
 
             EFQ.Constant efqConstant = null;
 
             while (reader.Read())
             {
-                if (reader.TokenType == JsonTokenType.EndObject)
+                if (reader.TokenType == SJ.JsonTokenType.EndObject)
                     return efqConstant;
 
-                if (reader.TokenType != JsonTokenType.PropertyName)
-                    throw new JsonException("Expected PropertyName token");
+                if (reader.TokenType != SJ.JsonTokenType.PropertyName)
+                    throw new SJ.JsonException("Expected PropertyName token");
 
                 var propName = reader.GetString();
                 reader.Read();
@@ -67,7 +68,7 @@ namespace JDege.EFQ
                     var convertConstantValueRE = new Regex("^(INT|DBL|DEC|DT|DTO|TSP|STR):(.*)", RegexOptions.IgnoreCase);
                     var match = convertConstantValueRE.Match(s);
                     if (!match.Success)
-                        throw new JsonException($"{s} is not a valid constant value expression");
+                        throw new SJ.JsonException($"{s} is not a valid constant value expression");
 
                     var destType = match.Groups[1].Value;
                     var expr = match.Groups[2].Value;
@@ -96,7 +97,7 @@ namespace JDege.EFQ
                             efqConstant = new EFQ.Constant(expr);
                             break;
                         default:
-                            throw new JsonException($"{destType} is not a valid constant value type");
+                            throw new SJ.JsonException($"{destType} is not a valid constant value type");
                     }
 
                 }
