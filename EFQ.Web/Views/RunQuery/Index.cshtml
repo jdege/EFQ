@@ -101,7 +101,6 @@
 
         });
 
-        // TODO: Use lambda expressions in JavaScript
         $criteriaForm.keypress((e) =>
         {
             if (e.which === 13)
@@ -127,11 +126,11 @@
             {
                 title: "Customers",
                 data: "customers",
-                render: function (data, type, row)
+                render: (data, type, row) =>
                 {
                     var rVal = '';
 
-                    $.each(data, function (index, value)
+                    $.each(data, (index, value) =>
                     {
                         rVal += value.firstName;
                         rVal += ' '
@@ -166,7 +165,7 @@
 
     $("#InvoicesContainer").hide();
 
-    $("#Submit").click(function (event)
+    $("#Submit").click((event) =>
     {
         event.preventDefault();
 
@@ -174,7 +173,7 @@
 
         $criteriaForm
             .find("select")
-            .each(function (index, element)
+            .each((index, element) =>
             {
                 var $element = $(element);
                 var $selected = $element.find(':selected');
@@ -186,7 +185,7 @@
 
         $criteriaForm
             .find("input")
-            .each(function (index, element)
+            .each((index, element) =>
             {
                 var $element = $(element);
                 var name = $element.attr("name");
@@ -213,7 +212,7 @@
         if (result.success)
         {
             $select.empty().append("<option value=''></option>");
-            $.each(result.data, function (index, item)
+            $.each(result.data, (index, item) =>
             {
                 $select.append($("<option />").val(item.value || index).text(item.text).data('query', item.query));
             });
@@ -223,19 +222,19 @@
         }
     };
 
-    $(document).ready(function ()
+    $(document).ready(() =>
     {
         if (displayForm)
         {
             var $selects = $criteriaForm.find("select");
 
-            $selects.each(function (index, element)
+            $selects.each((index, element) =>
             {
                 var $element = $(element);
                 var key = $element.data("key");
                 var dropdownUrl = $element.data("dropdownUrl");
 
-                DropdownService.getDropdown(dropdownUrl, { includeQueries: true }, function (result)
+                DropdownService.getDropdown(dropdownUrl, { includeQueries: true }, (result) =>
                 {
                     fillSelect($element, result);
                 });
@@ -249,11 +248,11 @@
         }
     });
 
-    var populateTables = function (model, context)
+    var populateTables = (model, context) =>
     {
         if (model.Model === "TrackModel")
         {
-            TrackQueryService.storedQuery(model.StoredQueryId, context, function (result)
+            TrackQueryService.storedQuery(model.StoredQueryId, context, (result) =>
             {
                 if (result.success)
                 {
@@ -270,7 +269,7 @@
         }
         if (model.Model === "InvoiceModel")
         {
-            InvoiceQueryService.storedQuery(model.StoredQueryId, context, function (result)
+            InvoiceQueryService.storedQuery(model.StoredQueryId, context, (result) =>
             {
                 if (result.success)
                 {

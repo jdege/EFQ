@@ -111,11 +111,11 @@
             {
                 title: "Customers",
                 data: "customers",
-                render: function (data, type, row)
+                render: (data, type, row) =>
                 {
                     var rVal = '';
 
-                    $.each(data, function (index, value)
+                    $.each(data, (index, value) =>
                     {
                         rVal += value.firstName;
                         rVal += ' '
@@ -134,7 +134,7 @@
         if (result.success)
         {
             $select.empty().append("<option value=''></option>");
-            $.each(result.data, function (index, item)
+            $.each(result.data, (index, item) =>
             {
                 $select.append($("<option />").val(item.value || index).text(item.text).data('query', item.query));
             });
@@ -144,7 +144,7 @@
         }
     };
 
-    $("#Submit").click(function ()
+    $("#Submit").click(() =>
     {
         var andQueries = [EFQ.isTrue()];
 
@@ -169,7 +169,7 @@
 
         var query = EFQ.and(andQueries);
 
-        TrackQueryService.queryTracks(query, function (result)
+        TrackQueryService.queryTracks(query, (result) =>
         {
             if (result.success)
             {
@@ -185,19 +185,19 @@
         });
     });
 
-    $(document).ready(function ()
+    $(document).ready(() =>
     {
-        DropdownService.getArtists({ includeQueries: true }, function (result)
+        DropdownService.getArtists({ includeQueries: true }, (result) =>
         {
             fillSelect($artistSelect, result);
         });
 
-        DropdownService.getCustomers({ includeQueries: true }, function (result)
+        DropdownService.getCustomers({ includeQueries: true }, (result) =>
         {
             fillSelect($customerSelect, result);
         });
 
-        DropdownService.getMediaTypes({ includeQueries: true }, function (result)
+        DropdownService.getMediaTypes({ includeQueries: true }, (result) =>
         {
             fillSelect($mediaTypeSelect, result);
         });

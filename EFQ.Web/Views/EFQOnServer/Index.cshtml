@@ -97,11 +97,11 @@
             {
                 title: "Customers",
                 data: "customers",
-                render: function (data, type, row)
+                render: (data, type, row) =>
                 {
                     var rVal = '';
 
-                    $.each(data, function (index, value)
+                    $.each(data, (index, value) =>
                     {
                         rVal += value.firstName;
                         rVal += ' '
@@ -120,7 +120,7 @@
         if (result.success)
         {
             $select.empty().append("<option value=''></option>");
-            $.each(result.data, function (index, item)
+            $.each(result.data, (index, item) =>
             {
                 $select.append($("<option />").val(item.value || index).text(item.text));
             });
@@ -130,12 +130,12 @@
         }
     };
 
-    $("#Submit").click(function ()
+    $("#Submit").click(() =>
     {
         var artistId = $artistSelect.val();
         var customerId = $customerSelect.val();
 
-        TrackQueryService.getTracks(artistId, customerId, function (result)
+        TrackQueryService.getTracks(artistId, customerId, (result) =>
         {
             if (result.success)
             {
@@ -151,14 +151,14 @@
         });
     });
 
-    $(document).ready(function ()
+    $(document).ready(() =>
     {
-        DropdownService.getArtists({ includeQueries: false }, function (result)
+        DropdownService.getArtists({ includeQueries: false }, (result) =>
         {
             fillSelect($artistSelect, result);
         });
 
-        DropdownService.getCustomers({ includeQueries: false }, function (result)
+        DropdownService.getCustomers({ includeQueries: false }, (result) =>
         {
             fillSelect($customerSelect, result);
         });

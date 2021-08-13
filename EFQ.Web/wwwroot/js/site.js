@@ -11,11 +11,11 @@ DropdownService = {
         };
 
         $.ajax(url, settings)
-            .done(function (result, status, jqXHR)
+            .done((result, status, jqXHR) =>
             {
                 callback({ success: true, data: result });
             })
-            .fail(function (jqXHR, textStatus, errorThrown)
+            .fail((jqXHR, textStatus, errorThrown) =>
             {
                 callback({ success: false, error: errorThrown });
             });
@@ -33,11 +33,11 @@ DropdownService = {
         };
 
         $.ajax(url, settings)
-            .done(function (result, status, jqXHR)
+            .done((result, status, jqXHR) =>
             {
                 callback({ success: true, data: result });
             })
-            .fail(function (jqXHR, textStatus, errorThrown)
+            .fail((jqXHR, textStatus, errorThrown) =>
             {
                 callback({ success: false, error: errorThrown });
             });
@@ -55,11 +55,11 @@ DropdownService = {
         };
 
         $.ajax(url, settings)
-            .done(function (result, status, jqXHR)
+            .done((result, status, jqXHR) =>
             {
                 callback({ success: true, data: result });
             })
-            .fail(function (jqXHR, textStatus, errorThrown)
+            .fail((jqXHR, textStatus, errorThrown) =>
             {
                 callback({ success: false, error: errorThrown });
             });
@@ -77,11 +77,11 @@ DropdownService = {
         };
 
         $.ajax(url, settings)
-            .done(function (result, status, jqXHR)
+            .done((result, status, jqXHR) =>
             {
                 callback({ success: true, data: result });
             })
-            .fail(function (jqXHR, textStatus, errorThrown)
+            .fail((jqXHR, textStatus, errorThrown) =>
             {
                 callback({ success: false, error: errorThrown });
             });
@@ -101,11 +101,11 @@ TrackQueryService = {
         };
 
         $.ajax(url, settings)
-            .done(function (result, status, jqXHR)
+            .done((result, status, jqXHR) =>
             {
                 callback({ success: true, data: result });
             })
-            .fail(function (jqXHR, textStatus, errorThrown)
+            .fail((jqXHR, textStatus, errorThrown) =>
             {
                 callback({ success: false, error: errorThrown });
             });
@@ -123,11 +123,11 @@ TrackQueryService = {
         };
 
         $.ajax(url, settings)
-            .done(function (result, status, jqXHR)
+            .done((result, status, jqXHR) =>
             {
                 callback({ success: true, data: result });
             })
-            .fail(function (jqXHR, textStatus, errorThrown)
+            .fail((jqXHR, textStatus, errorThrown) =>
             {
                 callback({ success: false, error: errorThrown });
             });
@@ -145,11 +145,11 @@ TrackQueryService = {
         };
 
         $.ajax(url, settings)
-            .done(function (result, status, jqXHR)
+            .done((result, status, jqXHR) =>
             {
                 callback({ success: true, data: result });
             })
-            .fail(function (jqXHR, textStatus, errorThrown)
+            .fail((jqXHR, textStatus, errorThrown) =>
             {
                 callback({ success: false, error: errorThrown });
             });
@@ -170,11 +170,11 @@ InvoiceQueryService = {
         };
 
         $.ajax(url, settings)
-            .done(function (result, status, jqXHR)
+            .done((result, status, jqXHR) =>
             {
                 callback({ success: true, data: result });
             })
-            .fail(function (jqXHR, textStatus, errorThrown)
+            .fail((jqXHR, textStatus, errorThrown) =>
             {
                 callback({ success: false, error: errorThrown });
             });
