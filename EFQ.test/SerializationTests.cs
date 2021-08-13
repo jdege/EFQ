@@ -64,24 +64,53 @@ namespace JDege.EFQ.test
         {
             foreach (var efqConstant in _testEfqConstants)
             {
-                var s = SJ.JsonSerializer.Serialize(efqConstant);
-                var d = SJ.JsonSerializer.Deserialize<EFQ.Constant>(s);
-                d.ShouldBeEquivalentTo(efqConstant);
+                var systemJsonSerialized = SJ.JsonSerializer.Serialize(efqConstant);
+                var newtonsoftJsonSerialized = NJ.JsonConvert.SerializeObject(efqConstant);
+
+                newtonsoftJsonSerialized.ShouldBe(systemJsonSerialized);
+
+                var systemJsonDeserialized = SJ.JsonSerializer.Deserialize<EFQ.Constant>(systemJsonSerialized);
+                systemJsonDeserialized.ShouldBeEquivalentTo(efqConstant);
+
+                var newtonsoftJsonDeserialized = NJ.JsonConvert.DeserializeObject<EFQ.Constant>(newtonsoftJsonSerialized);
+                newtonsoftJsonDeserialized.ShouldBeEquivalentTo(efqConstant);
+
+                newtonsoftJsonDeserialized.ShouldBeEquivalentTo(systemJsonDeserialized);
             }
         }
 
         [Fact]
         public void ConstantValueDictionaryDeserialize()
         {
+            // it would be nice if ShouldBeEquivalentTo() worked with dictionaries, but...
+            // https://github.com/shouldly/shouldly/issues/767
+            Action<Dictionary<string, EFQ.Constant>, Dictionary<string, EFQ.Constant>> DictsShouldMatch = (dict1, dict2) =>
+            {
+                dict1.Keys.ShouldBeEquivalentTo(dict2.Keys);
+                foreach (var key in dict1.Keys)
+                {
+                    dict2[key].ShouldBeEquivalentTo(dict1[key]);
+                }
+            };
+
             var dict = new Dictionary<string, EFQ.Constant>
             {
                 {"first", new EFQ.Constant("string")},
                 {"second", new EFQ.Constant(10)},
             };
 
-            var s = SJ.JsonSerializer.Serialize(dict);
-            var d = SJ.JsonSerializer.Deserialize<Dictionary<string, EFQ.Constant>>(s);
-            d.ShouldBeEquivalentTo(d);
+            var systemJsonSerialized = SJ.JsonSerializer.Serialize(dict);
+            var newtonsoftJsonSerialized = NJ.JsonConvert.SerializeObject(dict);
+
+            newtonsoftJsonSerialized.ShouldBe(systemJsonSerialized);
+
+            var systemJsonDeserialized = SJ.JsonSerializer.Deserialize<Dictionary<string, EFQ.Constant>>(systemJsonSerialized);
+            DictsShouldMatch(systemJsonDeserialized, dict);
+
+            var newtonsoftJsonDeserialized = NJ.JsonConvert.DeserializeObject<Dictionary<string, EFQ.Constant>>(newtonsoftJsonSerialized);
+            DictsShouldMatch(newtonsoftJsonDeserialized, dict);
+
+            DictsShouldMatch(newtonsoftJsonDeserialized, systemJsonDeserialized);
         }
     }
 }
