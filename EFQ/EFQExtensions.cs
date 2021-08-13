@@ -308,10 +308,36 @@ namespace JDege.EFQ
                         var field = match.Groups[2].Value;
                         switch (field.ToUpperInvariant())
                         {
-                            // TODO: Implement other date options
                             case "DATE":
-                                var val = DateTime.Now.Date;
-                                value = val;
+                                value = DateTime.Now.Date;
+                                break;
+                            case "DATETIME":
+                                value = DateTime.Now;
+                                break;
+                            case "DATEOFFSET":
+                                value = DateTimeOffset.Now.Date;
+                                break;
+                            case "DATETIMEOFFSET":
+                                value = DateTimeOffset.Now;
+                                break;
+                        }
+                    }
+                    else if (String.Equals(source, "UTCNOW", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        var field = match.Groups[2].Value;
+                        switch (field.ToUpperInvariant())
+                        {
+                            case "DATE":
+                                value = DateTime.UtcNow.Date;
+                                break;
+                            case "DATETIME":
+                                value = DateTime.UtcNow;
+                                break;
+                            case "DATEOFFSET":
+                                value = DateTimeOffset.UtcNow.Date;
+                                break;
+                            case "DATETIMEOFFSET":
+                                value = DateTimeOffset.UtcNow;
                                 break;
                         }
                     }

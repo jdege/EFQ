@@ -27,7 +27,7 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQBuilder.And(new[]
+            var efq = JDege.EFQ.EFQBuilder.And(new[]
                 {
                     JDege.EFQ.EFQBuilder.Equal("itemId", "Item 1"),
                     JDege.EFQ.EFQBuilder.Equal("name", "An item"),
@@ -35,7 +35,7 @@ namespace JDege.EFQ.dbtest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>()).ToListAsync();
+                var results = await dbContext.Items.Where(efq.ConstructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe("An item");
             }
@@ -51,7 +51,7 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQBuilder.And(new[]
+            var efq = JDege.EFQ.EFQBuilder.And(new[]
                 {
                     JDege.EFQ.EFQBuilder.Equal("itemId", "Item 1"),
                     JDege.EFQ.EFQBuilder.IsTrue(),
@@ -59,7 +59,7 @@ namespace JDege.EFQ.dbtest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>()).ToListAsync();
+                var results = await dbContext.Items.Where(efq.ConstructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe("An item");
             }
@@ -75,14 +75,14 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQBuilder.And(
+            var efq = JDege.EFQ.EFQBuilder.And(
                 JDege.EFQ.EFQBuilder.Equal("itemId", "Item 1"),
                 JDege.EFQ.EFQBuilder.IsTrue()
             );
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>()).ToListAsync();
+                var results = await dbContext.Items.Where(efq.ConstructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe("An item");
             }
@@ -98,7 +98,7 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQBuilder.And(new[]
+            var efq = JDege.EFQ.EFQBuilder.And(new[]
                 {
                     JDege.EFQ.EFQBuilder.Equal("itemId", "Item 1"),
                     JDege.EFQ.EFQBuilder.IsFalse(),
@@ -106,7 +106,7 @@ namespace JDege.EFQ.dbtest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>()).ToListAsync();
+                var results = await dbContext.Items.Where(efq.ConstructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(0);
             }
         }
@@ -121,7 +121,7 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQBuilder.Or(new[]
+            var efq = JDege.EFQ.EFQBuilder.Or(new[]
                 {
                     JDege.EFQ.EFQBuilder.Equal("itemId", "Item 1"),
                     JDege.EFQ.EFQBuilder.Equal("itemId", "Item 3"),
@@ -129,7 +129,7 @@ namespace JDege.EFQ.dbtest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>())
+                var results = await dbContext.Items.Where(efq.ConstructPredicate<Item>())
                     .OrderBy(i => i.itemId).ToListAsync();
                 results.Count.ShouldBe(2);
                 results[0].name.ShouldBe("An item");
@@ -147,7 +147,7 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQBuilder.Nand(new[]
+            var efq = JDege.EFQ.EFQBuilder.Nand(new[]
                 {
                     JDege.EFQ.EFQBuilder.Equal("itemId", "Item 1"),
                     JDege.EFQ.EFQBuilder.Equal("name", "An item"),
@@ -155,7 +155,7 @@ namespace JDege.EFQ.dbtest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>())
+                var results = await dbContext.Items.Where(efq.ConstructPredicate<Item>())
                     .OrderBy(i => i.itemId).ToListAsync();
                 results.Count.ShouldBe(2);
                 results[0].name.ShouldBe("Another item");
@@ -173,7 +173,7 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQBuilder.Nor(new[]
+            var efq = JDege.EFQ.EFQBuilder.Nor(new[]
                 {
                     JDege.EFQ.EFQBuilder.Equal("itemId", "Item 1"),
                     JDege.EFQ.EFQBuilder.Equal("itemId", "Item 3"),
@@ -181,7 +181,7 @@ namespace JDege.EFQ.dbtest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>()).ToListAsync();
+                var results = await dbContext.Items.Where(efq.ConstructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe("Another item");
             }
@@ -197,11 +197,11 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = JDege.EFQ.EFQBuilder.Not(JDege.EFQ.EFQBuilder.Equal("itemId", "Item 1"));
+            var efq = JDege.EFQ.EFQBuilder.Not(JDege.EFQ.EFQBuilder.Equal("itemId", "Item 1"));
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>())
+                var results = await dbContext.Items.Where(efq.ConstructPredicate<Item>())
                     .OrderBy(i => i.itemId).ToListAsync();
                 results.Count.ShouldBe(2);
                 results[0].name.ShouldBe("Another item");

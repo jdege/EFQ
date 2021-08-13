@@ -31,7 +31,7 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "Item 3", name = "A third item"},
             });
 
-            var sc = EFQBuilder.Equal("itemId", "{{Context:searchItemId}}");
+            var efq = EFQBuilder.Equal("itemId", "{{Context:searchItemId}}");
 
             var context = new Dictionary<string, EFQ.Constant> {
                 {"searchItemId", new EFQ.Constant(searchItemId)}
@@ -39,7 +39,7 @@ namespace JDege.EFQ.dbtest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var predicate = sc.ConstructPredicate<Item>(context);
+                var predicate = efq.ConstructPredicate<Item>(context);
                 var results = await dbContext.Items.Where(predicate).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe(expectedName);
@@ -58,7 +58,7 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "Item 3", amount = 3},
             });
 
-            var sc = EFQBuilder.Equal("amount", "{{Context:searchAmount}}");
+            var efq = EFQBuilder.Equal("amount", "{{Context:searchAmount}}");
 
             var context = new Dictionary<string, EFQ.Constant> {
                 {"searchAmount", new EFQ.Constant(searchAmount)}
@@ -66,7 +66,7 @@ namespace JDege.EFQ.dbtest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var predicate = sc.ConstructPredicate<Item>(context);
+                var predicate = efq.ConstructPredicate<Item>(context);
                 var results = await dbContext.Items.Where(predicate).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe(expectedItemId);
@@ -85,7 +85,7 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "Item 3", when = DateTime.Parse("2020-03-11")},
             });
 
-            var sc = EFQBuilder.Equal("when", "{{Context:searchWhen}}");
+            var efq = EFQBuilder.Equal("when", "{{Context:searchWhen}}");
 
             var context = new Dictionary<string, EFQ.Constant> {
                 {"searchWhen", new EFQ.Constant(searchWhen)}
@@ -93,7 +93,7 @@ namespace JDege.EFQ.dbtest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var predicate = sc.ConstructPredicate<Item>(context);
+                var predicate = efq.ConstructPredicate<Item>(context);
                 var results = await dbContext.Items.Where(predicate).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe(expectedItemId);
@@ -114,7 +114,7 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "Item 3", when = mockNow .AddDays(-3)},
             });
 
-            var sc = EFQBuilder.Between("when", "{{Context:fromWhen}}", "{{Context:toWhen}}");
+            var efq = EFQBuilder.Between("when", "{{Context:fromWhen}}", "{{Context:toWhen}}");
 
             var context = new Dictionary<string, EFQ.Constant> {
                 {"fromWhen", new EFQ.Constant(fromWhen)},
@@ -123,7 +123,7 @@ namespace JDege.EFQ.dbtest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var predicate = sc.ConstructPredicate<Item>(context);
+                var predicate = efq.ConstructPredicate<Item>(context);
                 var results = await dbContext.Items.Where(predicate).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe(expectedItemId);
@@ -139,12 +139,12 @@ namespace JDege.EFQ.dbtest
             var expectedItemId = "Item 2";
             Seed(items: new[]
             {
-                new Item{itemId = "Item 1", when = mockNow .AddDays(-7)},
-                new Item{itemId = expectedItemId, when = mockNow .AddDays(-5)},
-                new Item{itemId = "Item 3", when = mockNow .AddDays(-3)},
+                new Item{itemId = "Item 1", when = mockNow.AddDays(-7)},
+                new Item{itemId = expectedItemId, when = mockNow.AddDays(-5)},
+                new Item{itemId = "Item 3", when = mockNow.AddDays(-3)},
             });
 
-            var sc = EFQBuilder.Between("when",
+            var efq = EFQBuilder.Between("when",
                 "{{Context:fromWhen}}",
                 EFQBuilder.Add("{{Context:fromWhen}}", "{{Context:addInterval}}")
                 );
@@ -156,7 +156,7 @@ namespace JDege.EFQ.dbtest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var predicate = sc.ConstructPredicate<Item>(context);
+                var predicate = efq.ConstructPredicate<Item>(context);
                 var results = await dbContext.Items.Where(predicate).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe(expectedItemId);
@@ -174,11 +174,11 @@ namespace JDege.EFQ.dbtest
                 new Item{itemId = "Item 3", when = DateTime.Parse("2020-03-11")},
             });
 
-            var sc = EFQBuilder.Equal("when", "{{NOW:Date}}");
+            var efq = EFQBuilder.Equal("when", "{{NOW:Date}}");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var predicate = sc.ConstructPredicate<Item>();
+                var predicate = efq.ConstructPredicate<Item>();
                 var results = await dbContext.Items.Where(predicate).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe(expectedItemId);
@@ -186,29 +186,178 @@ namespace JDege.EFQ.dbtest
         }
 
         [Fact]
-        public async Task testNowDateRangeAsync()
+        public async Task testNowDateTimeAsync()
         {
             var expectedItemId = "Item 2";
             Seed(items: new[]
             {
-                new Item{itemId = "Item 1", when = DateTime.Parse("2020-07-14")},
+                new Item{itemId = "Item 1", when = DateTime.Parse("2020-07-14 13:14:15.678")},
                 new Item{itemId = expectedItemId, when = DateTime.Now},
-                new Item{itemId = "Item 3", when = DateTime.Parse("2020-03-11")},
+                new Item{itemId = "Item 3", when = DateTime.Parse("2020-03-11 13:14:15.678")},
             });
 
             // exact match of datetime will almost always fail
-            var sc = EFQBuilder.Between("when",
-                "{{NOW:Date}}",
-                EFQBuilder.Add("{{NOW:Date}}", TimeSpan.FromDays(1))
+            var efq = EFQBuilder.Between("when",
+                EFQBuilder.Add("{{NOW:DateTime}}", TimeSpan.FromSeconds(-1)),
+                EFQBuilder.Add("{{NOW:DateTime}}", TimeSpan.FromSeconds(1))
             );
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var predicate = sc.ConstructPredicate<Item>();
+                var predicate = efq.ConstructPredicate<Item>();
                 var results = await dbContext.Items.Where(predicate).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe(expectedItemId);
             }
         }
+
+        // I had hoped I'd be able to test DateTimeOffset, but SqlLite doesn't support it.
+        // [Fact]
+        // public async Task testNowDateOffsetAsync()
+        // {
+        //     var expectedItemId = "Item 2";
+        //     Seed(items: new[]
+        //     {
+        //         new Item{itemId = "Item 1", whenOffset = DateTimeOffset.Parse("2020-07-14")},
+        //         new Item{itemId = expectedItemId, whenOffset = DateTimeOffset.Now.Date},
+        //         new Item{itemId = "Item 3", whenOffset = DateTimeOffset.Parse("2020-03-11")},
+        //     });
+
+        //     var efq = EFQBuilder.Equal("whenOffset", "{{NOW:DateOffset}}");
+
+        //     using (var dbContext = new TestDbContext(ContextOptions))
+        //     {
+        //         var predicate = efq.ConstructPredicate<Item>();
+        //         var results = await dbContext.Items.Where(predicate).ToListAsync();
+        //         results.Count.ShouldBe(1);
+        //         results[0].itemId.ShouldBe(expectedItemId);
+        //     }
+        // }
+
+        // I had hoped I'd be able to test DateTimeOffset, but SqlLite doesn't support it.
+        // [Fact]
+        // public async Task testNowDateTimeOffsetAsync()
+        // {
+        //     var expectedItemId = "Item 2";
+        //     Seed(items: new[]
+        //     {
+        //         new Item{itemId = "Item 1", whenOffset = DateTimeOffset.Parse("2020-07-14 13:14:15.678")},
+        //         new Item{itemId = expectedItemId, whenOffset = DateTimeOffset.Now},
+        //         new Item{itemId = "Item 3", whenOffset = DateTimeOffset.Parse("2020-03-11 13:14:15.678")},
+        //     });
+
+        //     // exact match of datetime will almost always fail
+        //     var efq = EFQBuilder.Between("whenOffset",
+        //         EFQBuilder.Add("{{NOW:DateTimeOffset}}", TimeSpan.FromSeconds(-1)),
+        //         EFQBuilder.Add("{{NOW:DateTimeOffset}}", TimeSpan.FromSeconds(1))
+        //     );
+
+        //     using (var dbContext = new TestDbContext(ContextOptions))
+        //     {
+        //         var predicate = efq.ConstructPredicate<Item>();
+        //         var results = await dbContext.Items.Where(predicate).ToListAsync();
+        //         results.Count.ShouldBe(1);
+        //         results[0].itemId.ShouldBe(expectedItemId);
+        //     }
+        // }
+
+        [Fact]
+        public async Task testUtcNowDateAsync()
+        {
+            var expectedItemId = "Item 2";
+            Seed(items: new[]
+            {
+                new Item{itemId = "Item 1", when = DateTime.Parse("2020-07-14")},
+                new Item{itemId = expectedItemId, when = DateTime.UtcNow.Date},
+                new Item{itemId = "Item 3", when = DateTime.Parse("2020-03-11")},
+            });
+
+            var efq = EFQBuilder.Equal("when", "{{UTCNOW:Date}}");
+
+            using (var dbContext = new TestDbContext(ContextOptions))
+            {
+                var predicate = efq.ConstructPredicate<Item>();
+                var results = await dbContext.Items.Where(predicate).ToListAsync();
+                results.Count.ShouldBe(1);
+                results[0].itemId.ShouldBe(expectedItemId);
+            }
+        }
+
+        [Fact]
+        public async Task testUtcNowDateTimeAsync()
+        {
+            var expectedItemId = "Item 2";
+            Seed(items: new[]
+            {
+                new Item{itemId = "Item 1", when = DateTime.Parse("2020-07-14 13:14:15.678")},
+                new Item{itemId = expectedItemId, when = DateTime.UtcNow},
+                new Item{itemId = "Item 3", when = DateTime.Parse("2020-03-11 13:14:15.678")},
+            });
+
+            // exact match of datetime will almost always fail
+            var efq = EFQBuilder.Between("when",
+                EFQBuilder.Add("{{UTCNOW:DateTime}}", TimeSpan.FromSeconds(-1)),
+                EFQBuilder.Add("{{UTCNOW:DateTime}}", TimeSpan.FromSeconds(1))
+            );
+
+            using (var dbContext = new TestDbContext(ContextOptions))
+            {
+                var predicate = efq.ConstructPredicate<Item>();
+                var results = await dbContext.Items.Where(predicate).ToListAsync();
+                results.Count.ShouldBe(1);
+                results[0].itemId.ShouldBe(expectedItemId);
+            }
+        }
+
+        // I had hoped I'd be able to test DateTimeOffset, but SqlLite doesn't support it.
+        // [Fact]
+        // public async Task testUtcNowDateOffsetAsync()
+        // {
+        //     var expectedItemId = "Item 2";
+        //     Seed(items: new[]
+        //     {
+        //         new Item{itemId = "Item 1", whenOffset = DateTimeOffset.Parse("2020-07-14")},
+        //         new Item{itemId = expectedItemId, whenOffset = DateTimeOffset.UtcNow.Date},
+        //         new Item{itemId = "Item 3", whenOffset = DateTimeOffset.Parse("2020-03-11")},
+        //     });
+
+        //     var efq = EFQBuilder.Equal("whenOffset", "{{UTCNOW:DateOffset}}");
+
+        //     using (var dbContext = new TestDbContext(ContextOptions))
+        //     {
+        //         var predicate = efq.ConstructPredicate<Item>();
+        //         var results = await dbContext.Items.Where(predicate).ToListAsync();
+        //         results.Count.ShouldBe(1);
+        //         results[0].itemId.ShouldBe(expectedItemId);
+        //     }
+        // }
+
+        // I had hoped I'd be able to test DateTimeOffset, but SqlLite doesn't support it.
+        // [Fact]
+        // public async Task testUtcNowDateTimeOffsetAsync()
+        // {
+        //     var expectedItemId = "Item 2";
+        //     Seed(items: new[]
+        //     {
+        //         new Item{itemId = "Item 1", whenOffset = DateTimeOffset.Parse("2020-07-14 13:14:15.678")},
+        //         new Item{itemId = expectedItemId, whenOffset = DateTimeOffset.UtcNow},
+        //         new Item{itemId = "Item 3", whenOffset = DateTimeOffset.Parse("2020-03-11 13:14:15.678")},
+        //     });
+
+        //     // exact match of datetime will almost always fail
+        //     var efq = EFQBuilder.Between("whenOffset",
+        //         EFQBuilder.Add("{{UTCNOW:DateTimeOffset}}", TimeSpan.FromSeconds(-1)),
+        //         EFQBuilder.Add("{{UTCNOW:DateTimeOffset}}", TimeSpan.FromSeconds(1))
+        //     );
+
+        //     using (var dbContext = new TestDbContext(ContextOptions))
+        //     {
+        //         var predicate = efq.ConstructPredicate<Item>();
+        //         var results = await dbContext.Items.Where(predicate).ToListAsync();
+        //         results.Count.ShouldBe(1);
+        //         results[0].itemId.ShouldBe(expectedItemId);
+        //     }
+        // }
     }
 }
+

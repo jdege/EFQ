@@ -33,11 +33,11 @@ namespace JDege.EFQ.dbtest
                     new Item {itemId = "Item 3", name = "A third item", parentId = "Parent 3"},
                 });
 
-            var sc = JDege.EFQ.EFQBuilder.Equal("parent.name", "A parent");
+            var efq = JDege.EFQ.EFQBuilder.Equal("parent.name", "A parent");
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = dbContext.Items.Where(sc.ConstructPredicate<Item>()).ToList();
+                var results = dbContext.Items.Where(efq.ConstructPredicate<Item>()).ToList();
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe("An item");
             }
@@ -59,11 +59,11 @@ namespace JDege.EFQ.dbtest
                     new Child {childId = "Child 3", name = "A third child", itemId = "Item 3"},
                 });
 
-            var sc = JDege.EFQ.EFQBuilder.Any("Children", JDege.EFQ.EFQBuilder.Equal("name", "A child"));
+            var efq = JDege.EFQ.EFQBuilder.Any("Children", JDege.EFQ.EFQBuilder.Equal("name", "A child"));
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = dbContext.Items.Where(sc.ConstructPredicate<Item>()).ToList();
+                var results = dbContext.Items.Where(efq.ConstructPredicate<Item>()).ToList();
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe("An item");
             }

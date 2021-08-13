@@ -33,20 +33,20 @@ namespace JDege.EFQ.dbtest
                 new Item {itemId = "Item 3", when = date3},
             });
 
-            var sc = JDege.EFQ.EFQBuilder.GreaterThan("when", date2);
+            var efq = JDege.EFQ.EFQBuilder.GreaterThan("when", date2);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>()).ToListAsync();
+                var results = await dbContext.Items.Where(efq.ConstructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe("Item 3");
             }
 
-            sc = JDege.EFQ.EFQBuilder.GreaterThanOrEqual("when", date2);
+            efq = JDege.EFQ.EFQBuilder.GreaterThanOrEqual("when", date2);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>())
+                var results = await dbContext.Items.Where(efq.ConstructPredicate<Item>())
                     .OrderBy(i => i.itemId).ToListAsync();
                 results.Count.ShouldBe(2);
                 results[0].itemId.ShouldBe("Item 2");
@@ -65,20 +65,20 @@ namespace JDege.EFQ.dbtest
                 new Item {itemId = "Item 3", amount = 12},
             });
 
-            var sc = JDege.EFQ.EFQBuilder.GreaterThan("amount", 11);
+            var efq = JDege.EFQ.EFQBuilder.GreaterThan("amount", 11);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>()).ToListAsync();
+                var results = await dbContext.Items.Where(efq.ConstructPredicate<Item>()).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe("Item 3");
             }
 
-            sc = JDege.EFQ.EFQBuilder.GreaterThanOrEqual("amount", 11);
+            efq = JDege.EFQ.EFQBuilder.GreaterThanOrEqual("amount", 11);
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var results = await dbContext.Items.Where(sc.ConstructPredicate<Item>())
+                var results = await dbContext.Items.Where(efq.ConstructPredicate<Item>())
                     .OrderBy(i => i.itemId).ToListAsync();
                 results.Count.ShouldBe(2);
                 results[0].itemId.ShouldBe("Item 2");
