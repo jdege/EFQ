@@ -42,10 +42,10 @@ namespace JDege.EFQ.test
                 var sd = SJ.JsonSerializer.Deserialize<EFQ>(sj);
                 sd.ShouldBeEquivalentTo(efq);
 
-                // var nd = NJ.JsonConvert.DeserializeObject<EFQ>(nj);
-                // nd.ShouldBeEquivalentTo(efq);
+                var nd = NJ.JsonConvert.DeserializeObject<EFQ>(nj);
+                nd.ShouldBeEquivalentTo(efq);
 
-                // nd.ShouldBeEquivalentTo(sd);
+                nd.ShouldBeEquivalentTo(sd);
             }
         }
 
