@@ -1,6 +1,6 @@
 using System.Reflection;
-using EFQ;
-using EFQ.Web.DbContexts;
+using JDege.EFQ;
+using JDege.EFQ.Web.DbContexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

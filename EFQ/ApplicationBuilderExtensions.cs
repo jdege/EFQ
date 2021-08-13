@@ -2,7 +2,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.FileProviders;
 
-namespace EFQ
+namespace JDege.EFQ
 {
     public static class ApplicationBuilderExtensions
     {

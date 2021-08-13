@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using EFQ.Web.Entities;
+using JDege.EFQ.Web.Entities;
 
 #nullable disable
 
-namespace EFQ.Web.DbContexts
+namespace JDege.EFQ.Web.DbContexts
 {
     public partial class ChinookContext : DbContext
     {

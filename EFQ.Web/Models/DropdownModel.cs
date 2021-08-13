@@ -1,5 +1,5 @@
 using AutoMapper;
-using EFQ.Web.Entities;
+using JDege.EFQ.Web.Entities;
 
 namespace JDege.EFQ.Web.Models
 {

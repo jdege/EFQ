@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFQ.Web.Entities
+namespace JDege.EFQ.Web.Entities
 {
     internal class InvoiceLineConfiguration : IEntityTypeConfiguration<InvoiceLine>
     {

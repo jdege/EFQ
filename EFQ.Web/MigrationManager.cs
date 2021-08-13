@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using EFQ.Web.DbContexts;
+using JDege.EFQ.Web.DbContexts;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

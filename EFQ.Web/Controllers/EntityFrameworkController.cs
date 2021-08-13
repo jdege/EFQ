@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using EFQ.Web.DbContexts;
+using JDege.EFQ.Web.DbContexts;
 using JDege.EFQ.Web.Extensions;
 using JDege.EFQ.Web.Models;
 using Microsoft.AspNetCore.Hosting;

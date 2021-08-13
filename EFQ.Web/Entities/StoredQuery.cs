@@ -1,4 +1,4 @@
-namespace EFQ.Web.Entities
+namespace JDege.EFQ.Web.Entities
 {
     public partial class StoredQuery
     {
