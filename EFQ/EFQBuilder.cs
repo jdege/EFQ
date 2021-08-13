@@ -194,7 +194,6 @@ namespace JDege.EFQ
             };
         }
 
-        // #TODO: Ensure that having separate methods for EFQ[] and IEnumerable<EFQ> are both necessary
         /// <summary>
         /// returns a EFQuery that is true if all of the efQueries evaluate false
         /// </summary>

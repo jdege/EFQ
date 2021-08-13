@@ -8,7 +8,6 @@ namespace JDege.EFQ.Web.Controllers
 {
     public static class ControllerExtension
     {
-        // TODO: Consider whether loading docs from external files is really necessary
         public static async Task<string> GetContentsAsync(this Controller controllers,
             IWebHostEnvironment _webHostEnvironment, string path, CancellationToken cancellationToken)
         {
