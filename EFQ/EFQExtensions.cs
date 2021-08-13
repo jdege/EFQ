@@ -156,8 +156,7 @@ namespace JDege.EFQ
             var collectionType = member.Type;
             var memberType = collectionType.GenericTypeArguments[0];
 
-            // #TODO: Use nameof()?
-            var constructPredicateMethod = typeof(EFQExtensions).GetMethod("ConstructPredicate");
+            var constructPredicateMethod = typeof(EFQExtensions).GetMethod(nameof(EFQExtensions.ConstructPredicate));
             var constructPredicateMethodGeneric = constructPredicateMethod.MakeGenericMethod(memberType);
             var innerPredicate = (Expression)constructPredicateMethodGeneric.Invoke(null, new object[] { efq.InnerCriteria, context });
 
@@ -198,7 +197,7 @@ namespace JDege.EFQ
                         operation == ExpressionType.LessThanOrEqual ||
                         operation == ExpressionType.LessThan)
                     {
-                        MethodInfo method = value.Type.GetMethod("CompareTo", new[] { typeof(string) });
+                        MethodInfo method = value.Type.GetMethod(nameof(String.CompareTo), new[] { typeof(string) });
                         var zero = Expression.Constant(0);
 
                         var result = Expression.Call(member, method, converted);
@@ -240,14 +239,14 @@ namespace JDege.EFQ
             return Expression.Constant(value, value.GetType());
         }
 
-        private static object executeAddExpression<T>(EFQ sc, Dictionary<string, EFQ.Constant> context)
+        private static object executeAddExpression<T>(EFQ efq, Dictionary<string, EFQ.Constant> context)
         {
             object result = null;
 
-            foreach (var arg in sc.AggregateList)
+            foreach (var arg in efq.AggregateList)
             {
                 if (!arg.IsConstant())
-                    throw new ArgumentException($"{sc} must be constant");
+                    throw new ArgumentException($"{efq} must be constant");
 
                 if (result == null)
                 {
@@ -257,21 +256,9 @@ namespace JDege.EFQ
 
                 var value = getConstantValue(arg.ConstantValue, context);
 
-                // TODO: Make sure timespans parse correctly
-                // // System.Text.Json doesn't support TimeSpans, yet
-                // // Until we figure out how to make Json.NET deserialize into TimeSpan objects ...
-                // var s = value as string;
-                // if (s != null)
-                // {
-                //     TimeSpan span;
-                //     if (TimeSpan.TryParse(s, out span))
-                //         value = span;
-                // }
-
                 var leftType = result.GetType();
                 var rightType = value.GetType();
 
-                // #TODO: Ensure Add() works
                 var methodInfo = leftType.GetMethod("Add", new[] { rightType });
 
                 if (methodInfo == null)
@@ -497,9 +484,9 @@ namespace JDege.EFQ
         private static readonly Dictionary<EFQType, MethodInfo> methodMap =
             new Dictionary<EFQType, MethodInfo>
             {
-                { EFQType.Contains, typeof(string).GetMethod("Contains", new[] { typeof(string) }) },
-                { EFQType.StartsWith, typeof(string).GetMethod("StartsWith", new[] { typeof(string) }) },
-                { EFQType.EndsWith, typeof(string).GetMethod("EndsWith", new[] { typeof(string) }) },
+                { EFQType.Contains, typeof(string).GetMethod(nameof(String.Contains), new[] { typeof(string) }) },
+                { EFQType.StartsWith, typeof(string).GetMethod(nameof(String.StartsWith), new[] { typeof(string) }) },
+                { EFQType.EndsWith, typeof(string).GetMethod(nameof(String.EndsWith), new[] { typeof(string) }) },
             };
         #endregion
     }
