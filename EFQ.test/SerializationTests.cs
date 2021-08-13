@@ -35,17 +35,17 @@ namespace JDege.EFQ.test
         {
             foreach (var efq in _testEfqs)
             {
-                var sj = SJ.JsonSerializer.Serialize(efq);
-                var nj = NJ.JsonConvert.SerializeObject(efq);
-                nj.ShouldBe(sj);
+                var systemJsonSerialized = SJ.JsonSerializer.Serialize(efq);
+                var newtonsoftJsonSerialized = NJ.JsonConvert.SerializeObject(efq);
+                newtonsoftJsonSerialized.ShouldBe(systemJsonSerialized);
 
-                var sd = SJ.JsonSerializer.Deserialize<EFQ>(sj);
-                sd.ShouldBeEquivalentTo(efq);
+                var systemJsonDeserialized = SJ.JsonSerializer.Deserialize<EFQ>(systemJsonSerialized);
+                systemJsonDeserialized.ShouldBeEquivalentTo(efq);
 
-                var nd = NJ.JsonConvert.DeserializeObject<EFQ>(nj);
-                nd.ShouldBeEquivalentTo(efq);
+                var newtonsoftJsonDeserialized = NJ.JsonConvert.DeserializeObject<EFQ>(newtonsoftJsonSerialized);
+                newtonsoftJsonDeserialized.ShouldBeEquivalentTo(efq);
 
-                nd.ShouldBeEquivalentTo(sd);
+                newtonsoftJsonDeserialized.ShouldBeEquivalentTo(systemJsonDeserialized);
             }
         }
 
