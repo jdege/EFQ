@@ -94,7 +94,6 @@ namespace JDege.EFQ.Web.ApiControllers
             }
         }
 
-
         [HttpPost]
         [Route("StoredQuery/{id}")]
         public async Task<ActionResult<IEnumerable<TrackModel>>> StoredQueryAsync([FromRoute] int id,

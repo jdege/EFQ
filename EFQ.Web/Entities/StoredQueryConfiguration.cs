@@ -189,6 +189,17 @@ namespace JDege.EFQ.Web.Entities
                     Description = "This query searches for all Tracks that have a Composer, an Album.Title, or an Artist.Name that contain the search string provided by the user.",
                     StoredQueryJson = "{\"EFQType\":\"Or\",\"AggregateList\":[{\"EFQType\":\"Contains\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{Context:match}}\"}},{\"EFQType\":\"Contains\",\"FieldName\":\"Album.Title\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{Context:match}}\"}},{\"EFQType\":\"Contains\",\"FieldName\":\"Album.Artist.Name\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:{{Context:match}}\"}}]}",
                     ParametersJson = "[{\"Name\":\"Matching Value\", \"Key\":\"match\", \"Type\":\"STRING\",\"DropdownUrl\":null}]"
+                },
+                new StoredQuery
+                {
+                    StoredQueryId = 14,
+                    BaseTable = nameof(Track),
+                    Area = StoredQuery.StoredQueryArea.FieldMatch.ToString(),
+                    Name = "Match Composers within...",
+                    Query = "EFQBuilder.ContainedIn(\"Composer\", new[] { \"Steve Harris\", \"Miles Davis\" })",
+                    Description = "This query searches for all Tracks where the Composer is within the provided array.",
+                    StoredQueryJson = "{\"EFQType\":\"Or\",\"AggregateList\":[{\"EFQType\":\"Equal\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:Steve Harris\"}},{\"EFQType\":\"Equal\",\"FieldName\":\"Composer\",\"RightHandSide\":{\"EFQType\":\"Constant\",\"ConstantValue\":\"STR:Miles Davis\"}}]}",
+                    ParametersJson = null
                 }
             );
         }

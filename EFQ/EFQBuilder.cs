@@ -267,7 +267,6 @@ namespace JDege.EFQ
             return Nand(new[] { efq });
         }
 
-        // TODO: Provide a ContainedIn() example
         /// <summary>
         /// returns a EFQ that is true if fieldName is equal to one of the objects
         /// </summary>
