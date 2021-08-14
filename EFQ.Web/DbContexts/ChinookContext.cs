@@ -2,7 +2,6 @@
 
 using JDege.EFQ.Web.Entities;
 
-// TODO: See if we can enable nullable reference types
 #nullable disable
 
 namespace JDege.EFQ.Web.DbContexts
