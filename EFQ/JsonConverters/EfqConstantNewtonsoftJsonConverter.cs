@@ -5,6 +5,7 @@ using NJ = Newtonsoft.Json;
 
 namespace JDege.EFQ.JsonConverters
 {
+#pragma warning disable 1591
     public class EfqConstantNewtonsoftJsonConverter : NJ.JsonConverter<EFQ.Constant>
     {
         public override void WriteJson(NJ.JsonWriter writer, EFQ.Constant efqConstant, NJ.JsonSerializer serializer)

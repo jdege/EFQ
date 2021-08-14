@@ -6,6 +6,7 @@ using SJS = System.Text.Json.Serialization;
 
 namespace JDege.EFQ.JsonConverters
 {
+#pragma warning disable 1591
     public class EfqConstantJsonConverter : SJS.JsonConverter<EFQ.Constant>
     {
         public override void Write(SJ.Utf8JsonWriter writer, EFQ.Constant efqConstant, SJ.JsonSerializerOptions options)

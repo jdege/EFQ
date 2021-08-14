@@ -11,10 +11,21 @@ using PeteMontgomery.PredicateBuilder;
 
 namespace JDege.EFQ
 {
+    /// <summary>
+    /// EFQExtensions provides extension methods on EFQ that are used to construct predicates (Expression&lt;Func&lt;T, bool&gt;>&gt;)
+    /// that can be passed as arguments to Entity Framework's Where() method.
+    /// </summary>
     public static class EFQExtensions
     {
         #region predicate construction functions
-        public static Expression<Func<T, bool>> ConstructPredicate<T>(this EFQ efq, Dictionary<string, EFQ.Constant> context = null)
+        /// <summary>
+        /// Construct the Entity Framweork predicate
+        /// </summary>
+        /// <typeparam name="T">The base type of the collection that the query will be run against. This should be a DbSet.</typeparam>
+        /// <param name="efq">this EFQ</param>
+        /// <param name="paramDict">A dictionary of named constants to be substituted when building the predicate</param>
+        /// <returns>The predicate (an Expression tree)</returns>
+        public static Expression<Func<T, bool>> ConstructPredicate<T>(this EFQ efq, Dictionary<string, EFQ.Constant> paramDict = null)
         {
             if (efq.IsUnary())
                 return efq.EFQType == EFQType.IsTrue
@@ -22,29 +33,29 @@ namespace JDege.EFQ
                     : PredicateBuilder.False<T>();
 
             if (efq.IsAggregate())
-                return efq.constructAggregatePredicate<T>(context);
+                return efq.constructAggregatePredicate<T>(paramDict);
 
             if (efq.IsMethodCall())
-                return efq.constructMethodCallPredicate<T>(context);
+                return efq.constructMethodCallPredicate<T>(paramDict);
 
             if (efq.IsStaticCall())
-                return efq.constructStaticCallPredicate<T>(context);
+                return efq.constructStaticCallPredicate<T>(paramDict);
 
             if (efq.IsAny())
-                return efq.ConstructAnyPredicate<T>(context);
+                return efq.ConstructAnyPredicate<T>(paramDict);
 
-            return efq.ConstructSinglePredicate<T>(context);
+            return efq.ConstructSinglePredicate<T>(paramDict);
         }
 
-        private static Expression<Func<T, bool>> constructAggregatePredicate<T>(this EFQ efq, Dictionary<string, EFQ.Constant> context)
+        private static Expression<Func<T, bool>> constructAggregatePredicate<T>(this EFQ efq, Dictionary<string, EFQ.Constant> paramDict)
         {
             var predicate = efq.IsAnd() ? PredicateBuilder.True<T>() : PredicateBuilder.False<T>();
 
             foreach (var item in efq.AggregateList)
             {
                 predicate = efq.IsAnd()
-                    ? predicate.And(item.ConstructPredicate<T>(context))
-                    : predicate.Or(item.ConstructPredicate<T>(context));
+                    ? predicate.And(item.ConstructPredicate<T>(paramDict))
+                    : predicate.Or(item.ConstructPredicate<T>(paramDict));
             }
 
             if (efq.IsNegate())
@@ -63,7 +74,7 @@ namespace JDege.EFQ
             return Expression.Lambda<Func<T, bool>>(body, candidateExpr);
         }
 
-        private static Expression<Func<T, bool>> constructMethodCallPredicate<T>(this EFQ efq, Dictionary<string, EFQ.Constant> context)
+        private static Expression<Func<T, bool>> constructMethodCallPredicate<T>(this EFQ efq, Dictionary<string, EFQ.Constant> paramDict)
         {
             var type = typeof(T);
 
@@ -74,7 +85,7 @@ namespace JDege.EFQ
             if (!methodMap.TryGetValue(efq.EFQType, out method))
                 throw new ArgumentOutOfRangeException("EFQType", efq.EFQType, "Invalid filter operation");
 
-            var value = efq.constructConstantExpression<T>(efq.RightHandSide, context);
+            var value = efq.constructConstantExpression<T>(efq.RightHandSide, paramDict);
 
             try
             {
@@ -95,7 +106,7 @@ namespace JDege.EFQ
             }
         }
 
-        private static Expression<Func<T, bool>> constructStaticCallPredicate<T>(this EFQ efq, Dictionary<string, EFQ.Constant> context)
+        private static Expression<Func<T, bool>> constructStaticCallPredicate<T>(this EFQ efq, Dictionary<string, EFQ.Constant> paramDict)
         {
             var type = typeof(T);
 
@@ -104,7 +115,7 @@ namespace JDege.EFQ
 
             var parameter = Expression.Parameter(type);
             var member = Expression.PropertyOrField(parameter, efq.FieldName);
-            var value = efq.constructConstantExpression<T>(efq.RightHandSide, context);
+            var value = efq.constructConstantExpression<T>(efq.RightHandSide, paramDict);
 
             try
             {
@@ -143,7 +154,7 @@ namespace JDege.EFQ
             throw new InvalidExpressionException($"Invalid EFQType {efqType}");
         }
 
-        private static Expression<Func<T, bool>> ConstructAnyPredicate<T>(this EFQ efq, Dictionary<string, EFQ.Constant> context)
+        private static Expression<Func<T, bool>> ConstructAnyPredicate<T>(this EFQ efq, Dictionary<string, EFQ.Constant> paramDict)
         {
             var type = typeof(T);
 
@@ -159,7 +170,7 @@ namespace JDege.EFQ
 
             var constructPredicateMethod = typeof(EFQExtensions).GetMethod(nameof(EFQExtensions.ConstructPredicate));
             var constructPredicateMethodGeneric = constructPredicateMethod.MakeGenericMethod(memberType);
-            var innerPredicate = (Expression)constructPredicateMethodGeneric.Invoke(null, new object[] { efq.InnerCriteria, context });
+            var innerPredicate = (Expression)constructPredicateMethodGeneric.Invoke(null, new object[] { efq.InnerCriteria, paramDict });
 
             var call = Expression.Call(typeof(Enumerable), "Any",
                 new Type[] { memberType }, new[] { member, innerPredicate });
@@ -169,7 +180,7 @@ namespace JDege.EFQ
             return lambda;
         }
 
-        private static Expression<Func<T, bool>> ConstructSinglePredicate<T>(this EFQ efq, Dictionary<string, EFQ.Constant> context)
+        private static Expression<Func<T, bool>> ConstructSinglePredicate<T>(this EFQ efq, Dictionary<string, EFQ.Constant> paramDict)
         {
             var type = typeof(T);
 
@@ -177,7 +188,7 @@ namespace JDege.EFQ
 
             var member = efq.getMember<T>(type, parameter);
 
-            var value = efq.constructConstantExpression<T>(efq.RightHandSide, context);
+            var value = efq.constructConstantExpression<T>(efq.RightHandSide, paramDict);
 
             ExpressionType operation;
             if (!operationMap.TryGetValue(efq.EFQType, out operation))
@@ -221,18 +232,18 @@ namespace JDege.EFQ
             }
         }
 
-        private static ConstantExpression constructConstantExpression<T>(this EFQ efq, object value, Dictionary<string, EFQ.Constant> context)
+        private static ConstantExpression constructConstantExpression<T>(this EFQ efq, object value, Dictionary<string, EFQ.Constant> paramDict)
         {
             var valueEfq = value as EFQ;
             if (valueEfq != null)
             {
                 if (valueEfq.IsAdd())
-                    value = executeAddExpression<T>(valueEfq, context);
+                    value = executeAddExpression<T>(valueEfq, paramDict);
                 else if (valueEfq.IsConstant())
                     value = valueEfq.ConstantValue;
             }
 
-            value = getConstantValue(value, context);
+            value = getConstantValue(value, paramDict);
 
             if (value == null)
                 return Expression.Constant(null);
@@ -240,7 +251,7 @@ namespace JDege.EFQ
             return Expression.Constant(value, value.GetType());
         }
 
-        private static object executeAddExpression<T>(EFQ efq, Dictionary<string, EFQ.Constant> context)
+        private static object executeAddExpression<T>(EFQ efq, Dictionary<string, EFQ.Constant> paramDict)
         {
             object result = null;
 
@@ -251,11 +262,11 @@ namespace JDege.EFQ
 
                 if (result == null)
                 {
-                    result = getConstantValue(arg.ConstantValue, context);
+                    result = getConstantValue(arg.ConstantValue, paramDict);
                     continue;
                 }
 
-                var value = getConstantValue(arg.ConstantValue, context);
+                var value = getConstantValue(arg.ConstantValue, paramDict);
 
                 var leftType = result.GetType();
                 var rightType = value.GetType();
@@ -272,7 +283,7 @@ namespace JDege.EFQ
             return result;
         }
 
-        private static object getConstantValue(object value, Dictionary<string, EFQ.Constant> context)
+        private static object getConstantValue(object value, Dictionary<string, EFQ.Constant> paramDict)
         {
             var s = value as String;
             if (s != null)
@@ -286,9 +297,9 @@ namespace JDege.EFQ
                     if (String.Equals(source, "CONTEXT", StringComparison.InvariantCultureIgnoreCase))
                     {
                         var field = match.Groups[2].Value;
-                        if (!context.ContainsKey(field))
-                            throw new InvalidExpressionException($"Element {field} not found in context");
-                        var val = context[field];
+                        if (!paramDict.ContainsKey(field))
+                            throw new InvalidExpressionException($"Element {field} not found in paramDict");
+                        var val = paramDict[field];
                         value = val.Value;
                     }
                     else if (String.Equals(source, "NOW", StringComparison.InvariantCultureIgnoreCase))

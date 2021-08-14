@@ -4,11 +4,13 @@ using System.Linq;
 
 namespace JDege.EFQ
 {
+    /// <summary>
+    /// EFQBuilder provides a set of static methods that construct EFQ objects with
+    /// various types of expressions.
+    /// </summary>
     public class EFQBuilder
     {
-        #region static convenience functions
-
-        public static EFQ Compare(EFQType comparison, string fieldName, object rightHandSide)
+        private static EFQ Compare(EFQType comparison, string fieldName, object rightHandSide)
         {
             return new EFQ
             {
@@ -19,64 +21,74 @@ namespace JDege.EFQ
         }
 
         /// <summary>
-        /// returns a EFQuery that is always true
+        /// returns a EFQ that is always true
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <returns>EFQ</returns>
         public static EFQ IsTrue()
         {
             return new EFQ { EFQType = EFQType.IsTrue };
         }
 
         /// <summary>
-        /// returns a EFQuery that is always false
+        /// returns a EFQ that is always false
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <returns>EFQ</returns>
         public static EFQ IsFalse()
         {
             return new EFQ { EFQType = EFQType.IsFalse };
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if fieldName contains rightHandSide as a substring
+        /// returns a EFQ that is true if fieldName contains rightHandSide as a substring
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <param name="fieldName">The name of the field to compare against</param>
+        /// <param name="rightHandSide">A constant value or an EFQ that is used to compare</param>
+        /// <returns>EFQ</returns>
         public static EFQ Contains(string fieldName, object rightHandSide)
         {
             return Compare(EFQType.Contains, fieldName, rightHandSide);
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if fieldName starts with rightHandSide as a substring
+        /// returns a EFQ that is true if fieldName starts with rightHandSide as a substring
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <param name="fieldName">The name of the field to compare against</param>
+        /// <param name="rightHandSide">A constant value or an EFQ that is used to compare</param>
+        /// <returns>EFQ</returns>
         public static EFQ StartsWith(string fieldName, object rightHandSide)
         {
             return Compare(EFQType.StartsWith, fieldName, rightHandSide);
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if fieldName ends with rightHandSide as a substring
+        /// returns a EFQ that is true if fieldName ends with rightHandSide as a substring
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <param name="fieldName">The name of the field to compare against</param>
+        /// <param name="rightHandSide">A constant value or an EFQ that is used to compare</param>
+        /// <returns>EFQ</returns>
         public static EFQ EndsWith(string fieldName, object rightHandSide)
         {
             return Compare(EFQType.EndsWith, fieldName, rightHandSide);
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if fieldName matches rightHandSide as a SQL LIKE pattern
+        /// returns a EFQ that is true if fieldName matches rightHandSide as a SQL LIKE pattern
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <param name="fieldName">The name of the field to compare against</param>
+        /// <param name="rightHandSide">A constant value or an EFQ that is used to compare</param>
+        /// <returns>EFQ</returns>
         public static EFQ Like(string fieldName, object rightHandSide)
         {
             return Compare(EFQType.Like, fieldName, rightHandSide);
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if the innerCriteria evaluates true
+        /// returns a EFQ that is true if the innerCriteria evaluates true
         /// on the fieldName. (Assumes fieldName is a one-to-many navigational property).
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <param name="fieldName">The name of a navigation property</param>
+        /// <param name="innerCriteria">An EFQ that is applied to the navigation property</param>
+        /// <returns>EFQ</returns>
         public static EFQ Any(string fieldName, EFQ innerCriteria)
         {
             return new EFQ
@@ -88,151 +100,193 @@ namespace JDege.EFQ
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if fieldName is equal to rightHandSide
+        /// returns a EFQ that is true if fieldName is equal to rightHandSide
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <param name="fieldName">The name of the field to compare against</param>
+        /// <param name="rightHandSide">A constant value or an EFQ that is used to compare</param>
+        /// <returns>EFQ</returns>
         public static EFQ Equal(string fieldName, object rightHandSide)
         {
             return Compare(EFQType.Equal, fieldName, rightHandSide);
         }
 
-        // #TODO: Fix the doc comments
         /// <summary>
-        /// returns a EFQuery that is true if fieldName is not equal to rightHandSide
+        /// returns a EFQ that is true if fieldName is not equal to rightHandSide
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <param name="fieldName">The name of the field to compare against</param>
+        /// <param name="rightHandSide">A constant value or an EFQ that is used to compare</param>
+        /// <returns>EFQ</returns>
         public static EFQ NotEqual(string fieldName, object rightHandSide)
         {
             return Compare(EFQType.NotEqual, fieldName, rightHandSide);
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if fieldName is greater than rightHandSide
+        /// returns a EFQ that is true if fieldName is greater than rightHandSide
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <param name="fieldName">The name of the field to compare against</param>
+        /// <param name="rightHandSide">A constant value or an EFQ that is used to compare</param>
+        /// <returns>EFQ</returns>
         public static EFQ GreaterThan(string fieldName, object rightHandSide)
         {
             return Compare(EFQType.GreaterThan, fieldName, rightHandSide);
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if fieldName is greater than or equal to rightHandSide
+        /// returns a EFQ that is true if fieldName is greater than or equal to rightHandSide
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <param name="fieldName">The name of the field to compare against</param>
+        /// <param name="rightHandSide">A constant value or an EFQ that is used to compare</param>
+        /// <returns>EFQ</returns>
         public static EFQ GreaterThanOrEqual(string fieldName, object rightHandSide)
         {
             return Compare(EFQType.GreaterThanOrEqual, fieldName, rightHandSide);
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if fieldName is less than rightHandSide
+        /// returns a EFQ that is true if fieldName is less than rightHandSide
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <param name="fieldName">The name of the field to compare against</param>
+        /// <param name="rightHandSide">A constant value or an EFQ that is used to compare</param>
+        /// <returns>EFQ</returns>
         public static EFQ LessThan(string fieldName, object rightHandSide)
         {
             return Compare(EFQType.LessThan, fieldName, rightHandSide);
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if fieldName is less than or equal to rightHandSide
+        /// returns a EFQ that is true if fieldName is less than or equal to rightHandSide
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <param name="fieldName">The name of the field to compare against</param>
+        /// <param name="rightHandSide">A constant value or an EFQ that is used to compare</param>
+        /// <returns>EFQ</returns>
         public static EFQ LessThanOrEqual(string fieldName, object rightHandSide)
         {
             return Compare(EFQType.LessThanOrEqual, fieldName, rightHandSide);
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if all of the efQueries evaluate true
+        /// returns a EFQ that is true if all of the efqs evaluate true
         /// </summary>
-        /// <returns>EFQuery</returns>
-        public static EFQ And(params EFQ[] efQueries)
+        /// <param name="efqs">A collection of EFQs to evaluate</param>
+        /// <returns>EFQ</returns>
+        public static EFQ And(params EFQ[] efqs)
         {
-            return And(efQueries as IEnumerable<EFQ>);
+            return And(efqs as IEnumerable<EFQ>);
         }
-        public static EFQ And(IEnumerable<EFQ> efQueries)
+        /// <summary>
+        /// returns a EFQ that is true if all of the efqs evaluate true
+        /// </summary>
+        /// <param name="efqs">A collection of EFQs to evaluate</param>
+        /// <returns>EFQ</returns>
+        public static EFQ And(IEnumerable<EFQ> efqs)
         {
             return new EFQ
             {
                 EFQType = EFQType.And,
-                AggregateList = efQueries
+                AggregateList = efqs
             };
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if at least one of the efQueries evaluates true
+        /// returns a EFQ that is true if at least one of the efqs evaluates true
         /// </summary>
-        /// <returns>EFQuery</returns>
-        public static EFQ Or(params EFQ[] efQueries)
+        /// <param name="efqs">A collection of EFQs to evaluate</param>
+        /// <returns>EFQ</returns>
+        public static EFQ Or(params EFQ[] efqs)
         {
-            return Or(efQueries as IEnumerable<EFQ>);
+            return Or(efqs as IEnumerable<EFQ>);
         }
-        public static EFQ Or(IEnumerable<EFQ> efQueries)
+        /// <summary>
+        /// returns a EFQ that is true if at least one of the efqs evaluates true
+        /// </summary>
+        /// <param name="efqs">A collection of EFQs to evaluate</param>
+        /// <returns>EFQ</returns>
+        public static EFQ Or(IEnumerable<EFQ> efqs)
         {
             return new EFQ
             {
                 EFQType = EFQType.Or,
-                AggregateList = efQueries
+                AggregateList = efqs
             };
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if at least one the efQueries evaluates false
+        /// returns a EFQ that is true if at least one of the efqs evaluates false
         /// </summary>
-        /// <returns>EFQuery</returns>
-        public static EFQ Nand(params EFQ[] efQueries)
+        /// <param name="efqs">A collection of EFQs to evaluate</param>
+        /// <returns>EFQ</returns>
+        public static EFQ Nand(params EFQ[] efqs)
         {
-            return Nand(efQueries as IEnumerable<EFQ>);
+            return Nand(efqs as IEnumerable<EFQ>);
         }
-        public static EFQ Nand(IEnumerable<EFQ> efQueries)
+        /// <summary>
+        /// returns a EFQ that is true if at least one of the efqs evaluates false
+        /// </summary>
+        /// <param name="efqs">A collection of EFQs to evaluate</param>
+        /// <returns>EFQ</returns>
+        public static EFQ Nand(IEnumerable<EFQ> efqs)
         {
             return new EFQ
             {
                 EFQType = EFQType.Nand,
-                AggregateList = efQueries
+                AggregateList = efqs
             };
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if all of the efQueries evaluate false
+        /// returns a EFQ that is true if all of the efqs evaluate false
         /// </summary>
-        /// <returns>EFQuery</returns>
-        public static EFQ Nor(params EFQ[] efQueries)
+        /// <param name="efqs">A collection of EFQs to evaluate</param>
+        /// <returns>EFQ</returns>
+        public static EFQ Nor(params EFQ[] efqs)
         {
-            return Nor(efQueries as IEnumerable<EFQ>);
+            return Nor(efqs as IEnumerable<EFQ>);
         }
-        public static EFQ Nor(IEnumerable<EFQ> efQueries)
+        /// <summary>
+        /// returns a EFQ that is true if all of the efqs evaluate false
+        /// </summary>
+        /// <param name="efqs">A collection of EFQs to evaluate</param>
+        /// <returns>EFQ</returns>
+        public static EFQ Nor(IEnumerable<EFQ> efqs)
         {
             return new EFQ
             {
                 EFQType = EFQType.Nor,
-                AggregateList = efQueries
+                AggregateList = efqs
             };
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if all of the EFQuery evaluates false
+        /// returns a EFQ that is true if efq evaluates false
         /// </summary>
-        /// <returns>EFQuery</returns>
-        public static EFQ Not(EFQ efQuery)
+        /// <param name="efq">The EFQ to evaluate</param>
+        /// <returns>EFQ</returns>
+        public static EFQ Not(EFQ efq)
         {
-            return Nand(new[] { efQuery });
+            return Nand(new[] { efq });
         }
 
+        // TODO: Provide a ContainedIn() example
         /// <summary>
-        /// returns a EFQuery that is true if fieldName is equal to one of the objects
+        /// returns a EFQ that is true if fieldName is equal to one of the objects
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <param name="fieldName">The name of the field to compare against</param>
+        /// <param name="objects">The collection of objects that fieldName is compared to</param>
+        /// <returns>EFQ</returns>
         public static EFQ ContainedIn(string fieldName, IEnumerable<object> objects)
         {
             return Or(objects.Select(o => Equal(fieldName, o)));
         }
 
         /// <summary>
-        /// returns a EFQuery that is true if fieldName is greatder than or equal to left
+        /// returns a EFQ that is true if fieldName is greater than or equal to left
         /// and less than or equal to right
         /// </summary>
-        /// <returns>EFQuery</returns>
+        /// <param name="fieldName">The name of the field to compare against</param>
+        /// <param name="left">the lower bound of the comparison</param>
+        /// <param name="right">the upper bound of the comparison</param>
+        /// <returns>EFQ</returns>
         public static EFQ Between(string fieldName, object left, object right)
         {
             return And(new[]
@@ -242,6 +296,11 @@ namespace JDege.EFQ
                 });
         }
 
+        /// <summary>
+        /// Wraps a constant value in an EFQ
+        /// </summary>
+        /// <param name="value">The value to be wrapped</param>
+        /// <returns>EFQ</returns>
         public static EFQ Constant(object value)
         {
             var efq = new EFQ
@@ -253,6 +312,16 @@ namespace JDege.EFQ
             return efq;
         }
 
+        /// <summary>
+        /// Returns an EFQ that adds two constant values.
+        /// 
+        /// This was developed to support adding TimeSpans to DateTime.Now values.
+        /// It allows the construction of queries that, for example, return all records
+        /// where a date is greater than now-minus-30-days.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>EFQ</returns>
         public static EFQ Add(object left, object right)
         {
             return new EFQ
@@ -265,6 +334,5 @@ namespace JDege.EFQ
                 }
             };
         }
-        #endregion
     }
 }
