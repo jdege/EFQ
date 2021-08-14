@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
