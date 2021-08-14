@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 using SJ = System.Text.Json.Serialization;
 using NJ = Newtonsoft.Json;
+using NJC = Newtonsoft.Json.Converters;
 
 using JDege.EFQ.JsonConverters;
 
@@ -46,6 +47,8 @@ namespace JDege.EFQ
         #endregion
     }
 
+    [SJ.JsonConverter(typeof(SJ.JsonStringEnumConverter))]
+    [NJ.JsonConverter(typeof(NJC.StringEnumConverter))]
     public enum EFQType
     {
         Equal,
