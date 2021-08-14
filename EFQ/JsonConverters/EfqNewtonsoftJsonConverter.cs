@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
 
 using NJ = Newtonsoft.Json;
 
 namespace JDege.EFQ.JsonConverters
 {
+#pragma warning disable 1591
     public class EfqNewtonsoftJsonConverter : NJ.JsonConverter<EFQ>
     {
         public override void WriteJson(NJ.JsonWriter writer, EFQ efq, NJ.JsonSerializer serializer)
@@ -104,7 +104,7 @@ namespace JDege.EFQ.JsonConverters
             return efq;
         }
 
-        private EFQ ReadEfq(ref JsonReader reader, Type objectType)
+        private EFQ ReadEfq(ref NJ.JsonReader reader, Type objectType)
         {
             var efq = new EFQ();
 
