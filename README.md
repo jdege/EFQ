@@ -1,4 +1,4 @@
 # EFQ
 Serializable Entity Framework Queries
 
-Testing
+[a link to the docs](docs/index.md)
