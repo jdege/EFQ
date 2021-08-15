@@ -1,4 +1,4 @@
 # EFQ
 Serializable Entity Framework Queries
 
-[a link to the docs](docs/index.md)
+[a link to the docs](EFQ/docs/index.md)
