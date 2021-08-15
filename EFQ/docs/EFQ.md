@@ -1,5 +1,5 @@
-#### [EFQ](index 'index')
-### [JDege.EFQ](JDege_EFQ 'JDege.EFQ')
+#### [EFQ](index.md 'index')
+### [JDege.EFQ](JDege_EFQ.md 'JDege.EFQ')
 ## EFQ Class
 EFQ is an object that can contain a serialized expression tree that can be   
 serialized and deserialized, and which can be used to generate an   

@@ -1,5 +1,5 @@
-#### [EFQ](index 'index')
-### [JDege.EFQ](JDege_EFQ 'JDege.EFQ').[ApplicationBuilderExtensions](ApplicationBuilderExtensions 'JDege.EFQ.ApplicationBuilderExtensions')
+#### [EFQ](index.md 'index')
+### [JDege.EFQ](JDege_EFQ.md 'JDege.EFQ').[ApplicationBuilderExtensions](ApplicationBuilderExtensions.md 'JDege.EFQ.ApplicationBuilderExtensions')
 ## ApplicationBuilderExtensions.MapEFQ(IApplicationBuilder, string) Method
 Maps javascript embedded resources into a web project's routing space  
 ```csharp

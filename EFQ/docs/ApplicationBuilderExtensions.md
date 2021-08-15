@@ -1,5 +1,5 @@
-#### [EFQ](index 'index')
-### [JDege.EFQ](JDege_EFQ 'JDege.EFQ')
+#### [EFQ](index.md 'index')
+### [JDege.EFQ](JDege_EFQ.md 'JDege.EFQ')
 ## ApplicationBuilderExtensions Class
 Extension methods for IApplicationBuilder  
 ```csharp
@@ -10,4 +10,4 @@ Inheritance [System.Object](https://docs.microsoft.com/en-us/dotnet/api/System.O
 
 | Methods | |
 | :--- | :--- |
-| [MapEFQ(IApplicationBuilder, string)](ApplicationBuilderExtensions_MapEFQ_kXYHaONkTlKzZRiyqaaLOg 'JDege.EFQ.ApplicationBuilderExtensions.MapEFQ(Microsoft.AspNetCore.Builder.IApplicationBuilder, string)') | Maps javascript embedded resources into a web project's routing space<br/> |
+| [MapEFQ(IApplicationBuilder, string)](ApplicationBuilderExtensions_MapEFQ_kXYHaONkTlKzZRiyqaaLOg.md 'JDege.EFQ.ApplicationBuilderExtensions.MapEFQ(Microsoft.AspNetCore.Builder.IApplicationBuilder, string)') | Maps javascript embedded resources into a web project's routing space<br/> |

@@ -1,5 +1,5 @@
-#### [EFQ](index 'index')
-### [JDege.EFQ](JDege_EFQ 'JDege.EFQ').[EFQBuilder](EFQBuilder 'JDege.EFQ.EFQBuilder')
+#### [EFQ](index.md 'index')
+### [JDege.EFQ](JDege_EFQ.md 'JDege.EFQ').[EFQBuilder](EFQBuilder.md 'JDege.EFQ.EFQBuilder')
 ## EFQBuilder.ContainedIn(string, IEnumerable&lt;object&gt;) Method
 returns a EFQ that is true if fieldName is equal to one of the objects  
 ```csharp
@@ -15,5 +15,5 @@ The name of the field to compare against
 The collection of objects that fieldName is compared to
   
 #### Returns
-[EFQ](EFQ 'JDege.EFQ.EFQ')  
+[EFQ](EFQ.md 'JDege.EFQ.EFQ')  
 EFQ

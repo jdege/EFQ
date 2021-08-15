@@ -13,7 +13,6 @@
   <PropertyGroup>
     <DefaultDocumentationFolder>docs</DefaultDocumentationFolder>
     <DefaultDocumentationFileNameMode>NameAndMd5Mix</DefaultDocumentationFileNameMode>
-    <DefaultDocumentationRemoveFileExtensionFromLinks>true</DefaultDocumentationRemoveFileExtensionFromLinks>
   </PropertyGroup>
 
   <ItemGroup>

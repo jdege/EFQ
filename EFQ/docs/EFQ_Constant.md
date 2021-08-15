@@ -1,5 +1,5 @@
-#### [EFQ](index 'index')
-### [JDege.EFQ](JDege_EFQ 'JDege.EFQ').[EFQ](EFQ 'JDege.EFQ.EFQ')
+#### [EFQ](index.md 'index')
+### [JDege.EFQ](JDege_EFQ.md 'JDege.EFQ').[EFQ](EFQ.md 'JDege.EFQ.EFQ')
 ## EFQ.Constant Class
 EFQ.Constant wraps constant values in a way that can be reliably serialized and deserialized.  
 ```csharp

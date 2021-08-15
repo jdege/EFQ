@@ -1,5 +1,5 @@
-#### [EFQ](index 'index')
-### [JDege.EFQ](JDege_EFQ 'JDege.EFQ').[EFQBuilder](EFQBuilder 'JDege.EFQ.EFQBuilder')
+#### [EFQ](index.md 'index')
+### [JDege.EFQ](JDege_EFQ.md 'JDege.EFQ').[EFQBuilder](EFQBuilder.md 'JDege.EFQ.EFQBuilder')
 ## EFQBuilder.Between(string, object, object) Method
 returns a EFQ that is true if fieldName is greater than or equal to left  
 and less than or equal to right  
@@ -20,5 +20,5 @@ the lower bound of the comparison
 the upper bound of the comparison
   
 #### Returns
-[EFQ](EFQ 'JDege.EFQ.EFQ')  
+[EFQ](EFQ.md 'JDege.EFQ.EFQ')  
 EFQ

@@ -1,5 +1,5 @@
-#### [EFQ](index 'index')
-### [JDege.EFQ](JDege_EFQ 'JDege.EFQ').[EFQBuilder](EFQBuilder 'JDege.EFQ.EFQBuilder')
+#### [EFQ](index.md 'index')
+### [JDege.EFQ](JDege_EFQ.md 'JDege.EFQ').[EFQBuilder](EFQBuilder.md 'JDege.EFQ.EFQBuilder')
 ## EFQBuilder.Add(object, object) Method
 Returns an EFQ that adds two constant values.  
   
@@ -17,5 +17,5 @@ public static JDege.EFQ.EFQ Add(object left, object right);
 `right` [System.Object](https://docs.microsoft.com/en-us/dotnet/api/System.Object 'System.Object')  
   
 #### Returns
-[EFQ](EFQ 'JDege.EFQ.EFQ')  
+[EFQ](EFQ.md 'JDege.EFQ.EFQ')  
 EFQ
