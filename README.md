@@ -1,8 +1,6 @@
 # EFQ
-##Serializable Entity Framework Queries
 
-
-Serializable Entity Framework Queries
+## Serializable Entity Framework Queries
 
 EFQ is a .NET 5.0 library to enable serializing Entity Framework queries.
 
