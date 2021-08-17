@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="JavaScript/EFQ.js" />
+    <EmbeddedResource Include="JavaScript\EFQ.js" />
   </ItemGroup>
 
 </Project>
