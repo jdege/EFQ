@@ -37,7 +37,7 @@ We were doing a rewrite in which the page would retrieve data via HTTP Requests 
 The problem was how for the browser to pass the data that the webservice needed to build a query, without creating strong coupling between the webservice and the front-end.
 
 Our solution was wrap Pete Montgomer's [Predicate Builder](https://petemontgomery.wordpress.com/2011/02/10/a-universal-predicatebuilder/)
-class that allowed us to construct Entity Framework expression trees in a piecemeal manner, and in a way that could be serialized and deserialized into and out of JSON, so they could be sent back and forth between the server and the front-end.
+in a class that allowed us to construct Entity Framework expression trees in a piecemeal manner, and in a way that could be serialized and deserialized into and out of JSON, so they could be sent back and forth between the server and the front-end.
 
 Consider, for example, a HTML &lt;select&gt; element. Our front end would call a Web API endpoint that returned a collection of DropDownModels:
 
