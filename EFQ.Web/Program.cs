@@ -22,7 +22,4 @@ namespace JDege.EFQ.Web
     }
 }
 
-
-// TODO: Add an example for Like().
-
-// TODO: look at the coverage report.
+// TODO: Work on the Github readme
