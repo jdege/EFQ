@@ -52,7 +52,6 @@
 <script src="~/efq/EFQ.js"></script>
 
 <script type="text/javascript">
-    debugger;
     var model = @Html.Raw(@JsonSerializer.Serialize(@Model));
     var displayForm = model.Parameters != null && model.Parameters.length > 0;
 

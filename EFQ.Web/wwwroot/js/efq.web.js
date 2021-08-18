@@ -111,7 +111,6 @@ TrackQueryService = {
     },
     queryTracks: function (efq, callback)
     {
-        debugger;
         var url = "/api/Track/Query";
         var data = JSON.stringify(efq);
         var settings = {
@@ -133,7 +132,6 @@ TrackQueryService = {
     },
     storedQuery: function (id, context, callback)
     {
-        debugger;
         var url = "/api/Track/StoredQuery/" + id;
         var data = context ? JSON.stringify(context) : "{}";
         var settings = {
@@ -158,7 +156,6 @@ TrackQueryService = {
 InvoiceQueryService = {
     storedQuery: function (id, context, callback)
     {
-        debugger;
         var url = "/api/Invoice/StoredQuery/" + id;
         var data = context ? JSON.stringify(context) : "{}";
         var settings = {
