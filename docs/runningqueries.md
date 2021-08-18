@@ -28,7 +28,7 @@ Running a query is pretty simple.
 
 ```
 
-4. Pass the predicate to Entity Framework's IQueryable&lt;T&gt;.Where():
+4. Pass the predicate to Entity Framework's `IQueryable&lt;T&gt;.Where()`:
 
 ```
     var tracklList = dbContext.Tracks
