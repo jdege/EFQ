@@ -47,5 +47,3 @@ namespace JDege.EFQ.Web.Controllers
         }
     }
 }
-
-// TODO: Test in Windows

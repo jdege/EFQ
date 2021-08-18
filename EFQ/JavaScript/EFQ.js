@@ -1,4 +1,4 @@
-﻿var EFQ = (function ()
+﻿var EFQBuilder = (function ()
 {
 	'use strict';
 
@@ -172,4 +172,3 @@ var EFQConstant = (function ()
 	return EFQConstant;
 
 })();
-

@@ -87,7 +87,6 @@
 <script src="~/efq/EFQ.js"></script>
 
 <script type="text/javascript">
-    debugger;
     var $artistSelect = $("#ArtistId");
     var $customerSelect = $("#CustomerId");
     var $mediaTypeSelect = $("#MediaType");
@@ -143,7 +142,7 @@
 
     $("#Submit").click(() =>
     {
-        var andQueries = [EFQ.isTrue()];
+        var andQueries = [EFQBuilder.isTrue()];
 
         var artistSelected = $artistSelect.find(':selected');
         var artistQuery = artistSelected.data('query');// $artistSelect.find(':selected').data('query');
@@ -164,7 +163,7 @@
             andQueries.push(mediaType);
         }
 
-        var query = EFQ.and(andQueries);
+        var query = EFQBuilder.and(andQueries);
 
         TrackQueryService.queryTracks(query, (result) =>
         {
