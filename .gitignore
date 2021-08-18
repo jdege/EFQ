@@ -270,3 +270,4 @@ EFQ.Web/chinook.db
 EFQ.Web/chinook.db-wal
 /EFQ.Web/Sql1DockerVolumes
 README.md.backup
+docs/gettingstarted.md.backup

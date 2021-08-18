@@ -4,6 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>JDege.EFQ</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Jeffrey Dege</Authors>
   </PropertyGroup>
 
   <PropertyGroup>

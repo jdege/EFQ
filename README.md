@@ -41,15 +41,18 @@ in a class that allowed us to construct Entity Framework expression trees in a p
 
 Consider, for example, a HTML &lt;select&gt; element. Our front end would call a Web API endpoint that returned a collection of DropDownModels:
 
+```
     public class DropdownModel
     {
         public string value { get; set; }
         public string text { get; set; }
         public EFQ query { get; set; }
     }
+```
 
 The query, in each case, would be an EFQ object that would do the proper comparison if that value was selected:
 
+```
     var dropdownModels = await dbContext.MediaTypes
         .OrderBy(c => c.Name)
         .ProjectTo<DropdownModel>(_configurationProvider)
@@ -59,25 +62,29 @@ The query, in each case, would be an EFQ object that would do the proper compari
     {
         model.query = EFQBuilder.Equal("MediaTypeId", Int32.Parse(model.value));
     }
+```
 
 The front-end would receive these, of course, as JSON, and would construct &lt;option&gt; elements, adding them to the &lt;select&gt; element. The received query object would be stored with each &lt;option&gt; element as a data attribute.
 
 When the user clicks on the Submit button, the event handler would create an array of JavaScript EFQ objects, wrap them all in an EFQ.and(), and pass them off to the search endpoint:
 
+```
     var andQueries = [EFQ.isTrue()];
- 
+
     var mediaType = $mediaTypeSelect.find(':selected').data('query');
     if (mediaType)
     {
         andQueries.push(mediaType);
     }
- 
+
     var query = EFQ.and(andQueries);
- 
+
     TrackQueryService.queryTracks(query, function (result)
+```
 
 The Web API endpoint would receive the query as a C# EFQ object. In some cases, the endpoint would run the query as-is, in others it would need to add additional constraints:
 
+```
     public ActionResult<IEnumerable<TaskModel>> Query(EFQ query)
     {
         // Make sure we return data only for the logged-in customer
@@ -97,6 +104,7 @@ The Web API endpoint would receive the query as a C# EFQ object. In some cases, 
             return trackModelList;
         }
     }
+```
 
 ---
 
