@@ -99,7 +99,9 @@ The Web API endpoint would receive the query as a C# EFQ object. In some cases, 
     }
 
 ---
-[The Generated Documentation](EFQ/docs/index.md)
+
+* [Getting Started](docs/gettingstarted.md)
+* [The Generated Documentation](EFQ/docs/index.md)
 
 
 © 2021 - Jeffrey C. Dege - MIT License
