@@ -4,7 +4,7 @@
 
 Running a query is pretty simple.
 
-If you're passing runtime parameters into the query:
+#### If you're passing runtime parameters into the query:
 
 1. Have an EFQ object (either created with EFQBuilder, or passed into Web API endpoint, or retrieved from a database, or something):
 ```
@@ -30,7 +30,7 @@ If you're passing runtime parameters into the query:
         .ToList();
 ```
 
-Or if you're not passing runtime parameters:
+#### Or if you're not passing runtime parameters:
 
 1. Have an EFQ object (either created with EFQBuilder, or passed into Web API endpoint, or retrieved from a database, or something):
 ```
