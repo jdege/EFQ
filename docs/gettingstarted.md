@@ -1,3 +1,5 @@
+[Back...](../README.md)
+
 ## Getting Started
 
 1. Install the EFQ NuGet package. (Which will be easier after I publish it to the NuGet gallery. For now, I copy JDege.EFQ.0.1.0 to ~/NuGetPackages, which is where I have my local package source configured.)
