@@ -32,13 +32,13 @@ namespace JDege.EFQ.dbtest
 
             var efq = EFQBuilder.Equal("itemId", "{{Context:searchItemId}}");
 
-            var context = new Dictionary<string, EFQ.Constant> {
+            var paramDict = new Dictionary<string, EFQ.Constant> {
                 {"searchItemId", new EFQ.Constant(searchItemId)}
             };
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var predicate = efq.ConstructPredicate<Item>(context);
+                var predicate = efq.ConstructPredicate<Item>(paramDict);
                 var results = await dbContext.Items.Where(predicate).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].name.ShouldBe(expectedName);
@@ -59,13 +59,13 @@ namespace JDege.EFQ.dbtest
 
             var efq = EFQBuilder.Equal("amount", "{{Context:searchAmount}}");
 
-            var context = new Dictionary<string, EFQ.Constant> {
+            var paramDict = new Dictionary<string, EFQ.Constant> {
                 {"searchAmount", new EFQ.Constant(searchAmount)}
             };
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var predicate = efq.ConstructPredicate<Item>(context);
+                var predicate = efq.ConstructPredicate<Item>(paramDict);
                 var results = await dbContext.Items.Where(predicate).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe(expectedItemId);
@@ -86,13 +86,13 @@ namespace JDege.EFQ.dbtest
 
             var efq = EFQBuilder.Equal("when", "{{Context:searchWhen}}");
 
-            var context = new Dictionary<string, EFQ.Constant> {
+            var paramDict = new Dictionary<string, EFQ.Constant> {
                 {"searchWhen", new EFQ.Constant(searchWhen)}
             };
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var predicate = efq.ConstructPredicate<Item>(context);
+                var predicate = efq.ConstructPredicate<Item>(paramDict);
                 var results = await dbContext.Items.Where(predicate).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe(expectedItemId);
@@ -115,14 +115,14 @@ namespace JDege.EFQ.dbtest
 
             var efq = EFQBuilder.Between("when", "{{Context:fromWhen}}", "{{Context:toWhen}}");
 
-            var context = new Dictionary<string, EFQ.Constant> {
+            var paramDict = new Dictionary<string, EFQ.Constant> {
                 {"fromWhen", new EFQ.Constant(fromWhen)},
                 {"toWhen", new EFQ.Constant(toWhen)}
             };
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var predicate = efq.ConstructPredicate<Item>(context);
+                var predicate = efq.ConstructPredicate<Item>(paramDict);
                 var results = await dbContext.Items.Where(predicate).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe(expectedItemId);
@@ -148,14 +148,14 @@ namespace JDege.EFQ.dbtest
                 EFQBuilder.Add("{{Context:fromWhen}}", "{{Context:addInterval}}")
                 );
 
-            var context = new Dictionary<string, EFQ.Constant> {
+            var paramDict = new Dictionary<string, EFQ.Constant> {
                 {"fromWhen", new EFQ.Constant(fromWhen)},
                 {"addInterval", new EFQ.Constant(addInterval)}
             };
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var predicate = efq.ConstructPredicate<Item>(context);
+                var predicate = efq.ConstructPredicate<Item>(paramDict);
                 var results = await dbContext.Items.Where(predicate).ToListAsync();
                 results.Count.ShouldBe(1);
                 results[0].itemId.ShouldBe(expectedItemId);

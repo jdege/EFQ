@@ -230,13 +230,13 @@ namespace JDege.EFQ.dbtest
 
             using (var dbContext = new TestDbContext(ContextOptions))
             {
-                var context = new Dictionary<string, EFQ.Constant>
+                var paramDict = new Dictionary<string, EFQ.Constant>
                 {
                     { "foo", new EFQ.Constant("abcd") },
                     { "bar", new EFQ.Constant(10) }
                 };
 
-                var predicate = efq.ConstructPredicate<Item>(context);
+                var predicate = efq.ConstructPredicate<Item>(paramDict);
 
                 var results = await dbContext.Items.Where(predicate)
                     .OrderBy(i => i.itemId).ToListAsync();
