@@ -1,6 +1,6 @@
 [Back...](../README.md)
 
-## Running queries
+## Running Queries
 
 Running a query is pretty simple.
 
