@@ -2,7 +2,7 @@
 
 ## Serializable Entity Framework Queries
 
-EFQ is a .NET 5.0 library to enable serializing Entity Framework queries.
+EFQ is a .NET 5.0 library that enables serializing Entity Framework queries.
 
 When we started working with Entity Framework, there were two functionalities we had been using that EF, out of the box, did not support:
 
@@ -110,7 +110,7 @@ The Web API endpoint would receive the query as a C# EFQ object. In some cases, 
 
 * [Getting Started](docs/gettingstarted.md)
 * [Building Queries](docs/buildingqueries.md)
-* [Running Queries](docs/runningqueries.md)
+* [Running Queries](docs/runningqueries.m
 * [Running The Demos](docs/runningthedemos.md)
 * [The Generated Documentation](EFQ/docs/index.md)
 
