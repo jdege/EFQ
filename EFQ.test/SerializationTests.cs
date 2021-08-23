@@ -5,6 +5,7 @@ using Xunit;
 
 using SJ = System.Text.Json;
 using NJ = Newtonsoft.Json;
+using System.Runtime.CompilerServices;
 
 namespace JDege.EFQ.test
 {
@@ -37,16 +38,24 @@ namespace JDege.EFQ.test
             {
                 var systemJsonSerialized = SJ.JsonSerializer.Serialize(efq);
                 var newtonsoftJsonSerialized = NJ.JsonConvert.SerializeObject(efq);
-                newtonsoftJsonSerialized.ShouldBe(systemJsonSerialized);
+                newtonsoftJsonSerialized.ShouldBe(systemJsonSerialized, ShowFilePosition());
 
                 var systemJsonDeserialized = SJ.JsonSerializer.Deserialize<EFQ>(systemJsonSerialized);
-                systemJsonDeserialized.ShouldBeEquivalentTo(efq);
+                systemJsonDeserialized.ShouldBeEquivalentTo(efq, ShowFilePosition());
 
                 var newtonsoftJsonDeserialized = NJ.JsonConvert.DeserializeObject<EFQ>(newtonsoftJsonSerialized);
-                newtonsoftJsonDeserialized.ShouldBeEquivalentTo(efq);
+                newtonsoftJsonDeserialized.ShouldBeEquivalentTo(efq, ShowFilePosition());
 
-                newtonsoftJsonDeserialized.ShouldBeEquivalentTo(systemJsonDeserialized);
+                newtonsoftJsonDeserialized.ShouldBeEquivalentTo(systemJsonDeserialized, ShowFilePosition());
             }
+        }
+
+        private static string ShowFilePosition(
+            [CallerFilePath] string filePath = null,
+            [CallerLineNumber] int lineNumber = 0,
+            [CallerMemberName] string member = null)
+        {
+            return $"Path: {filePath}, Line: {lineNumber}, Member: {member}";
         }
 
         private IEnumerable<EFQ.Constant> _testEfqConstants = new[] {
@@ -67,15 +76,15 @@ namespace JDege.EFQ.test
                 var systemJsonSerialized = SJ.JsonSerializer.Serialize(efqConstant);
                 var newtonsoftJsonSerialized = NJ.JsonConvert.SerializeObject(efqConstant);
 
-                newtonsoftJsonSerialized.ShouldBe(systemJsonSerialized);
+                newtonsoftJsonSerialized.ShouldBe(systemJsonSerialized, ShowFilePosition());
 
                 var systemJsonDeserialized = SJ.JsonSerializer.Deserialize<EFQ.Constant>(systemJsonSerialized);
-                systemJsonDeserialized.ShouldBeEquivalentTo(efqConstant);
+                systemJsonDeserialized.ShouldBeEquivalentTo(efqConstant, ShowFilePosition());
 
                 var newtonsoftJsonDeserialized = NJ.JsonConvert.DeserializeObject<EFQ.Constant>(newtonsoftJsonSerialized);
-                newtonsoftJsonDeserialized.ShouldBeEquivalentTo(efqConstant);
+                newtonsoftJsonDeserialized.ShouldBeEquivalentTo(efqConstant, ShowFilePosition());
 
-                newtonsoftJsonDeserialized.ShouldBeEquivalentTo(systemJsonDeserialized);
+                newtonsoftJsonDeserialized.ShouldBeEquivalentTo(systemJsonDeserialized, ShowFilePosition());
             }
         }
 
@@ -86,10 +95,10 @@ namespace JDege.EFQ.test
             // https://github.com/shouldly/shouldly/issues/767
             Action<Dictionary<string, EFQ.Constant>, Dictionary<string, EFQ.Constant>> DictsShouldMatch = (dict1, dict2) =>
             {
-                dict1.Keys.ShouldBeEquivalentTo(dict2.Keys);
+                dict1.Keys.ShouldBeEquivalentTo(dict2.Keys, ShowFilePosition());
                 foreach (var key in dict1.Keys)
                 {
-                    dict2[key].ShouldBeEquivalentTo(dict1[key]);
+                    dict2[key].ShouldBeEquivalentTo(dict1[key], ShowFilePosition());
                 }
             };
 
@@ -102,7 +111,7 @@ namespace JDege.EFQ.test
             var systemJsonSerialized = SJ.JsonSerializer.Serialize(dict);
             var newtonsoftJsonSerialized = NJ.JsonConvert.SerializeObject(dict);
 
-            newtonsoftJsonSerialized.ShouldBe(systemJsonSerialized);
+            newtonsoftJsonSerialized.ShouldBe(systemJsonSerialized, ShowFilePosition());
 
             var systemJsonDeserialized = SJ.JsonSerializer.Deserialize<Dictionary<string, EFQ.Constant>>(systemJsonSerialized);
             DictsShouldMatch(systemJsonDeserialized, dict);
