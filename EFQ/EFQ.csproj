@@ -3,10 +3,24 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
     <PackageId>JDege.EFQ</PackageId>
-    <Version>0.1.0</Version>
+    <!-- 
+        We want to set the Version in the build command.
+        <Version>0.1.0</Version>
+    -->
     <Authors>Jeffrey Dege</Authors>
+    <Description>A .NET 5.0 library to enable serializing Entity Framework queries.</Description>
+    <Tags>EntityFramework JSON</Tags>
+    <ProjectUrl>https://github.com/jdege/EFQ</ProjectUrl>
+    <RepositoryUrl>https://github.com/jdege/EFQ</RepositoryUrl>
+    <RepositoryType>github.com</RepositoryType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup>
