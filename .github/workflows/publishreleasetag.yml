@@ -3,9 +3,9 @@ name: PublishReleaseTag
 on: ["push"]
 
 env:
-  PROJECT_PATH: "EFQ/EFQ.csproj"
+  PROJECT_PATH: 'EFQ/EFQ.csproj'
   NUGET_URL: "https://api.nuget.org/v3/index.json"
-  PACKAGE_OUTPUT_DIR: ${{ github.workspace }}\output
+  PACKAGE_OUTPUT_DIR: ${{ github.workspace }}/output
 
 jobs:
   build:
