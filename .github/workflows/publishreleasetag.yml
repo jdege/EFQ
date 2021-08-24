@@ -17,16 +17,17 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: 'Install dotnet'
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '5.0.x'
+    # - name: 'Install dotnet'
+    #   uses: actions/setup-dotnet@v1
+    #   with:
+    #     dotnet-version: '5.0.x'
 
     - name: Restore
       run: dotnet restore ${{ env.PROJECT_PATH }}
 
     - name: Build
-      run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release --p:Version=0.0.4
+      run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release
+      # run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release --p:Version=0.0.4
 
     - name: Pack
       run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols --output ${{ env.PACKAGE_OUTPUT_DIR }}
