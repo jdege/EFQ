@@ -1,0 +1,19 @@
+name: PublisReleaseTag
+
+on: ["push"]
+
+env:
+  PACKAGES_PATH: "./EFQ/bin/Release/*.nupkg"
+  NUGET_URL: "https://api.nuget.org/v3/index.json"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Build
+      run: dotnet pack -c Release -p:Version=0.0.4
+
+    - name: Publish
+      run: dotnet nuget push ${{ env.PACKAGES_PATH }} -s ${{ NUGET_URL }} -k ${{ secret.NUGET_EFQ_ACCESS_KEY }} 
