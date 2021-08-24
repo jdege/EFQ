@@ -1,12 +1,14 @@
 name: PublishReleaseTag
 
-on: ["push"]
+on:
+  push:
+    tags:
+      'v*'
 
 env:
   PROJECT_PATH: "EFQ/EFQ.csproj"
   NUGET_URL: "https://api.nuget.org/v3/index.json"
   PACKAGE_OUTPUT_DIR: ${{ github.workspace }}/output
-  VERSION: 0.0.4
 
 jobs:
   BuildAndPublish:
@@ -21,11 +23,15 @@ jobs:
     - name: Restore
       run: dotnet restore ${{ env.PROJECT_PATH }}
 
+    - name: 'Get Version'
+      id: version
+      uses: battila7/get-version-action@v2
+
     - name: Build
-      run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:Version=${{ env.VERSION }}
+      run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:Version=${{ steps.version.outputs.version-without-v }}
 
     - name: Pack
-      run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols --output ${{ env.PACKAGE_OUTPUT_DIR }} -p:Version=${{ env.VERSION }}
+      run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols --output ${{ env.PACKAGE_OUTPUT_DIR }} -p:PackageVersion=${{ steps.version.outputs.version-without-v }}
 
     - name: Push
       run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIR }}/*.nupkg -s ${{ env.NUGET_URL }} -k ${{ secrets.NUGET_EFQ_ACCESS_KEY }}
