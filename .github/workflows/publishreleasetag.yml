@@ -16,9 +16,13 @@ jobs:
     # - name: Build and pack 
     #   run: dotnet pack -c Release -p:Version=0.0.4
 
-    - name: Restore
+    - name: Echo
       run: echo dotnet restore ${{ env.PROJECT_PATH }}
+
+    - name: Ls
       run: ls ${{ env.PROJECT_PATH }}
+
+    - name: Restore
       run: dotnet restore ${{ env.PROJECT_PATH }}
 
     # - name: Build
