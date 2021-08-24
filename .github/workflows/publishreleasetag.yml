@@ -17,7 +17,7 @@ jobs:
     #   run: dotnet pack -c Release -p:Version=0.0.4
 
     - name: Restore
-      run: dotnet restore ${{ env.PROJECT_PATH }}
+      run: dotnet restore
 
     # - name: Build
     #   run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release --p:Version=0.0.4
