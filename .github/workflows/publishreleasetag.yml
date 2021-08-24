@@ -17,31 +17,14 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    # - name: Build and pack 
-    #   run: dotnet pack -c Release -p:Version=0.0.4
-
-    - name: workspace
-      run: echo ${{ github.workspace }}
-
-    - name: ls workspace
-      run: ls ${{ github.workspace }}
-
-    - name: Echo
-      run: echo dotnet restore ${{ env.PROJECT_PATH }}
-
-    - name: Ls
-      run: ls ${{ env.PROJECT_PATH }}
-
     - name: Restore
       run: dotnet restore ${{ env.PROJECT_PATH }}
 
-    # - name: Build
-    #   run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release --p:Version=0.0.4
+    - name: Build
+      run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release --p:Version=0.0.4
 
-    # - name: Pack
-    #   run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols --output ${{ env.PACKAGE_OUTPUT_DIR }}
+    - name: Pack
+      run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols --output ${{ env.PACKAGE_OUTPUT_DIR }}
 
-    # - name: Push
-    #   run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIR }}\*.nupkg -s ${{ env.NUGET_URL }} -k ${{ secrets.NUGET_EFQ_ACCESS_KEY }}
-
-
+    - name: Push
+      run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIR }}\*.nupkg -s ${{ env.NUGET_URL }} -k ${{ secrets.NUGET_EFQ_ACCESS_KEY }}
