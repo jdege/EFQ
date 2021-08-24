@@ -8,13 +8,19 @@ env:
   PACKAGE_OUTPUT_DIR: ${{ github.workspace }}/output
 
 jobs:
-  build:
+  buildandpublish:
 
     runs-on: ubuntu-latest
 
     steps:
     # - name: Build and pack 
     #   run: dotnet pack -c Release -p:Version=0.0.4
+
+    - name: workspace
+      run: echo ${{ github.workspace }}
+
+    - name: ls workspace
+      run: ls ${{ github.workspace }}
 
     - name: Echo
       run: echo dotnet restore ${{ env.PROJECT_PATH }}
