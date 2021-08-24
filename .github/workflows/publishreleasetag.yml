@@ -3,12 +3,12 @@ name: PublishReleaseTag
 on: ["push"]
 
 env:
-  PROJECT_PATH: ${{ github.workspace }}/EFQ/EFQ.csproj
+  PROJECT_PATH: EFQ.csproj
   NUGET_URL: "https://api.nuget.org/v3/index.json"
   PACKAGE_OUTPUT_DIR: ${{ github.workspace }}/output
 
 jobs:
-  buildandpublish:
+  BuildAndPublish:
 
     runs-on: ubuntu-latest
 
@@ -39,3 +39,5 @@ jobs:
 
     # - name: Push
     #   run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIR }}\*.nupkg -s ${{ env.NUGET_URL }} -k ${{ secrets.NUGET_EFQ_ACCESS_KEY }}
+
+
