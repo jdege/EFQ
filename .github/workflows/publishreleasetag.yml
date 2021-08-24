@@ -3,7 +3,7 @@ name: PublishReleaseTag
 on: ["push"]
 
 env:
-  PROJECT_PATH: 'EFQ/EFQ.csproj'
+  PROJECT_PATH: "EFQ/EFQ.csproj"
   NUGET_URL: "https://api.nuget.org/v3/index.json"
   PACKAGE_OUTPUT_DIR: ${{ github.workspace }}/output
 
@@ -17,7 +17,7 @@ jobs:
     #   run: dotnet pack -c Release -p:Version=0.0.4
 
     - name: Restore
-      run: dotnet restore
+      run: dotnet restore ${{ env.PROJECT_PATH }}
 
     # - name: Build
     #   run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release --p:Version=0.0.4
