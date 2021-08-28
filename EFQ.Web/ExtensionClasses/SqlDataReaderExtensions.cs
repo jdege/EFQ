@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using Microsoft.Data.SqlClient;
 
-namespace JDege.EFQ.Web.Extensions
+namespace JDege.EFQ.Web.ExtensionClasses
 {
     /// <summary>
     /// Getting data out of a SqlDataReader is far more complicated than it should be

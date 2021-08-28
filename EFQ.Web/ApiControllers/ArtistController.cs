@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
+
 using JDege.EFQ.Web.DbContexts;
+using JDege.EFQ.Web.ExtensionClasses;
 using JDege.EFQ.Web.Models;
 
 namespace JDege.EFQ.Web.ApiControllers
@@ -46,6 +48,7 @@ namespace JDege.EFQ.Web.ApiControllers
                 {
                     foreach (var model in dropdownModels)
                     {
+                        cancellationToken.ThrowIfCancellationRequested();
                         var efq = EFQBuilder.Equal("Album.ArtistId", Int32.Parse(model.value));
                         model.query = efq;
                     }

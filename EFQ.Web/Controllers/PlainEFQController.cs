@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 
 using JDege.EFQ.Web.DbContexts;
 using JDege.EFQ.Web.Entities;
+using JDege.EFQ.Web.ExtensionClasses;
 using JDege.EFQ.Web.Models;
 
 namespace JDege.EFQ.Web.Controllers

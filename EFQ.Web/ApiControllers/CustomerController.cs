@@ -47,6 +47,7 @@ namespace JDege.EFQ.Web.ApiControllers
                 {
                     foreach (var model in dropdownModels)
                     {
+                        cancellationToken.ThrowIfCancellationRequested();
                         var efq = EFQBuilder.Any("InvoiceLines", EFQBuilder.Equal("Invoice.CustomerId", Int32.Parse(model.value)));
                         model.query = efq;
                     }

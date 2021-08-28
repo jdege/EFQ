@@ -46,6 +46,7 @@ namespace JDege.EFQ.Web.ApiControllers
                 {
                     foreach (var model in dropdownModels)
                     {
+                        cancellationToken.ThrowIfCancellationRequested();
                         var efq = EFQBuilder.Equal("MediaTypeId", Int32.Parse(model.value));
                         model.query = efq;
                     }

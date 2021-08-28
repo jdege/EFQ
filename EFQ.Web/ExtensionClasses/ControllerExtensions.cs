@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JDege.EFQ.Web.Controllers
+namespace JDege.EFQ.Web.ExtensionClasses
 {
     public static class ControllerExtension
     {
