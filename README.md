@@ -110,7 +110,7 @@ The Web API endpoint would receive the query as a C# EFQ object. In some cases, 
 
 * [Getting Started](docs/gettingstarted.md)
 * [Building Queries](docs/buildingqueries.md)
-* [Running Queries](docs/runningqueries.m
+* [Running Queries](docs/runningqueries.md)
 * [Running The Demos](docs/runningthedemos.md)
 * [The Generated Documentation](EFQ/docs/index.md)
 
